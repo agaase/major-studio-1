@@ -4,7 +4,7 @@ Regular coursework for major studio 1 class.
 ## Data Review
 ### Selected data sources
 
-#### Table 2: Sectoral breakdown of economic activity in Africa, 1990, 2000 and 2010-2012 (Page 13, Growth, Poverty and Inequality Interactions in Africa: An Overview of Key Issues)
+#### 1. Table 2: Sectoral breakdown of economic activity in Africa, 1990, 2000 and 2010-2012 (Page 13, Growth, Poverty and Inequality Interactions in Africa: An Overview of Key Issues)
 
 This table provides the breakdown of economic activity in Africa. What would be interesting to visualize is the relationship between manufacturing and inequality for Africa and rest of the world.
 
@@ -25,9 +25,11 @@ Supplemental data sources
 3. Development as Diffusion: Manufacturing Productivity and Sub-Saharan Africa’s Missing Middle -[[link]] (http://www.cgdev.org/sites/default/files/development-diffusion-market-productivity_final.pdf) 
 
 Questions
+
 Is it always safe to assume that a transition towards manufacturing industries will always lead to more positive growth in a country or there are caveats to this assumption?
 
-#### Ethnic fractionalisation in Africa - Using data from 18 SSA countries, Jackson (2013) shows that, in ethnically diverse communities, access to water, electricity and education is lower. (Page 13, Growth, Poverty and Inequality Interactions in Africa: An Overview of Key Issues)
+---
+#### 2. Ethnic fractionalisation in Africa - Using data from 18 SSA countries, Jackson (2013) shows that, in ethnically diverse communities, access to water, electricity and education is lower. (Page 13, Growth, Poverty and Inequality Interactions in Africa: An Overview of Key Issues)
 
 With this data set it would be interesting to explorw how the ethnic groups are leading to more inequality in Africa and probably also how history or the colonial rule led to the state of inequality as it is today by causing ethnic fractionalisation.
 
@@ -49,7 +51,12 @@ Supplemental sources
 
 4. Ethnic Groups in Africa, ArcGIS [[link]](http://www.arcgis.com/home/item.html?id=cc2324e45ace44d09c333b4b4a1c14a3#data)
 
-#### Figure 7. Estimated impact on the Gini coe cient of additional income that escapes the national accounts, Côte d’Ivoire, 2008 (Page 15, Building the integrated inequality database and the seven sins of inequality measurement in Sub-Saharan Africa)
+Questions
+
+Can you quantify the impact of ethnic clash within a country ? If there are several clashes of a severe nature, how will it impact the inequality?
+
+---
+#### 3. Figure 7. Estimated impact on the Gini coe cient of additional income that escapes the national accounts, Côte d’Ivoire, 2008 (Page 15, Building the integrated inequality database and the seven sins of inequality measurement in Sub-Saharan Africa)
 
 We already know that capital flights would lead to further increase of Gini coefficient but what we are interested to know is that how the distribution of capital flight between different countries would look like. Are there specific countries where there is a huge impact and which in turn with it brings along other additional consequences.
 
@@ -67,10 +74,11 @@ References
 3. Sub-Saharan Africa: capital flight, secret wealth and debt [[link]](http://www.theguardian.com/global-development/datablog/interactive/2012/jul/21/sub-saharan-africa-capital-flight-debt)
 
 Questions
+
 Does capital flight has a double effect on the inequality within the country? 1. The money it generates would increase the income of the rich by some percent and 2. If its illegal money (and mostly it is) it deprives the redistribution of the same money as tax benefit or other schemes to the poor? If that is the case how can quantify the second effect?
 
-
-#### Figure 8. Monthly consumer price of millet (CFAF/gg): 2005 vs. 2004 and average 2000-2004 (Page 15, Building the integrated inequality database and the seven sins of inequality measurement in Sub-Saharan Africa)
+---
+#### 4. Figure 8. Monthly consumer price of millet (CFAF/gg): 2005 vs. 2004 and average 2000-2004 (Page 15, Building the integrated inequality database and the seven sins of inequality measurement in Sub-Saharan Africa)
 
 There are three biases while calculating the GINI coefficient using the consumption expenditure per household
 
