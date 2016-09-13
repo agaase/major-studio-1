@@ -3,7 +3,7 @@ Regular coursework for major studio 1 class.
 
 ## UNDP Questions
 
-- While trying to find a list ethnic groups in Africa, the data set I found  [here](https://worldmap.harvard.edu/data/geonode:GREG_0vV)  and  [here](http://www.arcgis.com/home/item.html?id=cc2324e45ace44d09c333b4b4a1c14a3#data); both have their source of data as the  Atlas Narodov Mira (1964).n However one research paper [here]() points out - "the Atlas only provides a list of population by ethnicity with no documentation of its methodology" and many others (one example [here](http://www.nber.org/papers/w9411.pdf)) have questioned its validity. Can we use this data at its face value without really understanding its methodology?
+- While trying to find a list ethnic groups in Africa, the data set I found  [here](https://worldmap.harvard.edu/data/geonode:GREG_0vV)  and  [here](http://www.arcgis.com/home/item.html?id=cc2324e45ace44d09c333b4b4a1c14a3#data); both have their source of data as the  Atlas Narodov Mira (1964). However one research paper [here]() points out - "the Atlas only provides a list of population by ethnicity with no documentation of its methodology" and many others (one example [here](http://www.nber.org/papers/w9411.pdf)) have questioned its validity. Can we use this data at its face value without really understanding its methodology?
 
 
 
