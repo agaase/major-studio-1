@@ -1,4 +1,4 @@
-var cnv, score=0, balls = [];
+var cnv, score=0, balls = [], gameOver = false, batX, batY;
 
 var config = {
     bat : {
@@ -22,13 +22,31 @@ function randomPosition(){
   return (parseInt(Math.random()*windowWidth),parseInt(Math.random()*windowHeight));
 }
 
+function keyPressed() {
+  debugger;
+  if (keyCode == RIGHT_ARROW) {
+    if(batX+5<windowWidth){
+        batX += 5;
+    }
+  } else if (keyCode == LEFT_ARROW) {
+    if(batX-5>0){
+      batX -= 5;
+    }
+  }
+  return false; // prevent default
+}
+
 function draw() {
+  if(gameOver){
+    return;
+  }
   var numOfBalls = balls.length || config.balls;
   background("#42a5f5");
   fill("#ffffff");
   noStroke();
-  var posX = windowWidth/2-config.bat.w/2, posY = windowHeight-50;
-  rect(posX,posY,config.bat.w,config.bat.h,config.bat.r,config.bat.r,config.bat.r,config.bat.r);
+  batX = windowWidth/2-config.bat.w/2;
+  batY = windowHeight-50;
+  rect(batX,batY,config.bat.w,config.bat.h,config.bat.r,config.bat.r,config.bat.r,config.bat.r);
   fill("#000000");
   text(score,windowWidth/2, windowHeight-37);
   fill("#ffffff");
@@ -43,12 +61,15 @@ function draw() {
         }
         if(balls[i].y >= windowHeight){
           balls.splice(i,1);
-          continue;
+          if(!balls.length){
+            gameOver = true;
+          }
+          break;
         }
         if(balls[i].y <=0){
           balls[i].diry = balls[i].diry*-1;
         }
-        if( balls[i].x > posX && balls[i].x < posX + config.bat.w && balls[i].y > posY && balls[i].y < posY+config.bat.h ) {
+        if( balls[i].x > batX && balls[i].x < batX + config.bat.w && balls[i].y > batY && balls[i].y < batY+config.bat.h ) {
           balls[i].diry = balls[i].diry*-1;
           score += 1;
         }
@@ -57,6 +78,9 @@ function draw() {
 
     }
     ellipse(balls[i].x, balls[i].y, config.ballR);
-
+  }
+  if(gameOver){
+    textSize(44);
+    text("GAME OVER",windowWidth/2-40, windowHeight/2);
   }
 }
