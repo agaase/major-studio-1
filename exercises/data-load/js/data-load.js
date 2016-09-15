@@ -1,5 +1,5 @@
 function setup() {
-  
+
   createCanvas(windowWidth,windowHeight);
   loadTSV();
   showJSON();
@@ -10,13 +10,13 @@ var loadTSV = function(){
   loadTable("groceries.tsv","tsv","header",function(data){
       var count = data.getRowCount();
       var rowHeight = height/count;
-      
+
       for(var i=0;i<count;i++){
         var amount = data.getString(i,0);
         var unit = data.getString(i,1);
         var item = data.getString(i,2);
         var source = data.getString(i,3);
-        
+
         if(source === "market"){
             fill("#BBDEFB");
         }else{
@@ -24,7 +24,7 @@ var loadTSV = function(){
         }
         textSize(32);
         text(amount + ' ' + unit + ' ' + item + " - " + source,100, 100 + rowHeight * (i+1));
-        
+
       }
   })
 };
