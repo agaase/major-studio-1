@@ -32,10 +32,34 @@ function drawShape(){
         }
         if(points.length >= 3 ){
           endShape(CLOSE);
+          debugger;
+          var centroid = centroidOfShape(points);
+          //text("A SHAPE",centroid[0],centroid[1]);
+          ellipse(centroid[0],centroid[1],10,10);
         }else{
           endShape();
         }
       }
     }
+}
 
+function centroidOfShape(points){
+  var A=0, Cx=0, Cy=0, i;
+  var num = points.length;
+  for(var ct=0;ct<num;ct++){
+      i = ct < (num-1) ? ct : 0;
+      //i=ct;
+      A += points[i][0]*points[i+1][1] - points[i+1][0]*points[i][1];
+  }
+  A = A/2;
+
+  for(ct=0;ct<num;ct++){
+      i = ct < (num-1) ? ct : 0;
+      //i=ct;
+      Cx += (points[i][0]+points[i+1][0])*(points[i][0]*points[i+1][1] - points[i+1][0]*points[i][1]);
+      Cy += (points[i][1]+points[i+1][1])*(points[i][0]*points[i+1][1] - points[i+1][0]*points[i][1]);
+  }
+  Cx = Cx/(6*A);
+  Cy = Cy/(6*A);
+  return [Cx,Cy];
 }
