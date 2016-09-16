@@ -1,5 +1,7 @@
 var cnv, score=0, balls = [], gameOver = false, batX, batY;
 
+
+
 var config = {
     bat : {
       w : 200,
@@ -7,15 +9,15 @@ var config = {
       r : 7
     },
     ballR : 15,
-    speed : 3,
-    balls : 6
+    speed : 4,
+    balls : 6,
+    batSpeed : 60
 }
 
 function setup() {
     cnv = createCanvas(windowWidth,windowHeight);
-    //cnv.mouseReleased(drawShape);
-    background("#42a5f5");
-    //drawStage();
+    batX = windowWidth/2-config.bat.w/2;
+    batY = windowHeight-50;
 }
 
 function randomPosition(){
@@ -25,12 +27,12 @@ function randomPosition(){
 function keyPressed() {
   debugger;
   if (keyCode == RIGHT_ARROW) {
-    if(batX+5<windowWidth){
-        batX += 5;
+    if((batX + config.bat.w + config.batSpeed)<windowWidth){
+        batX += config.batSpeed;
     }
   } else if (keyCode == LEFT_ARROW) {
-    if(batX-5>0){
-      batX -= 5;
+    if((batX-config.batSpeed)>0){
+      batX -= config.batSpeed;
     }
   }
   return false; // prevent default
@@ -44,11 +46,10 @@ function draw() {
   background("#42a5f5");
   fill("#ffffff");
   noStroke();
-  batX = windowWidth/2-config.bat.w/2;
-  batY = windowHeight-50;
+
   rect(batX,batY,config.bat.w,config.bat.h,config.bat.r,config.bat.r,config.bat.r,config.bat.r);
   fill("#000000");
-  text(score,windowWidth/2, windowHeight-37);
+  text(score,batX+config.bat.w/2, batY+10);
   fill("#ffffff");
   var ball = {};
   for(var i=0;i<numOfBalls;i++){
@@ -57,9 +58,11 @@ function draw() {
         balls.push(ball);
     }else{
         if(balls[i].x >= windowWidth || balls[i].x <=0){
+          //When the balls cross the width of the window
           balls[i].dirx = balls[i].dirx*-1;
         }
         if(balls[i].y >= windowHeight){
+          //When the balls cross the height of the window
           balls.splice(i,1);
           if(!balls.length){
             gameOver = true;
@@ -75,12 +78,12 @@ function draw() {
         }
         balls[i].x += config.speed*balls[i].dirx;
         balls[i].y += config.speed*balls[i].diry;
-
     }
     ellipse(balls[i].x, balls[i].y, config.ballR);
   }
+  //Game over
   if(gameOver){
     textSize(44);
-    text("GAME OVER",windowWidth/2-40, windowHeight/2);
+    text("GAME OVER",windowWidth/2-100, windowHeight/2);
   }
 }
