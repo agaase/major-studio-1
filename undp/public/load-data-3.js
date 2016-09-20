@@ -1,6 +1,6 @@
 var countriesInAfrica = {}, conflictsPerYrPerCountry = {}, bgImg, selectedYr, startingYear = 1952 ;
 
-var colors = ["#FFF176","#FFB74D","#E57373","#F44336","#B71C1C","#69020F","#000000"];
+var colors = ["#FFF176","#FFB74D","#E57373","#F44336","#B71C1C","#69020F","#FFFFFF"];
 function setup() {
   createCanvas(windowWidth,windowHeight);
   /*loadImage("images/world_map.jpg",function(img){
@@ -245,7 +245,7 @@ function drawConflictsPerCountry() {
 
 
 
-    var ctCountry = 0, cellHeight = cellHeightSmall, marginTop = 90, marginLeft = 20, labelWidth = 10;
+    var ctCountry = 0, cellHeight = cellHeightSmall, marginTop = 90, marginLeft = 20;
     var cellWidth = Math.floor((windowWidth-(marginLeft*2))/(countries-1));
 
     textSize("16");
@@ -269,7 +269,7 @@ function drawConflictsPerCountry() {
     }
 
     var ctCountry = 0, cellHeight = cellHeightBig, marginTop = 90 + cellHeightSmall*(countries-1), marginLeft = 20, labelWidth = 80;
-    var cellWidth = Math.floor((windowWidth-marginLeft*2-labelWidth)/countries);
+    var cellWidth = Math.floor((windowWidth-marginLeft*2-labelWidth)/(countries-1));
 
 
     for(var country in perCountryData){
