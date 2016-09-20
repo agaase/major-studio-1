@@ -1,4 +1,4 @@
-var cnv, score=0, balls = [], gameOver = false, batX, batY;
+  var cnv, score=0, balls = [], gameOver = false, batX, batY;
 
 
 
@@ -58,7 +58,8 @@ function draw() {
         balls.push(ball);
     }else{
         if(balls[i].x >= windowWidth || balls[i].x <=0){
-          //When the balls cross the width of the window
+          ac
+
           balls[i].dirx = balls[i].dirx*-1;
         }
         if(balls[i].y >= windowHeight){

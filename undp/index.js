@@ -1,9 +1,6 @@
 var najax = require('najax');
 var fs = require('fs');
 
-
-
-
 var DataLoad = (function(){
 
     var sendToES = function(url,items,ct){

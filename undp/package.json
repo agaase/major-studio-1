@@ -7,7 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies" : {
-    "najax" : "0.1.5"
+    "najax" : "0.1.5",
+    "express": "~4.9.x",
+    "request" : "2.58.0",
+    "cors" : "2.7.1"
   },
   "author": "agaase",
   "license": "ISC"
