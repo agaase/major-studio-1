@@ -159,6 +159,7 @@ function drawHistogram(){
       noStroke();
       fill("#f44336");
       var el = ellipse(x2,y2,15);
+      el.
       textSize(16);
       text(selectedYr,x2+25,y2);
     }else{

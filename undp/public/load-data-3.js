@@ -1,8 +1,9 @@
-var countriesInAfrica = {}, conflictsPerYrPerCountry = {}, bgImg, selectedYr, startingYear = 1952 ;
+var countriesInAfrica = {}, conflictsPerYrPerCountry = {}, bgImg, selectedYr, startingYear = 1952, pointsArray = [];
 
 var colors = ["#FFF176","#FFB74D","#E57373","#F44336","#B71C1C","#69020F","#FFFFFF"];
 function setup() {
-  createCanvas(windowWidth,windowHeight);
+  var cnv = createCanvas(windowWidth,windowHeight);
+  cnv.mousePressed(handleClick);
   /*loadImage("images/world_map.jpg",function(img){
       //image(img, 0, 0, windowHeight*1.503 , windowHeight);
       bgImg =  img;
@@ -238,17 +239,11 @@ function drawConflictsPerCountry() {
 
     resizeCanvas(windowWidth, (cellHeightBig+cellHeightSmall)*countries+100);
 
-    textStyle(BOLD);
-    textSize("24");
-    fill("#ffffff");
-    text("SSA Conflicts (Over time)",20,40);
-
-
-
     var ctCountry = 0, cellHeight = cellHeightSmall, marginTop = 90, marginLeft = 20;
     var cellWidth = Math.floor((windowWidth-(marginLeft*2))/(countries-1));
 
     textSize("16");
+    fill("#FFFFFF");
     text(startingYear,20,marginTop-20,10,20);
     text(startingYear+countries-1,windowWidth-80,marginTop-20,10,20);
 
@@ -271,7 +266,6 @@ function drawConflictsPerCountry() {
     var ctCountry = 0, cellHeight = cellHeightBig, marginTop = 90 + cellHeightSmall*(countries-1), marginLeft = 20, labelWidth = 80;
     var cellWidth = Math.floor((windowWidth-marginLeft*2-labelWidth)/(countries-1));
 
-
     for(var country in perCountryData){
       textStyle(BOLD);
       textSize("9");
@@ -283,18 +277,86 @@ function drawConflictsPerCountry() {
       for(var z=0;z<=countries;z++){
           var intensity = perCountryData[country][startingYear + z];
           noStroke();
+          var x = marginLeft+labelWidth+z*cellWidth;
+          var y = marginTop+cellHeight*ctCountry;
           if(!intensity){
               noFill();
-              rect(marginLeft+labelWidth+z*cellWidth, marginTop+cellHeight*ctCountry, cellWidth, cellHeight);
+              rect(x,y, cellWidth, cellHeight);
           }else{
-              var colorPos = intensity/6 < 1 ? (intensity-1) : intensity/100 < 1 ? 5 : 6;
-
+              var colorPos = intensity/6 < 1 ? (intensity-1) : Math.floor(intensity/100) < 1 ? 5 : 6;
               fill(colors[colorPos]);
-              rect(marginLeft+labelWidth+z*cellWidth, marginTop+cellHeight*ctCountry, cellWidth, cellHeight);
+              rect(x, y, cellWidth, cellHeight);
+              pointsArray.push({
+                "info" : "<div><b>"+(startingYear+z)+"</b></div><div>"+country + " - " + getFatalities(intensity)+"</div>",
+                "x"  : x,
+                "y" : y,
+                "w" : cellWidth,
+                "h" : cellHeight
+              });
           }
       }
-      stroke("#cccccc");
+      stroke("#238377");
       line(marginLeft, marginTop+cellHeight*(ctCountry+1), windowWidth-marginLeft, marginTop+cellHeight*(ctCountry+1));
       ctCountry++;
+    }
+
+    noStroke();
+    textStyle(NORMAL);
+    fill("#ffffff");
+    textSize("10");
+    text("Conflict event in a country (Color : number of fatalities)",windowWidth-50-35*colors.length-300,30,300,15);
+    for(z=0;z<colors.length;z++){
+      fill(colors[colors.length-(z+1)]);
+      noStroke();
+      rect(windowWidth-50-45*z,30,45,15);
+      var fatalities = getFatalities(colors.length-z+1);
+      fill("#ffffff");
+      textSize("9");
+      text(fatalities,windowWidth+2-50-45*z,20);
+    }
+
+    textStyle(BOLD);
+    textSize("24");
+    fill("#ffffff");
+    text("SSA Conflicts (Over time)",20,40);
+
+}
+
+function getFatalities(intensity){
+  if(intensity ==1){
+    intensity = "< 1k";
+  }else if(intensity ==2){
+    intensity = "1-2k";
+  }
+  else if(intensity ==3){
+    intensity = "2-3k";
+  }
+  else if(intensity ==4){
+    intensity = "3-4k";
+  }else if(intensity ==5){
+    intensity = "4-5k";
+  }
+  else if(intensity ==6){
+    intensity = "above 5k";
+  }
+  else{
+    intensity = "genocide";
+  }
+  return intensity;
+}
+
+function handleClick(){
+    if($(".info").is(":visible")){
+      $(".info").hide();
+    }
+    for(var i=0;i<pointsArray.length;i++){
+      var point = pointsArray[i];
+      if(mouseX > point.x && mouseX < (point.x + point.w) && mouseY > point.y && mouseY < (point.y + point.h)){
+        fill("#cccccc");
+        $(".info").show().css({
+          "top" : mouseY,
+          "left" : mouseX
+        }).html("<span>"+point.info+"</span>");
+      }
     }
 }
