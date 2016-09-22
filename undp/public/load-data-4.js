@@ -242,7 +242,7 @@ function drawConflictsPerCountry() {
 
     resizeCanvas(windowWidth, ((cellHeightBig+cellHeightSmall)*countries+100)/(1.4));
 
-    var ctCountry = 0, cellHeight = cellHeightSmall, marginTop = 90, marginLeft = 20;
+    var ctCountry = 0, cellHeight = cellHeightSmall, marginTop = 110, marginLeft = 20;
     //A minor adjustment of 0.3
     var cellWidth = Math.floor((windowWidth-(marginLeft*2))/(countries-1))+0.3;
 
@@ -282,7 +282,7 @@ function drawConflictsPerCountry() {
       ctCountry++;
     }
 
-    var ctCountry = 0, cellHeight = cellHeightBig, marginTop = 90 + cellHeightSmall*(countries-1), marginLeft = 20, labelWidth = 80;
+    var ctCountry = 0, cellHeight = cellHeightBig, marginTop = 110 + cellHeightSmall*(countries-1), marginLeft = 20, labelWidth = 80;
     var cellWidth = Math.floor((windowWidth-marginLeft*2-labelWidth)/(countries-1));
 
     for(var country in perCountryData){
