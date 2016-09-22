@@ -287,7 +287,7 @@ function drawConflictsPerCountry() {
 
     for(var country in perCountryData){
       textStyle(BOLD);
-      textSize("9");
+      textSize("11");
       textAlign(LEFT,CENTER);
       fill("#ffffff");
       noStroke();
