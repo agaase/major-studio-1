@@ -248,8 +248,23 @@ function drawConflictsPerCountry() {
 
     textSize("16");
     fill("#FFFFFF");
-    text(startingYear,20,marginTop-20,10,20);
-    text(startingYear+countries-1,windowWidth-60,marginTop-20,10,20);
+    stroke("#FFFFFF");
+    line(20, marginTop-20, 20,marginTop);
+    text(startingYear,24,marginTop-20,10,20);
+    line(windowWidth-25, marginTop-20, windowWidth-25,marginTop);
+    text(startingYear+countries-1,windowWidth-63,marginTop-20,10,20);
+    line(windowWidth-25, marginTop-20, windowWidth-25,marginTop);
+    var nextCountry = Math.floor(countries*.25);
+    line(20+cellWidth*nextCountry,marginTop-20,20+cellWidth*nextCountry,marginTop);
+    text(startingYear+nextCountry,20+cellWidth*nextCountry+4,marginTop-20,10,20);
+
+    var nextCountry = Math.floor(countries*.5);
+    line(20+cellWidth*nextCountry,marginTop-20,20+cellWidth*nextCountry,marginTop);
+    text(startingYear+nextCountry,20+cellWidth*nextCountry+4,marginTop-20,10,20);
+
+    var nextCountry = Math.floor(countries*.75);
+    line(20+cellWidth*nextCountry,marginTop-20,20+cellWidth*nextCountry,marginTop);
+    text(startingYear+nextCountry,20+cellWidth*nextCountry+4,marginTop-20,10,20);
 
     for(var country in perCountryData){
       for(var z=0;z<=countries;z++){
