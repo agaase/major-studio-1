@@ -6,7 +6,7 @@ var colorFatalities = ["< 1k","1-2k","2-3k","3-4k","4-5k","> 5k","genocide"];
 function setup() {
   var cnv = createCanvas(windowWidth,windowHeight);
   cnv.mousePressed(handleClick);
-  //$("body").append("<div class='footnote'> © Aseem Agarwal | Data source : Uppsala Conflict Data Program (ucdp.uu.se)</div>");
+  $("body").append("<div class='footnote'> © Aseem Agarwal | Data source : Uppsala Conflict Data Program (ucdp.uu.se)</div>");
   /*loadImage("images/world_map.jpg",function(img){
       //image(img, 0, 0, windowHeight*1.503 , windowHeight);
       bgImg =  img;
