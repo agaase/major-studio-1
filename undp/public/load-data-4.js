@@ -238,7 +238,7 @@ function drawConflictsPerCountry() {
       }
     }
 
-    var cellHeightSmall = 2, cellHeightBig = 25;
+    var cellHeightSmall = 2, cellHeightBig = 35;
 
     resizeCanvas(windowWidth, ((cellHeightBig+cellHeightSmall)*countries+100)/(1.4));
 
