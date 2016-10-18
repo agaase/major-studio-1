@@ -1,0 +1,43 @@
+@font-face {
+  font-family: linowrite;
+  src: local("linowrite"), url(../fonts/linowrite.ttf);
+  font-weight: bold; }
+body {
+  margin: 0;
+  padding: 0;
+  font-family: linowrite;
+  width: 100%;
+  overflow-x: scroll;
+  background-color: #00695C;
+  color: #f9f9f9; }
+
+.header {
+  padding: 0 35px;
+  margin-bottom: 75px;
+  margin-top: 50px;
+  font-size: 150%; }
+  .header .insights {
+    color: #FFF176; }
+
+.outerContainer {
+  width: 4000px;
+  padding: 0 25px; }
+
+.yearData {
+  width: 200px;
+  min-height: 100vh;
+  display: inline-block; }
+  .yearData .yrLabel {
+    font-size: 125%;
+    text-align: center;
+    margin-bottom: 25px;
+    text-decoration: underline; }
+  .yearData .word {
+    font-size: 115%;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #FFF176;
+    text-decoration: underline;
+    cursor: pointer; }
+
+/*# sourceMappingURL=main.css.map */

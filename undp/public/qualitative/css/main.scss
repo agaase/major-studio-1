@@ -1,0 +1,55 @@
+@font-face {
+  font-family: linowrite;
+  src: local("linowrite"),
+       url(../fonts/linowrite.ttf);
+  font-weight: bold;
+}
+
+$font-color : #f9f9f9;
+$font-family : linowrite;
+$font-yellow : #FFF176;
+
+body{
+  margin: 0;
+  padding: 0;
+  font-family: $font-family;
+  width: 100%;
+  overflow-x: scroll;
+  background-color: #00695C;
+  color: $font-color;
+}
+.header{
+  padding: 0 35px;
+  margin-bottom: 75px;
+  margin-top: 50px;
+  font-size: 150%;
+  .insights{
+    color: $font-yellow;
+  }
+}
+.outerContainer{
+  width: 4000px;
+  padding: 0 25px;
+}
+
+.yearData{
+    width: 200px;
+    min-height: 100vh;
+    display: inline-block;
+
+    .yrLabel{
+      font-size: 125%;
+      text-align: center;
+      margin-bottom: 25px;
+      text-decoration: underline;
+    }
+    .word{
+      font-size: 115%;
+      text-align: center;
+      margin-bottom: 20px;
+      color: $font-yellow;
+      text-decoration: underline;
+      cursor: pointer;
+    }
+
+}
