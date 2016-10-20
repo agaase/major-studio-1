@@ -20,7 +20,7 @@ var Renderer = (function(){
     wordsCont.width((words.length*100) + "px");
 
     for(var i=0;i<words.length;i++){
-      if(words[i].score> 0.3){
+      if(words[i].score> 10){
         var fontsize = 50 + (100*(words[i].score/yrData["maxScore"])) + "%";
         var classToAdd  = "";
         if(words[i].score>75){
@@ -37,8 +37,8 @@ var Renderer = (function(){
       var word = $(this).data("word");
       var yr = $(this).data("yr");
       var q = es_queries["default_word_headlines_yr"];
-      q.query.bool.must[0].range.yr.gte = parseInt(yr);
-      q.query.bool.must[0].range.yr.lte = parseInt(yr+5);
+      q.query.bool.must[0].range.yr.gte = parseInt(yr.split("-")[0]);
+      q.query.bool.must[0].range.yr.lte = parseInt(yr.split("-")[1]);
       q.query.bool.must[1].term.new.value = word;
       var pos = $(this)[0].getBoundingClientRect();
        runQ(q,function(data){
@@ -66,7 +66,7 @@ var Renderer = (function(){
       $.each(articles,function(i,v){
           var rx = new RegExp(word, 'gi');
           v._source.or = v._source.or.replace(rx,"<span class='highlight'>"+word+"</span>");
-          $(".articles .headlines").append("<div class='headline'>- " +v._source.or+"("+v._source.yr+")</div>");
+          $(".articles .headlines").append("<div class='headline'>" +v._source.or+"("+v._source.yr+")</div>");
       });
       $(".articles").append("<div class='close'></div>");
       $(".articles").show();
@@ -76,7 +76,7 @@ var Renderer = (function(){
       });
       //.css({"top":""+(pos.top+20)+"px","left":""+(pos.left+150)+"px"});
   };
-  //https://flfjh0zj31:6st9dwmjqh@sandbox-cluster-5469596606.us-east-1.bonsai.io
+  //https://c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9243/scholar/
   //http://localhost:9200
   var runQ = function(q,c,type){
     $.ajax({

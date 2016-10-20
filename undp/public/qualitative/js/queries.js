@@ -34,7 +34,10 @@ var es_queries = {
                 "effect",
                 "pp",
                 "quot",
-                "york"
+                "york",
+                "american",
+                "world",
+                "research"
               ]
             }},
             {
