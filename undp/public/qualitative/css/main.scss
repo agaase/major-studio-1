@@ -202,6 +202,7 @@ body{
       width: 13%;
       vertical-align: top;
       font-weight: bold;
+      line-height: 30px;
     }
     .wordsO::-webkit-scrollbar {
         display: none;
@@ -216,6 +217,7 @@ body{
           font-size: 115%;
           text-align: center;
           color: $font-yellow;
+          line-height: 30px;
           text-decoration: underline;
           cursor: pointer;
           display: inline-block;
