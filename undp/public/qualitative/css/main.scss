@@ -81,27 +81,61 @@ body{
   overflow: scroll;
 }
 
-.intervals{
-  margin-left: 25px;
-  height: 25px;
-  font-size: 80%;
-  padding-bottom: 30px;
+.options{
   border-bottom: 1px solid #ccc;
-  .interval{
-    width: 100px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    margin-right: 15px;
+  margin-left: 25px;
+  .intervals{
+    height: 25px;
+    font-size: 80%;
+    padding-bottom: 30px;
+
     display: inline-block;
-    height: 100%;
-    float: left;
-    line-height: 25px;
-    background-color: #f1f1f1;
-    text-align: center;
-    cursor: pointer;
-    &.active{
-      color: #fff;
-      background-color: $color-secondary;
+    width: 45%;
+    .label{
+      float: left;
+      margin-right: 10px;
+      line-height: 30px;
+      font-size: 124%;
+      opacity: 0.5;
+      text-transform: uppercase;
+      text-decoration: underline;
+    }
+    .interval{
+      width: 100px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      margin-right: 15px;
+      display: inline-block;
+      height: 100%;
+      float: left;
+      line-height: 25px;
+      background-color: #f1f1f1;
+      text-align: center;
+      cursor: pointer;
+      &.active{
+        color: #fff;
+        background-color: $color-secondary;
+      }
+    }
+  }
+  .keys{
+    display: inline-block;
+    width: 25%;
+    vertical-align: top;
+    .red_mark{
+      display: inline-block;
+      .icon{
+        width: 15px;
+        height: 15px;
+        display: inline-block;
+        background-color: $color-third;
+        border-radius: 50%;
+        opacity: 0.9;
+      }
+      .label{
+        display: inline-block;
+        opacity: 0.5;
+      }
     }
   }
 }
@@ -144,7 +178,9 @@ body{
           display: none;
       }
       .headline{
-        margin-bottom: 20px;
+        margin-bottom: 30px;
+        border-left: 2px solid #aaa;
+        padding-left: 10px;
         .highlight{
           color: $color-secondary;
         }
