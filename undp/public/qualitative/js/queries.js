@@ -79,21 +79,40 @@ var es_queries = {
               "size": 1000,
               "query": {
                 "bool": {
-                  "must": [
+                  "should": [
+                    {"terms": {
+                      "new": [
+                        "reasons",
+                        "why",
+                        "impact",
+                        "effect",
+                        "causes",
+                        "look",
+                        "costs",
+                        "what",
+                        "measure",
+                        "conflict",
+                        "war",
+                        "genocide",
+                        "ethnic"
+                      ]
+                    }}
+                  ],
+                  "filter": [
                     {
                       "range": {
                         "yr": {
                           "gte": 1970,
-                          "lte": 1975
+                          "lte": 1974
                         }
                       }
                     },
                     {
-                      "term": {
-                        "new": {
-                          "value": "race"
+                    "term": {
+                          "new": {
+                            "value": "race"
+                          }
                         }
-                      }
                     }
                   ]
                 }

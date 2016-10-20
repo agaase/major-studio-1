@@ -186,6 +186,10 @@ body{
         padding-left: 10px;
         .highlight{
           color: $color-secondary;
+          &.yellow{
+            background-color: #ffe082;
+            color: $font-color;
+          }
         }
       }
     }

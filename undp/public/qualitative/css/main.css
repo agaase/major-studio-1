@@ -156,6 +156,9 @@ body {
       padding-left: 10px; }
       .articles .headlines .headline .highlight {
         color: #039be5; }
+        .articles .headlines .headline .highlight.yellow {
+          background-color: #ffe082;
+          color: #4A4A4A; }
 
 .yearData {
   vertical-align: top;

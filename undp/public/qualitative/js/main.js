@@ -39,9 +39,9 @@ var Renderer = (function(){
       var word = $(this).data("word");
       var yr = $(this).data("yr");
       var q = es_queries["default_word_headlines_yr"];
-      q.query.bool.must[0].range.yr.gte = parseInt(yr.split("-")[0]);
-      q.query.bool.must[0].range.yr.lte = parseInt(yr.split("-")[1]);
-      q.query.bool.must[1].term.new.value = word;
+      q.query.bool.filter[0].range.yr.gte = parseInt(yr.split("-")[0]);
+      q.query.bool.filter[0].range.yr.lte = parseInt(yr.split("-")[1]);
+      q.query.bool.filter[1].term.new.value = word;
       var pos = $(this)[0].getBoundingClientRect();
        runQ(q,function(data){
           drawArticles(word,data.hits.hits,pos);
@@ -81,6 +81,8 @@ var Renderer = (function(){
       $.each(articles,function(i,v){
           var rx = new RegExp(word, 'gi');
           v._source.or = v._source.or.replace(rx,"<span class='highlight'>"+word+"</span>");
+          v._source.or = v._source.or.replace(/(reasons|why|impact|effect|causes|look|costs|what|measure)/g,"<span class='highlight yellow'>$&</span>");
+
           $(".articles .headlines").append("<div class='headline'>" +v._source.or+"("+v._source.yr+")</div>");
       });
       $(".articles").append("<div class='close'></div>");
@@ -133,7 +135,7 @@ var Renderer = (function(){
               if((bckts[i].key+interval) > 2016){
                 yrKey = bckts[i].key + "-2016";
               }else{
-                yrKey = bckts[i].key+"-"+(bckts[i].key+interval)
+                yrKey = bckts[i].key+"-"+(bckts[i].key+interval-1)
               }
               refinedData.push({"yr" : yrKey,  "maxScore" : maxScore,"words" : arr});
             }
