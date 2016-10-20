@@ -81,7 +81,7 @@ var Renderer = (function(){
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "http://c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9200/scholar/"+(type || "word") +"/_search",
+      url: "https://c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9243/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);
