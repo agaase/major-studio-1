@@ -37,7 +37,8 @@ var es_queries = {
                 "york",
                 "american",
                 "world",
-                "research"
+                "research",
+                "gulf"
               ]
             }},
             {

@@ -13,11 +13,11 @@ var Renderer = (function(){
     //Adding year label
     yrDataCnt.append("<div class='yrLabel'>"+yr+"</span></div>");
 
-    yrDataCnt.append("<div class='wordsO'><div class='words'></div></div>");
+    yrDataCnt.append("<div class='wordsO'><div class='arrow left'><</div><div class='arrow right'>></div><div class='words'></div></div>");
 
     var wordsCont = $(".words",yrDataCnt);
 
-    wordsCont.width((words.length*100) + "px");
+    var count = 0 ;
 
     for(var i=0;i<words.length;i++){
       if(words[i].score> 10){
@@ -27,9 +27,11 @@ var Renderer = (function(){
           classToAdd += "important";
         }
         wordsCont.append("<div class='word "+classToAdd+"' data-word='"+words[i].word+"' data-yr='"+yr+"' style='font-size:"+fontsize+";'>"+words[i].word+"</span></div>");
+        count++;
       }
     }
-    addEvents();
+    wordsCont.width((count*60) + "px");
+
   }
 
   var addEvents = function(){
@@ -57,6 +59,19 @@ var Renderer = (function(){
           $(".outerContainer").empty();
           drawYears(data);
         });
+    });
+
+    $(".arrow").on("click",function(){
+        var parent = $(this).parent();
+        var toScroll = $(this).hasClass("right") ? 400 : (parent.scrollLeft()-400)<0 ? -1*(parent.scrollLeft()-400) : -400;
+        parent.animate({scrollLeft: (parent.scrollLeft() + toScroll) + "px"}, 500,function(){
+          if(parent.scrollLeft() >10){
+            $(".arrow.left",parent).show();
+          }else{
+            $(".arrow.left",parent).hide();
+          }
+        });
+
     });
   };
 
@@ -93,7 +108,8 @@ var Renderer = (function(){
   var drawYears = function(data){
       $.each(data,function(i,v){
         drawYearData(v);
-      })
+      });
+      addEvents();
   };
 
   var fetchYrWords = function(interval,callback){

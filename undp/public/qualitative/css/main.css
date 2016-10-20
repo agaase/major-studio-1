@@ -159,9 +159,10 @@ body {
 
 .yearData {
   vertical-align: top;
-  width: 100vw;
   border-bottom: 1px solid #ccc;
-  padding: 35px 0; }
+  padding: 35px 0;
+  position: relative;
+  padding-right: 35px; }
   .yearData .yrLabel {
     font-size: 125%;
     text-align: left;
@@ -176,6 +177,22 @@ body {
     width: 86%;
     display: inline-block;
     overflow: scroll; }
+    .yearData .wordsO .arrow {
+      height: 40px;
+      width: 30px;
+      line-height: 40px;
+      position: absolute;
+      background-color: #ccc;
+      opacity: 0.5;
+      text-align: center;
+      font-size: 125%;
+      border-radius: 5px;
+      cursor: pointer; }
+      .yearData .wordsO .arrow.left {
+        left: 10%;
+        display: none; }
+      .yearData .wordsO .arrow.right {
+        right: 10px; }
     .yearData .wordsO .words {
       width: 6000px; }
       .yearData .wordsO .words .word {
