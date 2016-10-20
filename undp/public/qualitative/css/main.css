@@ -47,7 +47,9 @@ body {
   width: 100%;
   overflow-x: hidden;
   background-color: #f9f9f9;
-  color: #4A4A4A; }
+  color: #4A4A4A;
+  max-width: 1300px;
+  margin: auto; }
 
 .header {
   padding: 0 25px;

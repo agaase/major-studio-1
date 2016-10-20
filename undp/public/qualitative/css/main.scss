@@ -61,6 +61,8 @@ body{
   overflow-x: hidden;
   background-color: #f9f9f9;
   color: $font-color;
+  max-width: 1300px;
+  margin: auto;
 }
 .header{
   padding: 0 25px;
