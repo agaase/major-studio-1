@@ -2,14 +2,22 @@
 <html>
   <head>
     <meta charset="utf-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="js/queries.js"></script>
     <link rel="stylesheet" href="css/main.css" media="screen" title="no title">
-    <script src="https://d3js.org/d3.v4.min.js"></script>
     <title>
     </title>
 
   </head>
   <body>
-    <div class='header'><span class='causes'>Causes and impact of conflict :</span><span class='insights'> Insights from the Scholars</span></div>
+    <div class='articles'></div>
+    <div class='header'><span class='causes'>Causes and impacts of conflicts in Africa :</span><span class='insights'> What have <a target='_blank' href='http://www.scholar.google.com'> Scholars </a> analysed? </span></div>
+    <div class='intervals'>
+      <div class='interval' data-interval="2">2 yrs</div>
+      <div class='interval active' data-interval="5">5 yrs</div>
+      <div class='interval' data-interval="10">10 yrs</div>
+      <div class='interval' data-interval="20">20 yrs</div>
+    </div>
     <div class='outerContainer'></div>
     <script src='js/main.js'></script>
   </body>
