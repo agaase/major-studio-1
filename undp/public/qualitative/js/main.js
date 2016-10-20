@@ -77,13 +77,13 @@ var Renderer = (function(){
 
   var drawArticles = function(word,articles,pos){
       debugger;
-      $(".articles").empty().append("<div class='heading'>"+word.toUpperCase()+"</div><div class='headlines'></div>");
+      $(".articles").empty().append("<div class='heading'>"+word.toUpperCase()+"<span class='count'>("+articles.length+" articles)</span></div><div class='headlines'></div>");
       $.each(articles,function(i,v){
           var rx = new RegExp(word, 'gi');
           v._source.or = v._source.or.replace(rx,"<span class='highlight'>"+word+"</span>");
           v._source.or = v._source.or.replace(/(reasons|why|impact|effect|causes|look|costs|what|measure)/g,"<span class='highlight yellow'>$&</span>");
 
-          $(".articles .headlines").append("<div class='headline'>" +v._source.or+"("+v._source.yr+")</div>");
+          $(".articles .headlines").append("<div class='headline'>" + v._source.or+"<span class='yr'> ("+v._source.yr+")</span>  </div>");
       });
       $(".articles").append("<div class='close'></div>");
       $(".articles").show();
