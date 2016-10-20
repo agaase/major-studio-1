@@ -51,8 +51,8 @@ body {
 
 .header {
   padding: 0 25px;
-  margin-bottom: 35px;
-  margin-top: 35px;
+  margin-bottom: 40px;
+  margin-top: 25px;
   font-size: 150%; }
   .header a {
     text-decoration: underline;
@@ -64,10 +64,12 @@ body {
   padding: 0 25px;
   height: 75vh;
   overflow: scroll; }
+  .outerContainer::-webkit-scrollbar {
+    display: none; }
 
 .options {
-  border-bottom: 1px solid #ccc;
-  margin-left: 25px; }
+  border-bottom: 8px solid #ccc;
+  padding-left: 25px; }
   .options .intervals {
     height: 25px;
     font-size: 80%;
