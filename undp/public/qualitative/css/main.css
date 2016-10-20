@@ -82,8 +82,7 @@ body {
       line-height: 30px;
       font-size: 124%;
       opacity: 0.5;
-      text-transform: uppercase;
-      text-decoration: underline; }
+      text-transform: uppercase; }
     .options .intervals .interval {
       width: 100px;
       border: 1px solid #ccc;
