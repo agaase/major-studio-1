@@ -6,6 +6,7 @@ var wordpos = require('wordpos');
 var deferred = require('deferred');
 var subpageError = false;
 var rita = require('rita');
+var lda = require('lda');
 
 
 var WP = new wordpos({profile: true});
@@ -14,7 +15,7 @@ var $;
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  host: 'c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9200'
+  host: 'localhost:9200'
 });
 
 var headlines = [], wordScoreObj = {};
@@ -35,6 +36,14 @@ function storeWordScore(yr,headline,word,pos,score){
     wordScoreObj[yr][word]["pos"] = pos;
 };
 
+function getTopics(headline){
+
+  // var documents = headline.match( /[^\.!\?]+[\.!\?]+/g );
+  console.log(headline);
+  // Run LDA to get terms for 2 topics (5 terms each).
+  var result = lda(headline+".", 2, 2);
+  console.log(result);
+}
 
 function getWords(yr,headline,score){
   try{
@@ -67,7 +76,8 @@ function parseHeadlines(yr,rows,ct,subpage){
     var headline = $("a").html();
     headline = headline ? headline.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
     headline = headline.toLowerCase();
-    headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
+    // headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
+    getTopics(headline);
     if(headline){
       headlines.push(headline);
     }
@@ -87,15 +97,15 @@ function guardianRequest(yr,subpage){
         $ = cheerio.load(file);
         var titles = $("body").html().match(/<h3(.|\n)*?<\/h3>/g);
         parseHeadlines(yr,titles,0,subpage);
-        subpage++;
-        guardianRequest(yr,subpage);
+        // subpage++;
+        // guardianRequest(yr,subpage);
       }
       catch(err){
-        // console.log(err);
+         console.log(err);
         if(!subpageError){
             subpageError=true;
             console.log(yr + " | flushing - headlines --- "+headlines.length + "; words ---- "+ Object.keys(wordScoreObj[yr]).length);
-            var promise = elPost(headlines,yr);
+            //var promise = elPost(headlines,yr);
             promise.done(function(){
               headlines = [];
               yr++;

@@ -61,7 +61,7 @@ body{
   overflow-x: hidden;
   background-color: #f9f9f9;
   color: $font-color;
-  max-width: 1800px;
+  max-width: 1000px;
   margin: auto;
 }
 .header{
@@ -69,6 +69,7 @@ body{
   margin-bottom: 40px;
   margin-top: 25px;
   font-size: 150%;
+  height: 35px;
   a{
     text-decoration: underline;
     color: $color-secondary;
@@ -85,10 +86,19 @@ body{
   }
   overflow: scroll;
 }
+.divider{
+  position: fixed;
+  top: 170px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background-color: #ccc;
+}
 
 .options{
-  border-bottom: 8px solid #ccc;
+  /*border-bottom: 8px solid #ccc;*/
   padding-left: 25px;
+  height: 35px;
   .intervals{
     height: 25px;
     font-size: 80%;

@@ -38,7 +38,9 @@ var es_queries = {
                 "american",
                 "world",
                 "research",
-                "gulf"
+                "gulf",
+                "policy",
+                "history"
               ]
             }},
             {
