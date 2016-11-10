@@ -25,13 +25,18 @@ body{
 		margin-left: 5%;	
 		width: 100%;
 		overflow: visible;
+
+		.update{
+			display: inline-block;
+			
+		}
 		.types{
-			width: 100%;
+			display: inline-block;
+			width: 60%;
 			height: 60%;
 			.type{
-				display: inline-block;
     			padding-right: 30px;
-    			padding-bottom: 5%;
+    			padding-bottom: 2%;
 				.label{
 					display: inline-block;
 					line-height: 15px;
@@ -81,7 +86,7 @@ body{
 			width:100%;
 			margin-right: 4%;
 			vertical-align: top;
-			height: 40%;
+			height: 35%;
 			.values{
 				height: 20px;
 				width: 100%;

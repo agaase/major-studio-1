@@ -106,6 +106,7 @@ var  SSAConflict = (function(){
         marker.bindPopup(countryOfDyads[d].d_name + "<br>" + countryOfDyads[d].country);
         marker.on("click",function(){
           highlightDyad(this.options.d_id);
+          setS
         });
         mapObj.addLayer(marker);
         lines = [];
