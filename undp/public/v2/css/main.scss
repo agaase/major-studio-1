@@ -1,8 +1,11 @@
+$base-color: #eeeeee;
+$bg-color: #00695c;
+
 body{
 	padding: 0;
 	margin:0;
-	background-color: #00695c;
-	color: #cccccc;
+	background-color: $bg-color;
+	color: $base-color;
 	font-family: sans-serif;
 }
 .leaflet-container{
@@ -23,16 +26,29 @@ body{
 	.filters{
 		height: 21%;	
 		margin-left: 5%;	
-		width: 100%;
+		width: 95%;
 		overflow: visible;
 
 		.update{
 			display: inline-block;
-			
+			height: 5vh;
+			width: 20%;
+			border: 2px solid #f9f9f9;
+			border-radius: 2px;
+			line-height: 200%;
+			text-align: center;
+			vertical-align: bottom;
+			cursor: pointer;
+			margin-bottom: 1vh;
+		}
+		.update.disabled{
+			opacity: 0.7;
+			cursor: initial;
 		}
 		.types{
 			display: inline-block;
-			width: 60%;
+			vertical-align: bottom;
+			width: 65%;
 			height: 60%;
 			.type{
     			padding-right: 30px;
@@ -70,7 +86,7 @@ body{
 						border-radius: 50%;
 						margin-left: 1px;
 						margin-top: 1px;
-						background-color: #ccc;
+						background-color: $base-color;
 					}
 				} 
 			}
@@ -83,7 +99,7 @@ body{
 			}
 		}
 		.years{
-			width:100%;
+			width:96%;
 			margin-right: 4%;
 			vertical-align: top;
 			height: 35%;
@@ -128,8 +144,8 @@ body{
 					width: 65%;
 					position: absolute;
 					top:120%;
-					background-color: #00695c;
-					border: 1px solid #ccc;
+					background-color: $bg-color;
+					border: 1px solid $base-color;
 					.label{
 						display: block;
 						padding: 0 10px;
@@ -163,10 +179,10 @@ body{
 
 		.leaflet-bar{
 			box-shadow: 0 0 0;
-			border: 1px solid #ccc;
+			border: 1px solid $base-color;
 			a{
-				background-color: #00695c;
-				color: #ccc;
+				background-color: $bg-color;
+				color: $base-color;
 			}
 		}
 	}
@@ -199,7 +215,7 @@ body{
 					border-radius: 50%;
 					margin-left: 1px;
 					margin-top: 1px;
-					background-color: #ccc;
+					background-color: $base-color;
 				}
 			}
 			.label{

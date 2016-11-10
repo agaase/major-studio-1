@@ -512,9 +512,15 @@ var  SSAConflict = (function(){
           type.addClass("active");
           conflictTypes.push(typeVal);
         }
-        SSAConflict.clear();
-        SSAConflict.init();
+        $(".filters .update").removeClass('disabled');
+     });
 
+     $(".filters .update").on("click",function(){
+        if(!$(this).hasClass("disabled")){
+          SSAConflict.clear();
+          SSAConflict.init();  
+          $(this).addClass("disabled");
+        }
      });
 
      $(".filters .years .year .dd").on("click",function(){
@@ -533,11 +539,8 @@ var  SSAConflict = (function(){
           $(this).parent().parent().find("> .label").html(timePeriod.to);
         }
         if((timePeriod.from + "-" + timePeriod.to) != orig){
-            SSAConflict.clear();
-            SSAConflict.init();
+            $(".filters .update").removeClass('disabled');
         }
-
-
      });  
 
      /*
