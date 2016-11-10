@@ -671,6 +671,7 @@ var  SSAConflict = (function(){
 
       runQ(q,function(aggs){
         var dyads = aggs.aggregations.dyads.buckets, seq=[];
+        countryOfDyads = {};
         getConflictsDyad(dyads,0,function(){
           doneCallback();
         });
