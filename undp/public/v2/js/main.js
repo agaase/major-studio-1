@@ -59,7 +59,7 @@ var  SSAConflict = (function(){
             center : [10.4530702,20.035771],
             zoom : 3  ,
             dragging : true,
-            touchZoom  : false,
+            touchZoom  : true,
             scrollWheelZoom : false,
             doubleClickZoom : false,
             boxZoom : false,

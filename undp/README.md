@@ -1,8 +1,13 @@
  >  Quantitative Asssignment - [Link](https://agaase.github.io/major-studio-1/undp/public/) - 
  I am studying the nature of ethnic conflicts in sub-saharan africa because I want to find out what are the different types of conflicts and what causes them in order to understand how the nature of conflicts hamper the growth and inequality of a country or in this case the whole SSA. I am using variables related to conflicts such as type of conflict, duration and intensity. My visualization is based on [Uppsala Conflict Data Program] (http://ucdp.uu.se/) data.
- 
+
+> Research topic 2 - 
+I am studying the interplay between ethnicity and natural resources in sub-saharan africa because I want to find out what are the social, economic and political effects when these two combine in order to understand how ethnicity has impacted the growth and inequality of different countries in SSA. I am using variables related to different types of impact they can have like unemployment, governance and conflicts. My visualization is based on data from [Uppsala Conflict Data Program] (http://ucdp.uu.se/) and [Worldmap, Harvard](https://worldmap.harvard.edu/data/geonode:GREG_0vV).
+
  > Qualitiative Assignment - [Link](https://agaase.github.io/major-studio-1/undp/public/qualitative/) - 
 I am studying the Google Scholar results (e.g [here](https://scholar.google.com/scholar?start=980&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=1960&as_vis=1)) on the search keyword - "Africa and Conflict" because I want to find out what research was done over the years on that topic in order to know what were the impacts and causes of conflicts in Africa as perceived by the research community. I am using variables related to conflicts such as crisis, war, ethnicity, coup etc to  make my results more relevant.
+
+
 ## UNDP Questions
 
 - While trying to find a list ethnic groups in Africa, the data set I found  [here](https://worldmap.harvard.edu/data/geonode:GREG_0vV)  and  [here](http://www.arcgis.com/home/item.html?id=cc2324e45ace44d09c333b4b4a1c14a3#data); both have their source of data as the  Atlas Narodov Mira (1964). However one research paper [here]() points out - "the Atlas only provides a list of population by ethnicity with no documentation of its methodology" and many others (one example [here](http://www.nber.org/papers/w9411.pdf)) have questioned its validity. Can we use this data at its face value without really understanding its methodology?

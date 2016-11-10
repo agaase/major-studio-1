@@ -7,6 +7,8 @@ body{
 	background-color: $bg-color;
 	color: $base-color;
 	font-family: sans-serif;
+	max-width: 2400px;
+	margin: auto;
 }
 .leaflet-container{
 	background-color:transparent;
@@ -31,7 +33,7 @@ body{
 
 		.update{
 			display: inline-block;
-			height: 5vh;
+			height: 30px;
 			width: 20%;
 			border: 2px solid #f9f9f9;
 			border-radius: 2px;
@@ -115,7 +117,7 @@ body{
 			.year{
 				float: left;
 				height: 20px;
-				width: 20%;
+				width: 150px;
 				font-size: 135%;
 				position: relative;
 				cursor: pointer;
@@ -197,7 +199,7 @@ body{
 		margin-right: 5%;
 		.parameter{
 			float: left;
-		    width: 30%;
+		    width: 200px;
 		    padding-top: 2%;
 			.selection{
 				float: left;
@@ -246,7 +248,7 @@ body{
 		}
 	}
 	.viz{
-		overflow: scroll;
+		overflow-x: scroll;
 		width: 100%;
 		.indicator{
 			height: 15%;
