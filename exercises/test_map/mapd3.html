@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.3/d3.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/topojson/1.6.9/topojson.min.js"></script>
+	<script src="datamaps.min.js"></script>
+	
+	
+	<style>
+		#container{
+			width: 700px;
+			margin: auto;
+			height: 500px;
+			position: relative;
+		}
+	</style>
+</head>
+<body>
+
+<div id="container"></div>
+<script>
+	    var map = new Datamap({
+	    	element: document.getElementById('container'),
+	    	fills: {
+	            defaultFill: 'rgba(23,48,210,0.9)' 
+	        },  geographyConfig: {
+			        dataUrl: null, // If not null, datamaps will fetch the map JSON (currently only supports topojson)
+			        hideAntarctica: true,
+			        hideHawaiiAndAlaska : false,
+			        borderWidth: 1,
+			        borderOpacity: 1,
+			        borderColor: '#FDFDFD',
+			        popupTemplate: function(geography, data) { // This function should just return a string
+			          return '&lt;div class="hoverinfo"&gt;&lt;strong&gt;' + geography.properties.name + '&lt;/strong&gt;&lt;/div&gt;';
+			        },
+			        popupOnHover: true, // True to show the popup while hovering
+			        highlightOnHover: true,
+			        highlightFillColor: '#FC8D59',
+			        highlightBorderColor: 'rgba(250, 15, 160, 0.2)',
+			        highlightBorderWidth: 2,
+			        highlightBorderOpacity: 1
+			    },
+			    setProjection: function(element, options) {
+			      var projection, path;
+			      projection = d3.geo.mercator()                          // The d3 projection
+			                     .translate([(700/2), (500/2)])      // And some options
+			                     .scale( 700 / 2 / Math.PI)
+			                     .center([-15.652173913043478, 17.2734596919573]);
+			      path = d3.geo.path()
+			               .projection( projection );
+			      return {path: path, projection: projection};
+    			}
+	    });
+	</script>
+</body>
+</html>

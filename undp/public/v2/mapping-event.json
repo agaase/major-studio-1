@@ -1,0 +1,87 @@
+{
+
+	"filter" : {
+		"key" : "region",
+		"value" : "Africa"
+	},
+	"fields" : 
+		[
+			{
+				"o_key" : "year",
+				"n_key" : "year",
+				"type" :    "integer"
+			},
+			{
+				"o_key" : "active_year",
+				"n_key" : "is_active_conflict",
+				"type" :    "integer"
+			}
+			{
+				"o_key" :  "type_of_violence",
+				"n_key" : "type_of_conflict",
+				"type" :    "integer"
+			},
+			{
+				"o_key" :  "dyad_new_id",
+				"n_key" : "d_id"
+			},
+			{
+
+				"o_key" :  "dyad_name",
+				"n_key" : "d_name"
+			},
+			{
+				"o_key" :  "side_a"
+			},
+			{
+				"o_key" :  "side_a_new_id",
+				"n_key" : "side_a_id"
+			},
+			{
+				"o_key" :  "side_b"
+			},
+			{
+				"o_key" :  "side_b_new_id",
+				"n_key" : "side_b_id"
+			},
+			{
+				"o_key" :  "source_article"
+			},
+			{
+				"o_key" :  "latitude",
+				"type" :   "float"
+			},
+			{
+				"o_key" :  "longitude",
+				"type" :   "float"
+			},
+			{
+				"o_key" :  "country"
+			},
+			{
+				"o_key" :  "event_clarity",
+				"n_key" : "clarity",
+				"type" :    "integer"
+			},
+			{
+				"o_key" :  "date_start"
+			},
+			{
+				"o_key" :  "date_end"
+			},
+			{
+
+				"o_key" :  "best_est",
+				"type" :    "integer"
+			},
+			{
+				"o_key" :  "high_est",
+				"type" :    "integer"
+			},
+			{
+				"o_key" :  "low_est",
+				"type" :    "integer"
+			}
+		]
+}
+

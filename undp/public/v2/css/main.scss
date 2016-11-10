@@ -1,0 +1,234 @@
+body{
+	padding: 0;
+	margin:0;
+	background-color: #00695c;
+	color: #cccccc;
+	font-family: sans-serif;
+}
+.leaflet-container{
+	background-color:transparent;
+}
+.left{
+	height: 100vh;
+	width: 40%;
+	float: left;
+	.header{
+		height: 9%;
+		font-size: 165%;
+		margin-left: 5%;
+		.title{
+			padding-top: 2%;
+		}
+	}
+	.filters{
+		height: 21%;	
+		margin-left: 5%;	
+		width: 100%;
+		overflow: visible;
+		.types{
+			width: 100%;
+			height: 60%;
+			.type{
+				display: inline-block;
+    			padding-right: 30px;
+    			padding-bottom: 5%;
+				.label{
+					display: inline-block;
+					line-height: 15px;
+					vertical-align: middle;
+				}
+			}
+			.type.state .label{
+				border-bottom: 1px solid;
+			}
+			.type.group .label{
+				border-bottom: 1px dotted;
+			}
+			.type.onesided .label{
+				border-bottom: 1px dashed;
+			}
+
+			.type {
+				.selection{
+					display: inline-block;
+					width: 13px;
+					height: 13px;
+					border-radius: 50%;
+					border : 1px solid;
+					cursor: pointer;
+					vertical-align: middle;
+					margin: auto;
+					.selected{
+						display: none;
+						width: 11px;
+						height: 11px;
+						border-radius: 50%;
+						margin-left: 1px;
+						margin-top: 1px;
+						background-color: #ccc;
+					}
+				} 
+			}
+			.type.active {
+				.selection{
+					.selected{
+						display: block;
+					}
+				}
+			}
+		}
+		.years{
+			width:100%;
+			margin-right: 4%;
+			vertical-align: top;
+			height: 40%;
+			.values{
+				height: 20px;
+				width: 100%;
+			}
+			.divider{
+				float: left;
+				width: 20%;
+			}
+			.year{
+				float: left;
+				height: 20px;
+				width: 20%;
+				font-size: 135%;
+				position: relative;
+				cursor: pointer;
+				.left{
+					text-align: left;
+				}
+				.right{
+					text-align: right;
+				}
+				.label{
+					margin-bottom: 5px;
+					display: inline-block;
+				}
+				.dd{
+					display: inline-block;
+					width: 20%;
+				    height: 100%;
+				    background-image: url(../images/dd.png);
+				    background-position: center;
+				    background-size: 60%;
+				    background-repeat: no-repeat;
+				    margin-left: 6%;
+				}
+				.hidden{
+					display: none;
+					font-size: 75%;
+					width: 65%;
+					position: absolute;
+					top:120%;
+					background-color: #00695c;
+					border: 1px solid #ccc;
+					.label{
+						display: block;
+						padding: 0 10px;
+						padding-top: 15px;
+						width: 100%;
+					}
+				}
+			}
+			#slider-range{
+				border: 0;
+				border-bottom: 0;
+				border-radius: 0 !important;
+				height: 2px;
+				span{
+					margin-left: 0;
+				    width: 15px;
+				    height: 15px;
+				    border-radius: 50%;
+				    margin-top: -3px;
+				    cursor: pointer;
+				}
+			}
+		}
+	}
+	#mapp{
+		background-color: transparent;
+		height: 73%;
+		width: 95%;
+		margin-left: 5%;
+		color: #333;
+
+		.leaflet-bar{
+			box-shadow: 0 0 0;
+			border: 1px solid #ccc;
+			a{
+				background-color: #00695c;
+				color: #ccc;
+			}
+		}
+	}
+}
+.right{
+	height: 676px;
+	width: 60%;
+	float: left;
+	.keys{
+		height: 8%;
+		margin-right: 5%;
+		.parameter{
+			float: left;
+		    width: 60%;
+		    padding-top: 2%;
+			.selection{
+				float: left;
+				width: 13px;
+				height: 13px;
+				border-radius: 50%;
+				border : 1px solid;
+				cursor: pointer;
+				vertical-align: middle;
+				margin: auto;
+				margin-right: 10px;
+				.selected{
+					display: block;
+					width: 11px;
+					height: 11px;
+					border-radius: 50%;
+					margin-left: 1px;
+					margin-top: 1px;
+					background-color: #ccc;
+				}
+			}
+			.label{
+			}
+		}
+		
+		.legends{
+			padding-top: 2%;
+			float: left;
+			width: 40%;
+			font-size: 75%;
+			.legend{
+				float: right;
+				text-align: right;
+			}
+			.legend.first{
+				color: #aaa;
+			}
+			.legend.second{
+				color: #fff;
+			}
+		}
+	}
+	.indicator{
+		height: 15%;
+	}
+	.timeline{
+		height: 7%;
+	}
+	#dyads{
+		height: 70%;
+		overflow: scroll;
+		svg{
+			float: left;
+		}
+	}
+}

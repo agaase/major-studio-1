@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.css" />
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="js/queries.js"></script>
+	<script src="data/africa-geo-json.js"></script>
+	<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+	<script src="jquery-ui.min.js"></script>
+    <script src="http://cdn.leafletjs.com/leaflet-0.7.1/leaflet.js"></script>
+
+	<title></title>
+	<style>
+	
+	</style>
+</head>
+<body>
+	<div class='left'>
+		<div class='header'>
+			<div class='title'>Conflicts in SSA &nbsp;[Timeline + Impact]</div>
+		</div>
+		<div class='filters'>
+			<div class='years'>
+				<div class='values'>
+				<div class='year from'>
+					<div class='label'>1989</div><div class='dd'></div>
+					<div class='hidden'>
+						<div class='label'>1994</div>
+						<div class='label'>1999</div>
+						<div class='label'>2004</div>
+						<div class='label'>2009</div>
+					</div>
+				</div>
+				<div class='year to'>
+					<div class='label'>2014</div><div class='dd'></div>
+					<div class='hidden'>
+						<div class='label'>2009</div>
+						<div class='label'>2004</div>
+						<div class='label'>1999</div>
+						<div class='label'>1994</div>
+					</div>
+				</div>
+				
+				</div>
+			</div>
+			<div class='types'>
+				<div class='type active state'>
+				<div class='selection'>
+					<div class='selected'></div>
+				</div>
+				<div class='label' data-type="1">Government Involved</div>
+				</div>
+				<div class='type active group'>
+				<div class='selection'>
+					<div class='selected'></div>
+				</div>
+				<div class='label' data-type="2">Between two non-state groups</div>
+				</div>
+				<div class='type active onesided'>
+				<div class='selection'>
+					<div class='selected'></div>
+				</div>
+				<div class='label' data-type="3">One sided violence</div>
+				</div>
+			</div>
+			
+		</div>
+		<div id="mapp"></div>
+	</div>
+	<div class="right">
+		<div class="keys">
+			<div class='parameter'>
+				<div class='selection'>
+						<div class='selected'></div>
+				</div>
+				<div class='label'>UNEMPLOYMENT</div>
+			</div>
+			<div class='legends'>
+				<div class='legend first'>&nbsp;&nbsp;OVERALL</div>
+				<div class='legend second'> ONFLICT COUNTRIES &nbsp;&nbsp;/ </div>
+			</div>
+		</div>
+		<div class='indicator'></div>
+		<div class='timeline'>
+			<div class='container'></div>
+		</div>
+		<div id="dyads"></div>
+	</div>
+	<script src="js/main.js"></script>
+</body>
+</html>

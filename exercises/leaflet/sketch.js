@@ -47,7 +47,7 @@ function updateQuakes() {
 
 function initLeaflet(){
   L.mapbox.accessToken = 'pk.eyJ1IjoiYWdhYXNlIiwiYSI6ImNpdWlua3BhOTAwMzgydHBja3V2aWM4c28ifQ.YPXpNNHUsTaElJTlwPj74Q';
-  mapp = L.mapbox.map("map","mapbox.light").setView([20,0],2);
+  mapp = L.mapbox.map("map","mapbox.light").setView([-3.599602,-20.5894476],4);
 
   function onMapClick(e){
 
