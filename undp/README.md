@@ -1,7 +1,7 @@
  >  Quantitative Asssignment - [Link](https://agaase.github.io/major-studio-1/undp/public/) - 
  I am studying the nature of ethnic conflicts in sub-saharan africa because I want to find out what are the different types of conflicts and what causes them in order to understand how the nature of conflicts hamper the growth and inequality of a country or in this case the whole SSA. I am using variables related to conflicts such as type of conflict, duration and intensity. My visualization is based on [Uppsala Conflict Data Program] (http://ucdp.uu.se/) data.
 
-> Research topic 2 - 
+> Research topic 2 - [DESIGN](https://www.dropbox.com/s/7a48uocpmmi7x7p/rq2.pdf?dl=0)
 I am studying the interplay between ethnicity and natural resources in sub-saharan africa because I want to find out what are the social, economic and political effects when these two combine in order to understand how ethnicity has impacted the growth and inequality of different countries in SSA. I am using variables related to different types of impact they can have like unemployment, governance and conflicts. My visualization is based on data from [Uppsala Conflict Data Program] (http://ucdp.uu.se/) and [Worldmap, Harvard](https://worldmap.harvard.edu/data/geonode:GREG_0vV).
 
  > Qualitiative Assignment - [Link](https://agaase.github.io/major-studio-1/undp/public/qualitative/) - 
