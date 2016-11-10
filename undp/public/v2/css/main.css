@@ -187,14 +187,16 @@ body {
         color: #aaa; }
       .right .keys .legends .legend.second {
         color: #fff; }
-  .right .indicator {
-    height: 15%; }
-  .right .timeline {
-    height: 7%; }
-  .right #dyads {
-    height: 70%;
-    overflow: scroll; }
-    .right #dyads svg {
-      float: left; }
+  .right .viz {
+    overflow: scroll;
+    width: 100%; }
+    .right .viz .indicator {
+      height: 15%; }
+    .right .viz .timeline {
+      height: 7%; }
+    .right .viz #dyads {
+      height: 70%; }
+      .right .viz #dyads svg {
+        float: left; }
 
 /*# sourceMappingURL=main.css.map */

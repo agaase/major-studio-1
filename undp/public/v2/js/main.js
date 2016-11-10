@@ -610,8 +610,12 @@ var  SSAConflict = (function(){
     },
     setup : function(width){
       var ww = width || w;
-      svg = d3.select("#dyads").append("svg").attr("width", ww).attr("height", window.innerHeight*.7);
-      dyadsCont = svg.append("g").attr("id","dyadsCont");
+      dyadsCont = d3.select("#dyads")
+                    .append("svg")
+                    .attr("width", ww)
+                    .attr("height", window.innerHeight*.7)
+                    .attr("id","dyadsCont");
+      // dyadsCont = svg.append("g").attr("id","dyadsCont");
 
       timeline = d3.select(".timeline .container").append("svg")
                        .attr("id","timeline")
@@ -629,6 +633,12 @@ var  SSAConflict = (function(){
         $("#indicator").empty();
         $("#mapp #markers").empty();
         $("#mapp .event_point").remove();
+    },
+    resize : function(wi){
+      w = wi;
+      dyadsCont.attr("width",wi);
+      timeline.attr("width",wi);
+      indi.attr("width",wi);
     },
     init : function(yr1,yr2){
         SSAConflict.renderDyadConflicts(function(){

@@ -239,17 +239,21 @@ body{
 			}
 		}
 	}
-	.indicator{
-		height: 15%;
-	}
-	.timeline{
-		height: 7%;
-	}
-	#dyads{
-		height: 70%;
+	.viz{
 		overflow: scroll;
-		svg{
-			float: left;
+		width: 100%;
+		.indicator{
+			height: 15%;
+		}
+		.timeline{
+			height: 7%;
+		}
+		#dyads{
+			height: 70%;
+			svg{
+				float: left;
+			}
 		}
 	}
+	
 }
