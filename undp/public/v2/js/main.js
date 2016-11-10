@@ -298,6 +298,10 @@ var  SSAConflict = (function(){
           yrStart += yrInterval;
         }
       }
+      timeline.append("circle")
+              .attr("cx",marginRight/2)
+              .attr("cy",marginTop)
+              .attr("r",10)
      
   };
 
