@@ -194,7 +194,7 @@ body {
       .right .keys .legends .legend.second {
         color: #fff; }
   .right .viz {
-    overflow-x: scroll;
+    overflow-x: hidden;
     width: 100%; }
     .right .viz .indicator {
       height: 15%; }
