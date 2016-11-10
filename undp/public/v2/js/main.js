@@ -554,7 +554,7 @@ var  SSAConflict = (function(){
               .range([0, w-40]);
     var y = d3.scaleLinear()
               .domain([minUnem, maxUnem])
-              .range([0, 100]);
+              .range([0, window.innerHeight*.15]);
     
     for(var i=0;i<dataUnem.length;i++){
       var xp = x(dataUnem[i].key);
