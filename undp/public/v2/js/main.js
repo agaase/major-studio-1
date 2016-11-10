@@ -298,10 +298,20 @@ var  SSAConflict = (function(){
           yrStart += yrInterval;
         }
       }
+      /*
       timeline.append("circle")
-              .attr("cx",marginRight/2)
+              .attr("cx",w-marginRight/2)
               .attr("cy",marginTop)
               .attr("r",10)
+              .style("fill","none")
+              .style("stroke-width","2px")
+              .style("stroke","#eeeeee")
+      timeline.append("text")
+              .attr("x",w-marginRight/3)
+              .attr("y",marginTop+5)
+              .style("fill","#eeeeee")
+              .text("+");
+      */
      
   };
 
