@@ -6,6 +6,8 @@ var timePeriod = {
   "to" : 2014
 };
 
+var baseColor = "#eee";
+
 var conflictTypes = [1,2,3];
 
 var  SSAConflict = (function(){
@@ -89,7 +91,7 @@ var  SSAConflict = (function(){
         var latlong = mapObj.latLngToLayerPoint(positions[i]);
         var marker = L.circleMarker(positions[i],{
           radius : 1,
-          color : "#cccccc",
+          color : baseColor,
           className : "event_point"
         });
 
@@ -137,7 +139,7 @@ var  SSAConflict = (function(){
         /*                              
         var lineGraph = markers.append("path")
                                     .attr("d", lineFunction(lines))
-                                  .attr("stroke", "#ccc")
+                                  .attr("stroke", baseColor)
                                   .attr("fill", "none")
                                   .style("stroke-dasharray",lineTypes[type-1])
                                   .style("stroke-width",0.6)
@@ -172,7 +174,7 @@ var  SSAConflict = (function(){
              .attr("cx", 7)
              .attr("cy", y)
              .attr("r", 5)
-            .style("stroke","#ccc")
+            .style("stroke",baseColor)
             .style("fill","none")
             .attr("class","dcc")
             .attr("id","dcc_"+data[0]._source.d_id)
@@ -185,7 +187,7 @@ var  SSAConflict = (function(){
              .attr("y1", y)
              .attr("y2", y)
              .style("stroke-dasharray",lineTypes[type-1])
-            .style("stroke","#ccc")
+            .style("stroke",baseColor)
             .attr("class","dc_"+data[0]._source.d_id)
             .style("stroke-width",0.3);
 
@@ -286,7 +288,7 @@ var  SSAConflict = (function(){
             .attr("y",marginTop)
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
-            .style("fill","#cccccc")
+            .style("fill",baseColor)
             .style("font-size","20px")
             .text(yrStart);
         if(yrStart == timePeriod.to){
@@ -332,7 +334,7 @@ var  SSAConflict = (function(){
     //       .attr("y1", marginTop+textHeight)
     //       .attr("x2", w - 40 )
     //       .attr("y2", marginTop+textHeight)
-    //       .attr("stroke","#cccccc");
+    //       .attr("stroke",baseColor);
     
     //From
     var from = slider.append("g")
@@ -344,7 +346,7 @@ var  SSAConflict = (function(){
             .attr("class","from dec control")
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
-            .style("fill","#cccccc")
+            .style("fill",baseColor)
             .style("cursor","pointer")
             .style("line-height",textHeight)
             .text("--");
@@ -354,7 +356,7 @@ var  SSAConflict = (function(){
             .attr("class","from value")
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
-            .style("fill","#cccccc")
+            .style("fill",baseColor)
             .style("line-height",textHeight)
             .text("1989");
     from.append("text")
@@ -363,7 +365,7 @@ var  SSAConflict = (function(){
             .attr("class","from inc control")
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
-            .style("fill","#cccccc")
+            .style("fill",baseColor)
             .style("line-height",textHeight)
             .style("cursor","pointer")
             .text("+");
@@ -373,7 +375,7 @@ var  SSAConflict = (function(){
           .attr("cy", marginTop+textHeight)
           .attr("r",sliderEndpointRadius)
           .style("fill",mainColor)
-          .style("stroke","#cccccc")
+          .style("stroke",baseColor)
           .style("stroke-width",2)
           .attr("type","from")
           .attr("id","c1");
@@ -390,7 +392,7 @@ var  SSAConflict = (function(){
     //         .attr("width",textHeight)
     //         .attr("height",textHeight)
     //         .attr("class","dec cont")
-    //         .style("fill","#cccccc")
+    //         .style("fill",baseColor)
 
     var leftPos = w - marginRight - textWidth*2;
     // to.append("text")
@@ -399,7 +401,7 @@ var  SSAConflict = (function(){
     //         .attr("class","to dec control")
     //         .attr("text-anchor","middle")
     //         .attr("alignment-baseline","central")
-    //         .style("fill","#cccccc")
+    //         .style("fill",baseColor)
     //         .style("cursor","pointer")
     //         .style("line-height",textHeight)
     //         .text("--");
@@ -409,7 +411,7 @@ var  SSAConflict = (function(){
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
             .attr("class","to value")
-            .style("fill","#cccccc")
+            .style("fill",baseColor)
             .style("line-height",textHeight)
             .text("2014");
     // to.append("text")
@@ -418,7 +420,7 @@ var  SSAConflict = (function(){
     //         .attr("class","to inc control")
     //         .attr("text-anchor","middle")
     //         .attr("alignment-baseline","central")
-    //         .style("fill","#cccccc")
+    //         .style("fill",baseColor)
     //         .style("line-height",textHeight)
     //         .style("cursor","pointer")
     //         .text("+");
@@ -427,7 +429,7 @@ var  SSAConflict = (function(){
     //       .attr("cx", leftPos + textWidth*2 - sliderEndpointRadius )
     //       .attr("cy", marginTop+textHeight)
     //       .attr("r",sliderEndpointRadius)
-    //       .style("fill","#cccccc")
+    //       .style("fill",baseColor)
     //       .attr("type","from")
     //       .attr("id","c2");
 
@@ -499,7 +501,7 @@ var  SSAConflict = (function(){
         //     .attr("r", window.innerHeight*.01)
         //     .style("fill","none")
         //     .style("stroke-width",2)
-        //     .style("stroke","#ccc");
+        //     .style("stroke",baseColor);
       }
     }
 
