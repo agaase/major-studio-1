@@ -162,6 +162,8 @@ var  SSAConflict = (function(){
  
     var wi = w-marginLeft-marginRight, he = (h-marginTop - 10)/dyadsCt;
 
+    he = he > 30 ? 30 : he;
+
     var domain = (yr2-yr1+1)*365*24*60*60*1000;
     var x = d3.scaleLinear()
               .domain([0, domain])
