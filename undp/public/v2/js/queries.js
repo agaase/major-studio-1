@@ -65,7 +65,7 @@ var es_queries = {
       "dyads": {
         "terms": {
           "field": "d_id",
-          "size": 5,
+          "size": 100,
           "order" : { "sum_f" : "desc" },
           "min_doc_count": 75
         },
