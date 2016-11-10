@@ -197,7 +197,7 @@ body{
 		margin-right: 5%;
 		.parameter{
 			float: left;
-		    width: 60%;
+		    width: 30%;
 		    padding-top: 2%;
 			.selection{
 				float: left;
@@ -210,7 +210,7 @@ body{
 				margin: auto;
 				margin-right: 10px;
 				.selected{
-					display: block;
+					display: none;
 					width: 11px;
 					height: 11px;
 					border-radius: 50%;
@@ -220,6 +220,11 @@ body{
 				}
 			}
 			.label{
+			}
+		}
+		.parameter.active{
+			.selected{
+				display: block;
 			}
 		}
 		

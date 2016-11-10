@@ -157,7 +157,7 @@ body {
     margin-right: 5%; }
     .right .keys .parameter {
       float: left;
-      width: 60%;
+      width: 30%;
       padding-top: 2%; }
       .right .keys .parameter .selection {
         float: left;
@@ -170,13 +170,15 @@ body {
         margin: auto;
         margin-right: 10px; }
         .right .keys .parameter .selection .selected {
-          display: block;
+          display: none;
           width: 11px;
           height: 11px;
           border-radius: 50%;
           margin-left: 1px;
           margin-top: 1px;
           background-color: #eeeeee; }
+    .right .keys .parameter.active .selected {
+      display: block; }
     .right .keys .legends {
       padding-top: 2%;
       float: left;

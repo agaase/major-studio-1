@@ -158,7 +158,7 @@ var  SSAConflict = (function(){
                    .attr("class","dyad")
                    .attr("id", "d_"+data[0]._source.d_id)
                    .attr("country", data[0]._source.country) 
-    var marginTop = 20, marginLeft = 20, marginRight=0.03*window.innerWidth;
+    var marginTop = 40, marginLeft = 20, marginRight=0.03*window.innerWidth;
  
     var wi = w-marginLeft-marginRight, he = (h-marginTop - 10)/dyadsCt;
 
@@ -189,6 +189,7 @@ var  SSAConflict = (function(){
             .style("stroke",baseColor)
             .attr("class","dc_"+data[0]._source.d_id)
             .style("stroke-width",0.3);
+
 
 
     for(var i=0;i<data.length;i++){
@@ -226,7 +227,7 @@ var  SSAConflict = (function(){
 
   }
   function getColor2(value){
-    if(value < 10){
+    if(value <= 10){
         // return "rgba(255,241,118,"+(value/1000)+")";
         return "rgba(255,241,118,0.5)";
       }else if(value> 10 & value <= 500){
@@ -244,12 +245,81 @@ var  SSAConflict = (function(){
       }
   }
 
+  function colorKeys(){
+    var marginRight=0.03*window.innerWidth;
+    dyadsCont.append("rect")
+         .attr("x",220)
+         .attr("y",15)
+         .attr("width",42)
+         .attr("height",5)
+         .style("fill",getColor2(20001));
+    dyadsCont.append("text")
+         .attr("x",220)
+         .attr("y",9)
+         .attr("font-size","10px")
+         .style("fill",baseColor)
+         .text("> 20k");
+
+    dyadsCont.append("rect")
+         .attr("x",170)
+         .attr("y",15)
+         .attr("width",42)
+         .attr("height",5)
+         .style("fill",getColor2(5001));
+    dyadsCont.append("text")
+         .attr("x",170)
+         .attr("y",9)
+         .attr("font-size","10px")
+         .style("fill",baseColor)
+         .text("5k-20k");
+
+     dyadsCont.append("rect")
+         .attr("x",120)
+         .attr("y",15)
+         .attr("width",42)
+         .attr("height",5)
+         .style("fill",getColor2(501));
+    dyadsCont.append("text")
+         .attr("x",120)
+         .attr("y",9)
+         .attr("font-size","10px")
+         .style("fill",baseColor)
+         .text("500-5k");
+
+    dyadsCont.append("rect")
+         .attr("x",70)
+         .attr("y",15)
+         .attr("width",42)
+         .attr("height",5)
+         .style("fill",getColor2(11));
+     dyadsCont.append("text")
+         .attr("x",70)
+         .attr("y",9)
+         .attr("font-size","10px")
+         .style("fill",baseColor)
+         .text("10-500");
+
+      dyadsCont.append("rect")
+         .attr("x",20)
+         .attr("y",15)
+         .attr("width",42)
+         .attr("height",5)
+         .style("fill",getColor2(5));
+      dyadsCont.append("text")
+         .attr("x",20)
+         .attr("y",9)
+         .attr("font-size","10px")
+         .style("fill",baseColor)
+         .text("<10");
+  }
+
 
   var getConflictsDyad = function(dyads,ct,callback){
     var def = $.Deferred();
     var q = es_queries["dyad_conflicts"];
     q["query"]["filtered"]["filter"]["term"]["d_id"] = dyads[ct].key;
 
+    colorKeys();
     //Once i have sequence I find per year the list of countries
     runQ(q,function(data){
       var dyadData = data.hits.hits;
@@ -271,7 +341,7 @@ var  SSAConflict = (function(){
 
   var drawTimeline = function(){
 
-      var marginTop =20, marginRight=window.innerWidth*0.035, timeInterval = 5, marginLeft=20;
+      var marginTop =20, marginRight=window.innerWidth*0.015, timeInterval = 5, marginLeft=40;
 
       var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
 
