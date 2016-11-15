@@ -4,10 +4,57 @@ var deferred = require('deferred');
 var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
+//https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/
 var client = new elasticsearch.Client({
-  host: 'https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/'
+  host: 'http://localhost:9200/'
 });
 
+
+var countryCodes = {
+        "Algeria" : "DZA",
+        "Somalia" : "SOM",
+        "South Africa" : "ZAF",
+        "DR Congo (Zaire)" : "COD",
+        "Sudan" : "SDN",
+        "Nigeria" : "NGA",
+        "Angola" : "AGO",
+        "Uganda" : "UGA",
+        "Ethiopia" : "ETH",
+        "Sierra Leone" : "SLE",
+        "Burundi" : "BDI",
+        "Central African Republic" : "CAF",
+        "Kenya" : "KEN",
+        "Rwanda" : "RWA",
+        "Liberia" : "LBR",
+        "Libya" : "LBY",
+        "South Sudan" : "SSD",
+        "Chad" : "TCD",
+        "Mali" : "MLI",
+        "Senegal" : "SEN",
+        "Mozambique" : "MOZ",
+        "Ivory Coast" : "CIV",
+        "Congo" : "COG",
+        "Cameroon" : "CMR",
+        "Niger" : "NER",
+        "Togo" : "TGO",
+        "Guinea" : "GIN",
+        "Zimbabwe (Rhodesia)" : "ZWE",
+        "Djibouti" : "DJI",
+        "Eritrea" : "ERI",
+        "Madagascar (Malagasy)" : "MDG",
+        "Ghana" : "GHA",
+        "Mauritania" : "MRT",
+        "Guinea-Bissau" : "GNB",
+        "Namibia" : "NAM",
+        "Tanzania" : "TZA",
+        "Zambia" : "ZMB",
+        "Morocco" : "MAR",
+        "Comoros" : "COM",
+        "Lesotho" : "LSO",
+        "Swaziland" : "SWZ",
+        "Tunisia" : "TUN",
+        "Botswana" : "BWA"
+ };
 
 var mapping = {
 
@@ -138,12 +185,16 @@ var createEvent = function(ct){
             val = val || "-";
           }
           
+
           obj[field.n_key ||field.o_key] = val;
+          if(field.o_key == "country"){
+             obj["ccd"] = countryCodes[val];
+          }
        }  
       events.push(obj);
     }
   }
-  console.log("posting --" + events.length);
+  console.log("posting --" + events.length );
   var promise = elPost(events);
   promise.done(function(){
     console.log("posted");

@@ -62,28 +62,52 @@ var es_queries = {
       }
     },
     "aggs": {
-      "dyads": {
+      "country_dyads" : {
         "terms": {
-          "field": "d_id",
-          "size": 100,
-          "order" : { "sum_f" : "desc" },
-          "min_doc_count": 50
+          "field": "ccd",
+          "size": 100
         },
-        "aggs" : {
-          "sum_f" : { "sum" : { "field" : "best_est"}}
+        "aggs": {
+          "dyads": {
+            "terms": {
+              "field": "d_id",
+              "size": 100,
+              "order" : { "sum_f" : "desc" },
+              "min_doc_count": 10
+            },
+            "aggs" : {
+              "sum_f" : { "sum" : { "field" : "best_est"}}
+            }
+          }
         }
       }
     }
   },
   "dyad_conflicts" : {
     "size" : 5000,
-    "query": {
-      "filtered": {
-        "filter": {
-          "term": {
-            "d_id": "12046"
-          }
+    "sort": [
+      {
+        "date_start": {
+          "order": "asc"
         }
+      }
+    ], 
+    "query": {
+      "bool": {
+        "must": [
+          {"term": {
+            "d_id": {
+              "value": "1026"
+            }
+          }},
+          {
+            "term": {
+              "ccd": {
+                "value": "COD"
+              }
+            }
+          }
+        ]
       }
     }
   },
@@ -126,19 +150,18 @@ var es_queries = {
           "size": 100
         },
         "aggs" : {
-                  "sum_v" : { "sum" : { "field" : "value"}}
+                  "avg_v" : { "avg" : { "field" : "value"}}
                 }
       }
     }
   },
-  "unemployment_data_filtered" : {
+  "unemployment_data_filtered_not" : {
     "size" : 0,
     "query": {
       "bool": {
-        "must": [
+        "must_not": [
           {"terms": {
-            "country": [
-            ]
+            "ccode": ["DZA","SOM","ZAF","COD","SDN","NGA","AGO","ETH","UGA","SLE","BDI","CAF","KEN","RWA","LBR","LBY","SSD","TCD","MLI","SEN","MOZ","CIV","COG","CMR","NER","TGO","GIN","ZWE","DJI","ERI","MDG","GHA","MRT","GNB","NAM","TZA","ZMB","MAR","COM","LSO","SWZ","TUN","BWA"]
           }}
         ]
       }
@@ -150,7 +173,31 @@ var es_queries = {
           "size": 100
         },
         "aggs" : {
-                  "sum_v" : { "sum" : { "field" : "value"}}
+                  "avg_v" : { "avg" : { "field" : "value"}}
+                }
+      }
+    }
+  },
+
+  "unemployment_data_filtered" : {
+    "size" : 0,
+    "query": {
+      "bool": {
+        "must": [
+          {"terms": {
+            "ccode": ["DZA","SOM","ZAF","COD","SDN","NGA","AGO","ETH","UGA","SLE","BDI","CAF","KEN","RWA","LBR","LBY","SSD","TCD","MLI","SEN","MOZ","CIV","COG","CMR","NER","TGO","GIN","ZWE","DJI","ERI","MDG","GHA","MRT","GNB","NAM","TZA","ZMB","MAR","COM","LSO","SWZ","TUN","BWA"]
+          }}
+        ]
+      }
+    },
+    "aggs": {
+      "by_year": {
+        "terms": {
+          "field": "yr",
+          "size": 100
+        },
+        "aggs" : {
+                  "avg_v" : { "avg" : { "field" : "value"}}
                 }
       }
     }

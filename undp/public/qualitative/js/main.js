@@ -93,12 +93,12 @@ var Renderer = (function(){
       });
       //.css({"top":""+(pos.top+20)+"px","left":""+(pos.left+150)+"px"});
   };
-  //https://c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9243/scholar/
+  //https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com
   //http://localhost:9200
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "https://c55ee86c7c4d0bf5f993e8fffcc7247e.us-east-1.aws.found.io:9243/scholar/"+(type || "word") +"/_search",
+      url: "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);

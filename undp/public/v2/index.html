@@ -16,78 +16,44 @@
 <body>
 	<div class='left'>
 		<div class='header'>
-			<div class='title'>Conflicts in SSA &nbsp;[Nature & Impact]</div>
-		</div>
-		<div class='filters'>
-			<div class='years'>
-				<div class='values'>
-				<div class='year from'>
-					<div class='label'>1989</div><div class='dd'></div>
-					<div class='hidden'>
-						<div class='label'>1994</div>
-						<div class='label'>1999</div>
-						<div class='label'>2004</div>
-						<div class='label'>2009</div>
-					</div>
+			<div class='title'>
+				<div class='label'>SSA: </div>
+				<div class='label'> Impact of </div>
+				<div class='filter'>
+				<div class='selected'>Conflicts</div><div class='dd'></div>
+				<div class='hidden'>
+					<div data-val='0' data-text='Conflicts' class='label active'>All</div>
+					<div data-val='1' data-text='Govt. Conflicts' class='label'>Government Involved</div>
+					<div data-val='2' data-text='Internal conflicts' class='label'>Internal conflicts</div>
+					<div data-val='3' data-text='One sided violence' class='label'>One sided violence</div>
 				</div>
-				<div class='year to'>
-					<div class='label'>2014</div><div class='dd'></div>
+				</div>
+				<div class='label'> on </div>
+				<div class='filter'>
+					<div class='selected'>Unemployment</div><div class='dd'></div>
 					<div class='hidden'>
-						<div class='label'>2009</div>
-						<div class='label'>2004</div>
-						<div class='label'>1999</div>
-						<div class='label'>1994</div>
-					</div>
+					<div data-text="Unemployment" class='label active'>Unemployment</div>
+					<div data-text="Education" class='label'>Education</div>
+					<div data-text="Manufacturing" class='label'>Manufacturing</div>
+					<div data-text="Governance" class='label'>Governance</div>
+				</div>
 				</div>
 				
-				</div>
 			</div>
-			<div class='bottom'>
-			<div class='types'>
-				<div class='type active state'>
-				<div class='selection'>
-					<div class='selected'></div>
-				</div>
-				<div class='label' data-type="1">Government Involved</div>
-				</div>
-				<div class='type active group'>
-				<div class='selection'>
-					<div class='selected'></div>
-				</div>
-				<div class='label' data-type="2">Between two non-state groups</div>
-				</div>
-				<div class='type active onesided'>
-				<div class='selection'>
-					<div class='selected'></div>
-				</div>
-				<div class='label' data-type="3">One sided violence</div>
-				</div>
-			</div>
-			<div class='update disabled'>
-				UPDATE
-			</div>
-			</div>
-			
+			<div class='sub disabled'></div>
 		</div>
+
+		<div class='user_selection'>Select a conflict or country </div>
 		<div id="mapp"></div>
 	</div>
 	<div class="right">
 		<div class="keys">
-			<div class='parameter active'>
-				<div class='selection'>
-						<div class='selected'></div>
-				</div>
-				<div class='label'>UNEMPLOYMENT</div>
+			<div class='legends'>
+				<div class='legend second'>[Conflict Countries &nbsp;&nbsp;/ </div>
+				<div class='legend first'>&nbsp;&nbsp;SSA]</div>
 			</div>
 			<div class='parameter'>
-				<div class='selection'>
-						<div class='selected'></div>
-				</div>
-				<div class='label'>MANUFACTURING</div>
-			</div>
-			<div class='legends'>
-				<div class='legend first'>&nbsp;&nbsp;SSA</div>
-				<div class='legend second'> Conflict Countries &nbsp;&nbsp;/ </div>
+				<div class='label'>Unemployment in %</div>
 			</div>
 		</div>
 		<div class='viz'>

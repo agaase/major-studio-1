@@ -40,7 +40,11 @@ var es_queries = {
                 "research",
                 "gulf",
                 "policy",
-                "history"
+                "history",
+                "press",
+                "british",
+                "west",
+                "middle"
               ]
             }},
             {

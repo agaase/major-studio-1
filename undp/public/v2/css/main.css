@@ -1,8 +1,8 @@
 body {
   padding: 0;
   margin: 0;
-  background-color: #00695c;
-  color: #eeeeee;
+  background-color: #f9f9f9;
+  color: #4A4A4A;
   font-family: sans-serif;
   max-width: 2400px;
   margin: auto; }
@@ -16,139 +16,75 @@ body {
   float: left; }
   .left .header {
     height: 9%;
-    font-size: 165%;
-    margin-left: 5%; }
-    .left .header .title {
-      padding-top: 2%; }
-  .left .filters {
-    height: 21%;
-    margin-left: 5%;
-    width: 95%;
-    overflow: visible; }
-    .left .filters .update {
+    margin-left: 4%;
+    padding-top: 4%; }
+    .left .header .sub {
       display: inline-block;
-      height: 30px;
-      width: 20%;
-      border: 2px solid #f9f9f9;
-      border-radius: 2px;
-      line-height: 200%;
-      text-align: center;
-      vertical-align: bottom;
-      cursor: pointer;
-      margin-bottom: 1vh; }
-    .left .filters .update.disabled {
-      opacity: 0.5;
-      cursor: initial; }
-    .left .filters .types {
-      display: inline-block;
-      vertical-align: bottom;
-      width: 65%;
-      height: 60%; }
-      .left .filters .types .type {
-        padding-right: 30px;
-        padding-bottom: 2%; }
-        .left .filters .types .type .label {
-          display: inline-block;
-          line-height: 15px;
-          vertical-align: middle; }
-      .left .filters .types .type.state .label {
-        border-bottom: 1px solid; }
-      .left .filters .types .type.group .label {
-        border-bottom: 1px dotted; }
-      .left .filters .types .type.onesided .label {
-        border-bottom: 1px dashed; }
-      .left .filters .types .type {
-        cursor: pointer; }
-        .left .filters .types .type .selection {
-          display: inline-block;
-          width: 13px;
-          height: 13px;
-          border-radius: 50%;
-          border: 1px solid;
-          cursor: pointer;
-          vertical-align: middle;
-          margin: auto; }
-          .left .filters .types .type .selection .selected {
-            display: none;
-            width: 11px;
-            height: 11px;
-            border-radius: 50%;
-            margin-left: 1px;
-            margin-top: 1px;
-            background-color: #eeeeee; }
-      .left .filters .types .type.active .selection .selected {
-        display: block; }
-    .left .filters .years {
-      width: 96%;
-      margin-right: 4%;
       vertical-align: top;
-      height: 35%; }
-      .left .filters .years .values {
-        height: 20px;
-        width: 100%; }
-      .left .filters .years .divider {
-        float: left;
-        width: 20%; }
-      .left .filters .years .year {
-        float: left;
-        height: 20px;
-        width: 150px;
-        font-size: 135%;
-        position: relative;
-        cursor: pointer; }
-        .left .filters .years .year .left {
-          text-align: left; }
-        .left .filters .years .year .right {
-          text-align: right; }
-        .left .filters .years .year .label {
-          margin-bottom: 5px;
-          display: inline-block; }
-        .left .filters .years .year .dd {
+      width: 5%;
+      height: 30%;
+      background-image: url(../images/sub.png);
+      background-position: center;
+      background-size: auto 60%;
+      background-repeat: no-repeat;
+      border: 1px solid #EF5050;
+      border-radius: 3px; }
+      .left .header .sub.disabled {
+        display: none; }
+    .left .header .title {
+      width: 93%;
+      display: inline-block;
+      font-size: 105%;
+      vertical-align: top;
+      font-weight: bold; }
+      .left .header .title .filter {
+        cursor: pointer;
+        display: inline-block;
+        position: relative; }
+        .left .header .title .filter .selected {
           display: inline-block;
-          width: 20%;
-          height: 100%;
-          background-image: url(../images/dd.png);
-          background-position: center;
-          background-size: 60%;
-          background-repeat: no-repeat;
-          margin-left: 6%; }
-        .left .filters .years .year .hidden {
-          display: none;
-          font-size: 75%;
-          width: 65%;
-          position: absolute;
-          top: 120%;
-          background-color: #00695c;
-          border: 1px solid #eeeeee; }
-          .left .filters .years .year .hidden .label {
-            display: block;
-            padding: 0 10px;
-            padding-top: 15px;
-            width: 100%; }
-      .left .filters .years #slider-range {
-        border: 0;
-        border-bottom: 0;
-        border-radius: 0 !important;
-        height: 2px; }
-        .left .filters .years #slider-range span {
-          margin-left: 0;
+          color: #EF5050; }
+        .left .header .title .filter .dd {
+          display: inline-block;
           width: 15px;
           height: 15px;
-          border-radius: 50%;
-          margin-top: -3px;
-          cursor: pointer; }
+          margin: 0 5px;
+          background-image: url(../images/dd.png);
+          background-position: center;
+          background-size: 100%;
+          background-repeat: no-repeat; }
+        .left .header .title .filter .hidden {
+          z-index: 999;
+          display: none;
+          font-size: 60%;
+          position: absolute;
+          background-color: #f9f9f9;
+          border: 1px solid #4A4A4A;
+          padding: 0 15px; }
+          .left .header .title .filter .hidden .label {
+            display: block;
+            padding: 10px 0;
+            width: 100%; }
+      .left .header .title .label {
+        display: inline-block; }
+  .left .user_selection {
+    height: 10%;
+    width: 96%;
+    margin-left: 4%;
+    padding-left: 1%;
+    line-height: 150%; }
   .left #mapp {
     background-color: transparent;
-    height: 73%;
+    height: 80%;
     width: 95%;
     margin-left: 5%;
     color: #333; }
     .left #mapp .leaflet-bar {
       box-shadow: 0 0 0;
-      border: 1px solid #eeeeee; }
+      border: 1px solid #4A4A4A; }
       .left #mapp .leaflet-bar a {
-        background-color: #00695c;
-        color: #eeeeee; }
+        background-color: #f9f9f9;
+        color: #4A4A4A; }
 
 .right {
   height: 676px;
@@ -158,51 +94,31 @@ body {
     height: 8%;
     margin-right: 5%; }
     .right .keys .parameter {
-      float: left;
-      width: 200px;
-      padding-top: 2%; }
-      .right .keys .parameter .selection {
-        float: left;
-        width: 13px;
-        height: 13px;
-        border-radius: 50%;
-        border: 1px solid;
-        cursor: pointer;
-        vertical-align: middle;
-        margin: auto;
-        margin-right: 10px; }
-        .right .keys .parameter .selection .selected {
-          display: none;
-          width: 11px;
-          height: 11px;
-          border-radius: 50%;
-          margin-left: 1px;
-          margin-top: 1px;
-          background-color: #eeeeee; }
-    .right .keys .parameter.active .selected {
-      display: block; }
+      float: right;
+      padding-top: 3%;
+      padding-right: 2%; }
     .right .keys .legends {
-      padding-top: 2%;
-      float: left;
-      width: 40%;
-      font-size: 75%; }
+      padding-top: 3%;
+      float: right; }
       .right .keys .legends .legend {
-        float: right;
-        text-align: right; }
+        float: left; }
       .right .keys .legends .legend.first {
-        color: #aaa; }
+        color: #4A4A4A; }
       .right .keys .legends .legend.second {
-        color: #fff; }
+        color: #EF5050; }
   .right .viz {
-    overflow-x: hidden;
-    width: 100%; }
+    width: 100%;
+    height: 92%; }
     .right .viz .indicator {
-      height: 15%; }
+      height: 20%; }
     .right .viz .timeline {
-      height: 7%; }
+      height: 10%; }
     .right .viz #dyads {
-      height: 70%; }
+      height: 70%;
+      overflow: scroll; }
       .right .viz #dyads svg {
         float: left; }
+    .right .viz #dyads::-webkit-scrollbar {
+      display: none; }
 
 /*# sourceMappingURL=main.css.map */

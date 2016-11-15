@@ -14,8 +14,10 @@ var $;
 
 
 var elasticsearch = require('elasticsearch');
+var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
+//var url = "localhost:9200";
 var client = new elasticsearch.Client({
-  host: 'localhost:9200'
+  host: url
 });
 
 var headlines = [], wordScoreObj = {};
@@ -76,8 +78,8 @@ function parseHeadlines(yr,rows,ct,subpage){
     var headline = $("a").html();
     headline = headline ? headline.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
     headline = headline.toLowerCase();
-    // headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
-    getTopics(headline);
+    headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
+    //getTopics(headline);
     if(headline){
       headlines.push(headline);
     }
@@ -97,15 +99,15 @@ function guardianRequest(yr,subpage){
         $ = cheerio.load(file);
         var titles = $("body").html().match(/<h3(.|\n)*?<\/h3>/g);
         parseHeadlines(yr,titles,0,subpage);
-        // subpage++;
-        // guardianRequest(yr,subpage);
+        subpage++;
+        guardianRequest(yr,subpage);
       }
       catch(err){
-         console.log(err);
+        //console.log(err);
         if(!subpageError){
             subpageError=true;
             console.log(yr + " | flushing - headlines --- "+headlines.length + "; words ---- "+ Object.keys(wordScoreObj[yr]).length);
-            //var promise = elPost(headlines,yr);
+            var promise = elPost(headlines,yr);
             promise.done(function(){
               headlines = [];
               yr++;
