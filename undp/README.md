@@ -3,8 +3,11 @@
  
  [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v2/preview.png)](https://agaase.github.io/major-studio-1/undp/public/v2/)
  
+ 
+ 
 >  Qualitative Asssignment -
 I am studying the Google Scholar results (e.g [here](https://scholar.google.com/scholar?start=980&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=1960&as_vis=1)) on the search keyword - "Africa and Conflict" because I want to find out what research was done over the years on that topic in order to know what were the impacts and causes of conflicts in Africa as perceived by the research community. I am using variables related to conflicts such as crisis, war, ethnicity, coup etc to  make my results more relevant.
+
 [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/qualitative/preview.png)](https://agaase.github.io/major-studio-1/undp/public/v2/)
 
 ## UNDP Questions
