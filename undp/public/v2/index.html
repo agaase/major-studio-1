@@ -17,9 +17,8 @@
 	<div class='left'>
 		<div class='header'>
 			<div class='title'>
-				<div class='label'>SSA: </div>
-				<div class='label'> Impact of </div>
-				<div class='filter'>
+				<div class='label'>Impact of </div>
+				<div class='filter conflicts'>
 				<div class='selected'>Conflicts</div><div class='dd'></div>
 				<div class='hidden'>
 					<div data-val='0' data-text='Conflicts' class='label active'>All</div>
@@ -29,28 +28,30 @@
 				</div>
 				</div>
 				<div class='label'> on </div>
-				<div class='filter'>
-					<div class='selected'>Unemployment</div><div class='dd'></div>
+				<div class='filter indicators'>
+					<div class='selected'>Primary Enrollment</div><div class='dd'></div>
 					<div class='hidden'>
-					<div data-text="Unemployment" class='label active'>Unemployment</div>
-					<div data-text="Education" class='label'>Education</div>
-					<div data-text="Manufacturing" class='label'>Manufacturing</div>
-					<div data-text="Governance" class='label'>Governance</div>
+					<div data-val='unemp' data-text="Unemployment" class='label'>Unemployment</div>
+					<div data-val='cr' data-text="Primary Enrollment" class='label active'>Primary Enrollment</div>
 				</div>
+				<div class='label'> in </div>
+				<div class='label dynamic'>SSA</div>
 				</div>
 				
 			</div>
 			<div class='sub disabled'></div>
 		</div>
 
-		<div class='user_selection'>Select a conflict or country </div>
+		<div class='user_selection'>
+			<div class='static'>There are over</div> <div class='dynamic ct'></div> different types of conflicts in <div class='dynamic co'></div><div class='static'> with </div><div class='dynamic ev'></div> <div class='static'> different conflict events. </div>
+		</div>
 		<div id="mapp"></div>
 	</div>
 	<div class="right">
 		<div class="keys">
 			<div class='legends'>
-				<div class='legend second'>[Conflict Countries &nbsp;&nbsp;/ </div>
-				<div class='legend first'>&nbsp;&nbsp;SSA]</div>
+				<div class='legend second'></div>
+				<div class='legend first'>[SSA]</div>
 			</div>
 			<div class='parameter'>
 				<div class='label'>Unemployment in %</div>

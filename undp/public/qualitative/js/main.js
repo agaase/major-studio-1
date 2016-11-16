@@ -82,8 +82,7 @@ var Renderer = (function(){
           var rx = new RegExp(word, 'gi');
           v._source.or = v._source.or.replace(rx,"<span class='highlight'>"+word+"</span>");
           v._source.or = v._source.or.replace(/(reasons|why|impact|effect|causes|look|costs|what|measure)/g,"<span class='highlight yellow'>$&</span>");
-
-          $(".articles .headlines").append("<div class='headline'>" + v._source.or+"<span class='yr'> ("+v._source.yr+")</span>  </div>");
+          $(".articles .headlines").append("<div class='headline'>" + v._source.or+"<span class='yr'> ("+v._source.yr+")</span>&nbsp;(<a target='_blank' href='"+v._source.link+"'>link</a>)</div>");
       });
       $(".articles").append("<div class='close'></div>");
       $(".articles").show();
@@ -98,7 +97,7 @@ var Renderer = (function(){
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/scholar/"+(type || "word") +"/_search",
+      url: "http://localhost:9200/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);

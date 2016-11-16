@@ -9,16 +9,16 @@ var timePeriod = {
 var bgColor = "#f9f9f9"
 var baseColor = "#4A4A4A";
 var highlightColor = "#EF5050";
-var secondHighlightColor = "#000000"
+var secondHighlightColor = "#006e98"
 
-var conflictTypes = [1,2,3];
+var conflictTypes = [1,2,3], indicatorType = "unemp", changed = "indicator", countrySelected = ["Algeria","DZA"];
 
 var  SSAConflict = (function(){
-  var w = window.innerWidth*.6, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries;
+  var w = window.innerWidth*.6, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries, impactDomain=[], impactDomainInitialValue;
   var yr1 = 1989, yr2=2015, lineTypes = ["0","2","8"], mainColor = "#00695c";
   
   var runQ = function(q,c,ind,type){
-     //var basesearchurl = "http://localhost:9200/";
+    //var basesearchurl = "http://localhost:9200/";
     var basesearchurl = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/";
     $.ajax({
       type: "POST",
@@ -32,7 +32,12 @@ var  SSAConflict = (function(){
   };
 
   var highlighCountry = function(cname,c){
-      $(".user_selection").html("<b>"+cname +"</b><br>" + $(".ehcc_"+c).length +" conflicts,"+ $(".epc_"+c).length +" conflict events.");
+      cname  = cname || countrySelected[0];
+      c = c || countrySelected[1];
+      $(".header .title .dynamic").text(cname);
+      $(".user_selection .ct").text( $(".ehcc_"+c).length);
+      $(".user_selection .co").text( cname);
+      $(".user_selection .ev").text( $(".epc_"+c).length);
 
       d3.selectAll(".eventHomeCountry,.eventPoint")
         .style("stroke",baseColor)
@@ -50,12 +55,18 @@ var  SSAConflict = (function(){
         .style("stroke",highlightColor)
         .style("stroke-width",3);
 
-      var q = es_queries["unemployment_data_filtered"];
+      var indiq = es_queries["indicator"][indicatorType];
+      var q = indiq["q"]["country"];
       q["query"]["bool"]["must"][0]["terms"]["ccode"] = [c];
       $("#countryIndicator").remove();
       runQ(q,function(data){
-          unempIndicator(data.aggregations.by_year.buckets,highlightColor,2, true,"countryIndicator");
-      },"unemp","c_unemp");
+          unempIndicator(data.hits.hits.map(function(d){
+              return {
+                "key" : d._source.yr,
+                "value" : d._source.value
+              }
+            }),secondHighlightColor ,2, true,"countryIndicator");
+      },indiq.index,indiq.type);
   };
 
   //EVENT BL 
@@ -103,11 +114,11 @@ var  SSAConflict = (function(){
           }
         mapObj = L.map('mapp',{
             center : [10.4530702,20.035771],
-            zoom : 3.3,
-            minZoom : 3.3,
+            zoom : 3,
+            minZoom : 3,
             dragging : true,
             touchZoom  : false,
-            scrollWheelZoom : false,
+            scrollWheelZoom : true,
             doubleClickZoom : false,
             boxZoom : false,
             zoomControl : false,
@@ -150,7 +161,7 @@ var  SSAConflict = (function(){
       for(var i=0;i<max;i++){
         var latlong = mapObj.latLngToLayerPoint(positions[i]);
         var marker = L.circleMarker(positions[i],{
-          radius : 1,
+          radius : 0.3,
           color : baseColor,
           className : "eventPoint epc_"+countryCode + " epd_"+d
         });
@@ -160,7 +171,7 @@ var  SSAConflict = (function(){
       for(var i=0;i<1;i++){
         var latlong = mapObj.latLngToLayerPoint(positions[i]);
         var marker = L.circleMarker(positions[i],{
-          radius : 8, 
+          radius : 4, 
           color : baseColor,
           className : "eventHomeCountry ehcc_"+countryCode + " ehcd_"+d,
           d_id : d
@@ -248,17 +259,16 @@ var  SSAConflict = (function(){
             .style("stroke",secondHighlightColor)
             .attr("class","countryLeftBorder clb_"+ccd)
             .style("stroke-width",0.2);
-
+    //.style("stroke-dasharray",lineTypes[type-1])
     dyadD.append("line")
              .attr("x1", x(0))
              .attr("x2", w-marginRight)
              .attr("y1", y)
              .attr("y2", y)
-             .style("stroke-dasharray",lineTypes[type-1])
             .style("stroke",secondHighlightColor)
             .attr("id", "cdt_"+data[0]._source.d_id)
             .attr("class","countryDyadType")
-            .style("stroke-width",0.2);
+            .style("stroke-width",0.1);
 
     for(var i=0;i<data.length;i++){
         var event = data[i]._source;
@@ -303,13 +313,13 @@ var  SSAConflict = (function(){
   }
   function getHeight(value,he){
     if(value <= 10){
-      return he*.25;
+      return he;
     }
     else if(value > 10 && value <= 100){
-      return he*0.5;
+      return he;
     }
     else if(value > 100 && value <= 500){
-      return he*0.75;
+      return he;
     }
     else if(value > 500 && value <= 5000){
       return he;
@@ -320,6 +330,22 @@ var  SSAConflict = (function(){
   }
 
   function getColor2(value){
+    if(value <= 10){
+      return "#F3BE8A";
+    }
+    else if(value > 10 && value <= 100){
+      return "#E2825F";
+    }
+    else if(value > 100 && value <= 500){
+      return "#C71F17";
+    }
+    else if(value > 500 && value <= 5000){
+      return "#8A0D0A";
+    }
+    else if(value>5000){
+      return "#8A0D0A";
+    }
+    /*
     if(value <= 1000){
         return "rgba(239, 80, 80, 1)";
       }else if(value> 1000 & value < 5000){
@@ -327,6 +353,7 @@ var  SSAConflict = (function(){
       }else if(value >= 5000){
         return "rgba(0, 0, 0,0.5)";
       }
+    */
   }
 
 
@@ -408,31 +435,83 @@ var  SSAConflict = (function(){
 
   var unempIndicator = function(dataUnem,color,stroke, markers, id){
     
-    var maxUnem = 0, minUnem = 100000000;
+    var maxUnem = 0, minUnem = 100000000, marginRight=0.03*window.innerWidth;
 
     for(var i=0;i<dataUnem.length;i++){
-      if(dataUnem[i].avg_v.value > maxUnem){
-        maxUnem = dataUnem[i].avg_v.value;
+      if(dataUnem[i].value > maxUnem){
+        maxUnem = dataUnem[i].value;
       }
-      if(dataUnem[i].avg_v.value < minUnem){
-        minUnem = dataUnem[i].avg_v.value;
+      if(dataUnem[i].value < minUnem){
+        minUnem = dataUnem[i].value;
       }
+    }
+    //Iam going to set the impact domain once while drawing  the SSA values
+    if(!impactDomain.length){
+      impactDomain[0] = Math.ceil((maxUnem-dataUnem[0].value)*2);
+      impactDomain[1] = Math.ceil((minUnem-dataUnem[0].value)*2);
+      impactDomainInitialValue = dataUnem[0].value;
     }
     var lines = [];
     var x = d3.scaleLinear()
               .domain([1989, 2014])
-              .range([0, w-40]);
+              .range([0, w-marginRight]);
     var y = d3.scaleLinear()
-              .domain([minUnem, maxUnem])
+              .domain([impactDomain[0], impactDomain[1]])
               .range([0, window.innerHeight*.15]);
     
-    for(var i=0;i<dataUnem.length;i++){
+    var initialValue = dataUnem[0].value;
+
+    var interval = parseInt((impactDomain[0] - impactDomain[1])/3)+1;
+    for(var i=impactDomain[1];i<=impactDomain[0];){
+      debugger;
+      indi.append("text")
+        .attr("x", 10+x(1989))
+        .attr("y", y(i)+10)
+        .attr("text-anchor","middle")
+        .attr("alignment-baseline","central")
+        .style("fill",baseColor)
+        .style("font-size","12px")
+        .text(parseInt(impactDomainInitialValue + i));  
+      i = i + interval;
+    }
+    indi.append("line")
+             .attr("x1", x(1989))
+             .attr("x2", x(1989))
+             .attr("y1", y(impactDomain[1])+10)
+             .attr("y2", y(impactDomain[0])+10)
+            .style("stroke",baseColor)
+            .style("stroke-width",1);
+    
+    indi.append("circle")
+          .attr("cx", x(1989)+2)
+          .attr("cy", y(initialValue - impactDomainInitialValue))
+          .attr("r", 2 )
+          .attr("fill",color)
+    
+    lines.push({
+          "x" : x(1989),
+          "y" : y(initialValue - impactDomainInitialValue)
+    });
+    for(var i=1;i<dataUnem.length;i++){
       var xp = x(dataUnem[i].key);
-      var yp =  y(dataUnem[i].avg_v.value);
+      var diff = dataUnem[i].value-impactDomainInitialValue ;
+      if(diff > impactDomain[0]){
+        console.log("ouch");
+        diff = impactDomain[0];
+      }else if(diff < impactDomain[1]){
+        diff = impactDomain[1];
+        console.log("ouch");
+      }
+      var yp =  y(diff);
       lines.push({
           "x" : xp,
           "y" : yp
       });
+      // indi.append("circle")
+      //     .attr("cx", xp)
+      //     .attr("cy", yp)
+      //     .attr("r", 2 )
+      //     .attr("fill",color)
     }
 
     var lineFunction = d3.line()
@@ -451,7 +530,10 @@ var  SSAConflict = (function(){
 var filterEvents = function(){
 
      $(".header .sub").on("click",function(){
-        if(!$(this).hasClass("disabled")){
+        if(changed == "indicator"){
+          SSAConflict.clearIndicator();
+          SSAConflict.renderIndicators();
+        }else if(!$(this).hasClass("disabled")){
           SSAConflict.clear();
           SSAConflict.init();  
           $(this).addClass("disabled");
@@ -461,7 +543,7 @@ var filterEvents = function(){
      $(".filter").on("click",function(){
         $(this).find(".hidden").toggle();
      });
-     $(".filter .hidden .label").on("click",function(){   
+     $(".filter.conflicts .hidden .label").on("click",function(){   
          var el = $(this);
          if(!el.hasClass("active")){
             $(".filter .hidden .label.active").removeClass("active");
@@ -473,6 +555,20 @@ var filterEvents = function(){
             }else{
               conflictTypes = [val];
             }
+         }
+         $(".header .sub").removeClass('disabled');
+         el.parent().find(".hidden").hide();
+     });  
+
+     $(".filter.indicators .hidden .label").on("click",function(){   
+         changed = "indicator";
+         var el = $(this);
+         if(!el.hasClass("active")){
+            $(".filter .hidden .label.active").removeClass("active");
+            el.addClass("active");
+            el.parent().parent().find(".selected").text(el.data("text"));
+            indicatorType = el.data("val");
+            impactDomain = [];
          }
          $(".header .sub").removeClass('disabled');
          el.parent().find(".hidden").hide();
@@ -541,7 +637,10 @@ var filterEvents = function(){
         $("#timeline").empty();
         $("#indicator").empty();
         $("#mapp #markers").empty();
-        $("#mapp .event_point").remove();
+        $(".eventPoint,.eventHomeCountry").remove();
+    },
+    clearIndicator : function(){
+      $("#indicator").empty();
     },
     resize : function(wi){
       w = wi;
@@ -554,14 +653,22 @@ var filterEvents = function(){
           SSAConflict.drawTimeline();
           SSAConflict.drawGeoMap();
           SSAConflict.renderIndicators();
+          highlighCountry();
         });
     },
 
     renderIndicators : function(){
-        var q = es_queries["unemployment_data"];
+        var indiq = es_queries["indicator"][indicatorType];
+        var q = indiq["q"]["ssa"];
         runQ(q,function(data){
-            unempIndicator(data.aggregations.by_year.buckets,baseColor,1);
-        },"unemp","c_unemp");
+
+            unempIndicator(data.aggregations.by_year.buckets.map(function(d){
+              return {
+                "key" : d.key,
+                "value" : d.avg_v.value
+              }
+            }),baseColor,1);
+        },indiq.index,indiq.type);
     }
 
   }
@@ -571,8 +678,5 @@ var filterEvents = function(){
 
 SSAConflict.setup();
 SSAConflict.init();
-
-
-
 SSAConflict.filterEvents();
 

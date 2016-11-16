@@ -14,8 +14,8 @@ var $;
 
 
 var elasticsearch = require('elasticsearch');
-var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
-//var url = "localhost:9200";
+//var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
+var url = "localhost:9200";
 var client = new elasticsearch.Client({
   host: url
 });
@@ -76,9 +76,12 @@ function parseHeadlines(yr,rows,ct,subpage){
     rows[ct] = rows[ct].replace(/(<b>|<\/b>)/g,"");
     $ = cheerio.load(rows[ct]);
     var headline = $("a").html();
+    var link = $("a").attr("href");
     headline = headline ? headline.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
+    link = link ? link.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
     headline = headline.toLowerCase();
     headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
+    headline["link"] = link;
     //getTopics(headline);
     if(headline){
       headlines.push(headline);

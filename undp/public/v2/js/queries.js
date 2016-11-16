@@ -65,7 +65,7 @@ var es_queries = {
       "country_dyads" : {
         "terms": {
           "field": "ccd",
-          "size": 100
+          "size": 5
         },
         "aggs": {
           "dyads": {
@@ -138,69 +138,107 @@ var es_queries = {
       }
     }
   },
-   "unemployment_data" : {
-    "size" : 0,
-    "query": {
-      "match_all" : {}
-    },
-    "aggs": {
-      "by_year": {
-        "terms": {
-          "field": "yr",
-          "size": 100
+  "indicator" : {
+    "unemp" :{ 
+      "index" : "unemp",
+      "type" : "c_unemp",
+      "q" : {
+        "ssa" : {
+          "size" : 0,
+          "query": {
+            "match_all" : {}
+          },
+          "aggs": {
+            "by_year": {
+              "terms": {
+                "field": "yr",
+                "size": 100
+              },
+              "aggs" : {
+                        "avg_v" : { "avg" : { "field" : "value"}}
+                      }
+            }
+          }
         },
-        "aggs" : {
-                  "avg_v" : { "avg" : { "field" : "value"}}
-                }
-      }
-    }
-  },
-  "unemployment_data_filtered_not" : {
-    "size" : 0,
-    "query": {
-      "bool": {
-        "must_not": [
-          {"terms": {
-            "ccode": ["DZA","SOM","ZAF","COD","SDN","NGA","AGO","ETH","UGA","SLE","BDI","CAF","KEN","RWA","LBR","LBY","SSD","TCD","MLI","SEN","MOZ","CIV","COG","CMR","NER","TGO","GIN","ZWE","DJI","ERI","MDG","GHA","MRT","GNB","NAM","TZA","ZMB","MAR","COM","LSO","SWZ","TUN","BWA"]
-          }}
-        ]
-      }
-    },
-    "aggs": {
-      "by_year": {
-        "terms": {
-          "field": "yr",
-          "size": 100
-        },
-        "aggs" : {
-                  "avg_v" : { "avg" : { "field" : "value"}}
-                }
-      }
-    }
-  },
-
-  "unemployment_data_filtered" : {
-    "size" : 0,
-    "query": {
-      "bool": {
-        "must": [
-          {"terms": {
-            "ccode": ["DZA","SOM","ZAF","COD","SDN","NGA","AGO","ETH","UGA","SLE","BDI","CAF","KEN","RWA","LBR","LBY","SSD","TCD","MLI","SEN","MOZ","CIV","COG","CMR","NER","TGO","GIN","ZWE","DJI","ERI","MDG","GHA","MRT","GNB","NAM","TZA","ZMB","MAR","COM","LSO","SWZ","TUN","BWA"]
-          }}
-        ]
+        "country" : {
+          "sort": [
+            {
+              "yr": {
+                "order": "asc"
+              }
+            }
+          ], 
+          "size" : 1000,
+          "query": {
+            "bool": {
+              "must": [
+                {"terms": {
+                  "ccode": ["KEN"]
+                }}
+              ]
+            }
+          }
+        }
       }
     },
-    "aggs": {
-      "by_year": {
-        "terms": {
-          "field": "yr",
-          "size": 100
+    "cr" : {
+      "index" : "cr",
+      "type" : "cr_country_year",
+      "q" : {
+        "ssa" : {
+          "size" : 0,
+          "query": {
+            "bool": {
+              "must": [
+                {"range": {
+                  "yr": {
+                    "gte": 1989
+                  }
+                }}
+              ]
+            }
+          },
+          "aggs": {
+            "by_year": {
+              "terms": {
+                "field": "yr",
+                "size": 100,
+                "order": {
+                  "_term": "asc"
+                }, 
+              },
+              "aggs" : {
+                        "avg_v" : { "avg" : { "field" : "value"}}
+                      }
+            }
+          }
         },
-        "aggs" : {
-                  "avg_v" : { "avg" : { "field" : "value"}}
-                }
+        "country" : {
+          "sort": [
+            {
+              "yr": {
+                "order": "asc"
+              }
+            }
+          ], 
+          "size" : 1000,
+          "query": {
+            "bool": {
+              "must": [
+                {"terms": {
+                  "ccode": ["KEN"]
+                }},
+                {"range": {
+                  "yr": {
+                    "gte": 1989
+                  }
+                }}
+              ]
+            }
+          }
+        }
       }
-    }
   }
-
+  }
+   
 }

@@ -1,6 +1,7 @@
 $base-color: #4A4A4A;
 $bg-color: #f9f9f9;
 $highlight-color : #EF5050;
+$second-highlight-color: #006e98;
 
 body{
 	padding: 0;
@@ -38,15 +39,20 @@ body{
 			}
 		}
 		.title{
-			width: 93%;
+			width: 100%;
 			display: inline-block;
 			font-size: 105%;
 			vertical-align: top;
-			font-weight: bold;
+
+			.dynamic{
+				display: inline-block;
+				font-weight: bold;
+			}
 			.filter{
 				cursor: pointer;
 				display: inline-block;
 				position: relative;
+				font-weight: bold;
 				.selected{
 					display: inline-block;
 					color: $highlight-color;
@@ -75,6 +81,14 @@ body{
 						width: 100%;
 					}
 				}
+				&.indicators{
+					.selected{
+						color: $second-highlight-color;	
+					}
+					.dd{
+						background-image: url(../images/dd_blue.png);
+					}
+				}
 			}
 			.label{
 				display: inline-block;
@@ -82,16 +96,19 @@ body{
 		}
 	}
 	.user_selection{
-		height: 10%;
+		height: 20%;
 		width: 96%;
 		margin-left: 4%;
 		padding-left: 1%;
 		line-height: 150%;
+		div{
+			display: inline-block;
+		}
 	}
 	#mapp{
 		background-color: transparent;
-		height: 80%;
-		width: 95%;
+		height: 65%;
+		width: 90%;
 		margin-left: 5%;
 		color: #333;
 
@@ -134,7 +151,7 @@ body{
 	}
 	.viz{
 		width: 100%;
-		height: 92%;
+		height: 90%;
 		.indicator{
 			height: 20%;
 		}
