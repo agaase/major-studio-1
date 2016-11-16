@@ -113,7 +113,7 @@ var  SSAConflict = (function(){
               weight: 0.8
           }
         //This is just stupid.
-        var zoomLevel = window.innerHeight*.004;
+        var zoomLevel = 3 + parseInt(window.innerHeight/800);
         mapObj = L.map('mapp',{
             center : [10.4530702,20.035771],
             zoom : zoomLevel,
@@ -449,8 +449,8 @@ var  SSAConflict = (function(){
     }
     //Iam going to set the impact domain once while drawing  the SSA values
     if(!impactDomain.length){
-      impactDomain[0] = Math.ceil((maxUnem-dataUnem[0].value)*2);
-      impactDomain[1] = Math.ceil((minUnem-dataUnem[0].value)*2);
+      impactDomain[0] = Math.ceil((maxUnem-dataUnem[0].value)*3);
+      impactDomain[1] = Math.ceil((minUnem-dataUnem[0].value)*3);
       impactDomainInitialValue = dataUnem[0].value;
     }
     var lines = [];

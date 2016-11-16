@@ -65,7 +65,7 @@ var es_queries = {
       "country_dyads" : {
         "terms": {
           "field": "ccd",
-          "size": 50
+          "size": 5
         },
         "aggs": {
           "dyads": {
