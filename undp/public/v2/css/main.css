@@ -100,8 +100,7 @@ body {
   width: 60%;
   float: left; }
   .right .keys {
-    height: 8%;
-    margin-right: 5%; }
+    height: 8%; }
     .right .keys .parameter {
       float: right;
       padding-top: 3%;
@@ -119,11 +118,11 @@ body {
     width: 100%;
     height: 90%; }
     .right .viz .indicator {
-      height: 30%; }
+      height: 26%; }
     .right .viz .timeline {
       height: 5%; }
     .right .viz #dyads {
-      height: 65%;
+      height: 69%;
       overflow: scroll; }
       .right .viz #dyads svg {
         float: left; }

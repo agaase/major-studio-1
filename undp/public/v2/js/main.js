@@ -112,10 +112,12 @@ var  SSAConflict = (function(){
               color : "rgba(255,255,255,1)",
               weight: 0.8
           }
+        //This is just stupid.
+        var zoomLevel = window.innerHeight*.004;
         mapObj = L.map('mapp',{
             center : [10.4530702,20.035771],
-            zoom : 3,
-            minZoom : 3,
+            zoom : zoomLevel,
+            minZoom : zoomLevel,
             dragging : true,
             touchZoom  : false,
             scrollWheelZoom : true,

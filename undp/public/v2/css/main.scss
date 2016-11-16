@@ -128,7 +128,6 @@ body{
 	float: left;
 	.keys{
 		height: 8%;
-		margin-right: 5%;
 		.parameter{
 			float: right;
 		    padding-top: 3%;
@@ -153,13 +152,13 @@ body{
 		width: 100%;
 		height: 90%;
 		.indicator{
-			height: 30%;
+			height: 26%;
 		}
 		.timeline{
 			height: 5%;
 		}
 		#dyads{
-			height: 65%;
+			height: 69%;
 			overflow: scroll;
 			svg{
 				float: left;
