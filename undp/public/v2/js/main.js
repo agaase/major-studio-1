@@ -160,6 +160,7 @@ var  SSAConflict = (function(){
       var countryCode = countryOfDyads[d].ccd;
       var seq = countryOfDyads[d].seq;
       var max = positions.length > 75 ? 75 : positions.length;
+      var smallCircleRadius = window.innerHeight*0.002;
       for(var i=0;i<max;i++){
         var latlong = mapObj.latLngToLayerPoint(positions[i]);
         var marker = L.circleMarker(positions[i],{
@@ -170,6 +171,7 @@ var  SSAConflict = (function(){
 
         mapObj.addLayer(marker);
       }
+      var bigCircleRadius = window.innerHeight*0.007;
       for(var i=0;i<1;i++){
         var latlong = mapObj.latLngToLayerPoint(positions[i]);
         var marker = L.circleMarker(positions[i],{
@@ -231,7 +233,7 @@ var  SSAConflict = (function(){
     var marginLeft = 10, marginRight=0.03*window.innerWidth;
  
     var wi = w-marginLeft-marginRight;
-    var he = 5;
+    var he = parseInt(window.innerHeight*.009);
     //var he = ($("#dyads").height()-marginTop - 10)/dyadsCt;
    // he = he > 30 ? 30 : (he < 10 ? 10 : he );
 
