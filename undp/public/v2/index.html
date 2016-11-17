@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<link rel="stylesheet" href="css/leaflet.min.css" />
 	<script src="js/lib/d3.min.js"></script>
@@ -14,11 +15,16 @@
 	</style>
 </head>
 <body>
+	<div class='tooltipCont'>
+		<div class='tooltip'></div>
+	</div>
 	<div class='left'>
 		<div class='header'>
 			<div class='title'>
+			<div class='label country'>Algeria</div>
 				<div class='label'>Impact of </div>
-				<div class='filter conflicts'>
+				<div data-help='i1' class='label info'>Conflicts </div>
+				<!-- <div class='filter conflicts'>
 				<div class='selected'>Conflicts</div><div class='dd'></div>
 				<div class='hidden'>
 					<div data-val='0' data-text='Conflicts' class='label active'>All</div>
@@ -26,16 +32,14 @@
 					<div data-val='2' data-text='Internal conflicts' class='label'>Internal conflicts</div>
 					<div data-val='3' data-text='One sided violence' class='label'>One sided violence</div>
 				</div>
-				</div>
+				</div> -->
 				<div class='label'> on </div>
 				<div class='filter indicators'>
-					<div class='selected'>Primary Enrollment</div><div class='dd'></div>
+					<div class='selected'>Unemployment</div><div class='dd'></div>
 					<div class='hidden'>
-					<div data-val='unemp' data-text="Unemployment" class='label'>Unemployment</div>
-					<div data-val='cr' data-text="Primary Enrollment" class='label active'>Primary Enrollment</div>
+					<div data-val='unemp' data-text="Unemployment" class='label active'>Unemployment</div>
+					<div data-val='cr' data-text="Primary Enrollment" class='label'>Primary Enrollment</div>
 				</div>
-				<div class='label'> in </div>
-				<div class='label dynamic'>SSA</div>
 				</div>
 				
 			</div>
@@ -43,18 +47,36 @@
 		</div>
 
 		<div class='user_selection'>
-			<div class='static'>There are over</div> <div class='dynamic ct'></div> different types of conflicts in <div class='dynamic co'></div><div class='static'> with </div><div class='dynamic ev'></div> <div class='static'> different conflict events. </div>
+			<div>
+			There are over<div class='dynamic ct'> ___ </div> different types of conflicts in <div class='dynamic co'>____</div>
+			</div>
+			<div>Out of which there are - 
+			</div>
+		</div>
+		<div class='ctypes'>
+			<div data-type="1" class='ctype'>
+				<div class='btn'></div>
+				<div data-help='ct1' class='label info'>Government Involved</div>
+			</div>
+			<div data-type="2" class='ctype'>
+				<div class='btn'></div>
+				<div data-help='ct2' class='label info'>Between Groups</div>
+			</div>
+			<div data-type="3" class='ctype'>
+				<div class='btn'></div>
+				<div data-help='ct3' class='label info'>One sided violence</div>
+			</div>
 		</div>
 		<div id="mapp"></div>
 	</div>
 	<div class="right">
 		<div class="keys">
 			<div class='legends'>
-				<div class='legend second'></div>
-				<div class='legend first'>[SSA]</div>
+				<div class='legend first'>[Africa / </div>
+				<div class='legend second'>&nbsp;Country]</div>
 			</div>
 			<div class='parameter'>
-				<div class='label'>Unemployment in %</div>
+				<div class='label info'></div>
 			</div>
 		</div>
 		<div class='viz'>

@@ -64,7 +64,7 @@ body {
     color: #039be5; }
 
 .outerContainer {
-  padding: 0 25px;
+  margin: 35px 25px;
   height: 75vh;
   overflow: scroll; }
   .outerContainer::-webkit-scrollbar {

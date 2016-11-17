@@ -14,8 +14,8 @@ var $;
 
 
 var elasticsearch = require('elasticsearch');
-//var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
-var url = "localhost:9200";
+var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
+//var url = "localhost:9200";
 var client = new elasticsearch.Client({
   host: url
 });

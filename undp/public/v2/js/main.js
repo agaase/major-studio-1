@@ -8,13 +8,23 @@ var timePeriod = {
 
 var bgColor = "#f9f9f9"
 var baseColor = "#4A4A4A";
+var baseColorLight = "#cccccc";
 var highlightColor = "#EF5050";
 var secondHighlightColor = "#006e98"
 
-var conflictTypes = [1,2,3], indicatorType = "unemp", changed = "indicator", countrySelected = ["Algeria","DZA"];
+var helpText = {
+  "cr" : "Total enrollment in primary education, regardless of age, expressed as a percentage of the population of official primary education age.<br> ",
+  "unemp" : "Unemployment, total (% of total labor force) (modeled ILO estimate)",
+  "ct1" : "Fighting either between two states, or between a state and a rebel group that challenges it",
+  "ct2" : "Conflicts in which none of the warring parties is a state",
+  "ct3" : "The use of armed force by the government of a state or by a formally organized group against civilians which results in at least 25 deaths in a year",
+  "i1" : "Conflict here specifically means use of violence during a disagreement between two groups either of which can be government or not.<br> <br> Fatalities Scale <span class='scale' style='color:#F3BE8A;'>< 10</span><span class='scale' style='color:#E2825F;'>10-100</span><span class='scale' style='color:#C71F17;'>100-500</span><span class='scale' style='color:#8A0D0A;'>500-5000</span><span class='scale' style='color:#8A0D0A;'>>5000(spike)</span>"
+}
+
+var conflictTypes = [1,2,3], indicatorType = "unemp", indicator = "Unemployment", changed, countrySelected = ["Algeria","DZA"];
 
 var  SSAConflict = (function(){
-  var w = window.innerWidth*.6, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries, impactDomain=[], impactDomainInitialValue;
+  var w = window.innerWidth*.57, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries, impactDomain=[];
   var yr1 = 1989, yr2=2015, lineTypes = ["0","2","8"], mainColor = "#00695c";
   
   var runQ = function(q,c,ind,type){
@@ -34,22 +44,58 @@ var  SSAConflict = (function(){
   var highlighCountry = function(cname,c){
       cname  = cname || countrySelected[0];
       c = c || countrySelected[1];
-      $(".header .title .dynamic").text(cname);
-      $(".user_selection .ct").text( $(".ehcc_"+c).length);
-      $(".user_selection .co").text( cname);
-      $(".user_selection .ev").text( $(".epc_"+c).length);
+      $(".header .title .country").text(cname);
+      $(".user_selection").empty();
 
+      $(".user_selection").append("<div>There are over<div class='dynamic'>"+$(".ehcc_"+c).length+"</div>different types of conflicts in</div><div class='dynamic'>"+cname+"</div>Out of which there are ")
+
+      $(".user_selection .ct").empty().text( $(".ehcc_"+c).length);
+      $(".user_selection .co").text( cname);
+      
+      if(conflictTypes.indexOf(1)>-1){
+        var conflicts = $("[ccd='"+c+"'] .dt_1").length;
+        if(conflicts)
+        $(".user_selection").append("<div class='dynamic'>"+conflicts+" government conflicts</div> ,")
+      }  
+      if(conflictTypes.indexOf(2)>-1){
+        conflicts = $("[ccd='"+c+"'] .dt_2").length;
+        if(conflicts)
+        $(".user_selection").append("<div class='dynamic'>"+conflicts+" group conflicts</div> , and")
+      }
+      if(conflictTypes.indexOf(3)>-1){
+        conflicts = $("[ccd='"+c+"'] .dt_3").length;
+        if(conflicts)
+        $(".user_selection").append("<div class='dynamic'>"+conflicts+" one sided violence</div>  conflicts");
+      }
+
+      $(".user_selection").append("&nbsp;.Together they have resulted in<div class='dynamic'>"+ $(".epc_"+c).length+"</div>different conflict events</div>");
+
+      var p1 = $("#dyads").position().top;
+      var p2 = $(".countryDyadsCont[ccd='"+c+"']").position().top;
+      var h = $("#dyads").height();
+      if(p2 > (p1+h)){
+        $("#dyads").animate({
+          "scrollTop" : p2-p1
+        });
+      }else{
+        $("#dyads").animate({
+          "scrollTop" : 0
+        });
+      }
+      /*
       d3.selectAll(".eventHomeCountry,.eventPoint")
         .style("stroke",baseColor)
         .style("stroke-width",1);
-
+      */
       d3.selectAll(".countryLeftBorder")
         .style("stroke",baseColor)
-        .style("stroke-width",1);
+        .style("stroke-width",0.2);
 
+      /*  
       d3.selectAll(".ehcc_"+c+",.epc_"+c)
         .style("stroke",highlightColor)
         .style("stroke-width",3);
+      */
 
       d3.selectAll(".clb_"+c)
         .style("stroke",highlightColor)
@@ -74,7 +120,6 @@ var  SSAConflict = (function(){
   var highlightDyad = function(id) {
     var dy = countryOfDyads[id];
     $(".user_selection").html(dy.d_name + "(" +dy.country+ ")" + "<br>" + dy.conflicts +" conflict events" + "<br>" + dy.fatalities +" fatalities");
-
 
     var h =  $("#d_"+id).parent().parent().height();
     var pos = $("#d_"+id).position().top;
@@ -108,12 +153,12 @@ var  SSAConflict = (function(){
         var myCustomStyle = {
               fill: true,
               fillColor: baseColor,
-              fillOpacity: 0.3,
+              fillOpacity: 0.2,
               color : "rgba(255,255,255,1)",
               weight: 0.8
           }
         //This is just stupid.
-        var zoomLevel = 3 + parseInt(window.innerHeight/800);
+        var zoomLevel = 3 + parseInt((window.innerHeight-700)/400)*.5;
         mapObj = L.map('mapp',{
             center : [10.4530702,20.035771],
             zoom : zoomLevel,
@@ -126,23 +171,29 @@ var  SSAConflict = (function(){
             zoomControl : false,
             attributionControl : false
         });
+      }
         L.geoJson(africa, {
             clickable: true,
             style: myCustomStyle,
             onEachFeature : function(d,l){
               var c = d.properties.iso_a3;
               var cname = d.properties.sovereignt;
-              l.on("click",function(){
-                highlighCountry(cname,c);
-              });
               if(conflictCountries.indexOf(c)>-1){
-                l.setStyle({fillOpacity: 0.7});  
+                if(l.options)
+                l.options.className = "countryGeo country_"+c;
+                l.setStyle({
+                  fillOpacity: 0.4
+                });
+                l.on("click",function(){
+                  highlighCountry(cname,c);
+                  d3.selectAll(".countryGeo").style("fill-opacity",0.3);
+                  d3.selectAll(".country_"+c).style("fill-opacity",0.5);
+                }); 
               }
               
             }
         }).addTo(mapObj);
-
-      }
+      
       drawConnections();    
       
   }
@@ -156,33 +207,32 @@ var  SSAConflict = (function(){
                       .attr("id","markers");
 
     for(var d in countryOfDyads){
-      var positions = countryOfDyads[d].positions;
+      var events = countryOfDyads[d].events;
       var countryCode = countryOfDyads[d].ccd;
       var seq = countryOfDyads[d].seq;
-      var max = positions.length > 75 ? 75 : positions.length;
+      var max = events.length > 75 ? 75 : events.length;
       var smallCircleRadius = window.innerHeight*0.002;
       for(var i=0;i<max;i++){
-        var latlong = mapObj.latLngToLayerPoint(positions[i]);
-        var marker = L.circleMarker(positions[i],{
-          radius : 0.3,
-          color : baseColor,
-          className : "eventPoint epc_"+countryCode + " epd_"+d
+        var latlong = mapObj.latLngToLayerPoint(events[i].position);
+        var marker = L.circleMarker(events[i].position,{
+          radius : 0.6,
+          color : getColor2(events[i].fatalities),
+          className : "eventPoint epc_"+countryCode + " epd_"+d,
+          toColor : getColor2(events[i].fatalities)
         });
 
         mapObj.addLayer(marker);
       }
       var bigCircleRadius = window.innerHeight*0.007;
       for(var i=0;i<1;i++){
-        var latlong = mapObj.latLngToLayerPoint(positions[i]);
-        var marker = L.circleMarker(positions[i],{
+        var latlong = mapObj.latLngToLayerPoint(events[i].position);
+        var marker = L.circleMarker(events[i].position,{
           radius : 4, 
           color : baseColor,
           className : "eventHomeCountry ehcc_"+countryCode + " ehcd_"+d,
           d_id : d
         });
-        marker.on("click",function(){
-          alert("somthing");
-        });
+        marker.bindPopup(countryOfDyads[d].d_name + "<br>" + countryOfDyads[d].country);
         mapObj.addLayer(marker);
         lines = [];
         lines.push({
@@ -224,13 +274,15 @@ var  SSAConflict = (function(){
                    .attr("class","countryDyadsCont")
                    .attr("ccd", ccd);
     }
+    var type = data[0]._source.type_of_conflict;
+
     dyadD = countryDyadsCont.append("g")
                    .attr("name", data[0]._source.d_name)
-                   .attr("class","countryDyad")
+                   .attr("class","countryDyad dt_"+type)
                    .attr("id", "d_"+data[0]._source.d_id)
                    .attr("ccd", ccd);
 
-    var marginLeft = 10, marginRight=0.03*window.innerWidth;
+    var marginLeft = 10, marginRight=0;
  
     var wi = w-marginLeft-marginRight;
     var he = parseInt(window.innerHeight*.009);
@@ -242,7 +294,7 @@ var  SSAConflict = (function(){
               .domain([0, domain])
               .range([marginLeft, wi]);
     var y = marginTop + (he)*ct;
-    var type = data[0]._source.type_of_conflict;
+    
     
 
     if(newCountry){
@@ -260,7 +312,7 @@ var  SSAConflict = (function(){
              .attr("x2", 5)
              .attr("y1", y-he/2)
              .attr("y2", y+he/2)
-            .style("stroke",secondHighlightColor)
+            .style("stroke",baseColor)
             .attr("class","countryLeftBorder clb_"+ccd)
             .style("stroke-width",0.2);
     //.style("stroke-dasharray",lineTypes[type-1])
@@ -269,7 +321,7 @@ var  SSAConflict = (function(){
              .attr("x2", w-marginRight)
              .attr("y1", y)
              .attr("y2", y)
-            .style("stroke",secondHighlightColor)
+            .style("stroke",baseColor)
             .attr("id", "cdt_"+data[0]._source.d_id)
             .attr("class","countryDyadType")
             .style("stroke-width",0.1);
@@ -277,10 +329,13 @@ var  SSAConflict = (function(){
     for(var i=0;i<data.length;i++){
         var event = data[i]._source;
         //Just assuming here, all the events of dyads happen in same country
-        countryOfDyads[event.d_id] = countryOfDyads[event.d_id] || {"positions" : []};
+        countryOfDyads[event.d_id] = countryOfDyads[event.d_id] || {"events" : []};
         countryOfDyads[event.d_id]["type"] = event.type_of_conflict;
         countryOfDyads[event.d_id]["seq"] = ct;
-        countryOfDyads[event.d_id]["positions"].push([event.latitude,event.longitude]);
+        countryOfDyads[event.d_id]["events"].push({
+          "position" : [event.latitude,event.longitude],
+          "fatalities" : event.best_est
+        });
         countryOfDyads[event.d_id]["country"] = (event.country);
         countryOfDyads[event.d_id]["ccd"] = (event.ccd);
         countryOfDyads[event.d_id]["d_name"] = (event.d_name);
@@ -407,7 +462,7 @@ var  SSAConflict = (function(){
 
   var drawTimeline = function(){
 
-      var marginTop =20, marginRight=window.innerWidth*0.015, timeInterval = 5, marginLeft=30;
+      var marginTop =20, marginRight=0, timeInterval = 5, marginLeft=30;
 
       var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
 
@@ -424,8 +479,9 @@ var  SSAConflict = (function(){
             .attr("text-anchor","middle")
             .attr("alignment-baseline","central")
             .style("fill",baseColor)
-            .style("font-size","20px")
+            .style("font-size",window.innerHeight*.03+"px")
             .text(yrStart);
+
         if(yrStart == timePeriod.to){
           break;
         }
@@ -438,84 +494,34 @@ var  SSAConflict = (function(){
   };
 
   var unempIndicator = function(dataUnem,color,stroke, markers, id){
-    
-    var maxUnem = 0, minUnem = 100000000, marginRight=0.03*window.innerWidth;
+    var  marginRight=0,lines = [];
 
-    for(var i=0;i<dataUnem.length;i++){
-      if(dataUnem[i].value > maxUnem){
-        maxUnem = dataUnem[i].value;
-      }
-      if(dataUnem[i].value < minUnem){
-        minUnem = dataUnem[i].value;
-      }
-    }
-    //Iam going to set the impact domain once while drawing  the SSA values
-    if(!impactDomain.length){
-      impactDomain[0] = Math.ceil((maxUnem-dataUnem[0].value)*3);
-      impactDomain[1] = Math.ceil((minUnem-dataUnem[0].value)*3);
-      impactDomainInitialValue = dataUnem[0].value;
-    }
-    var lines = [];
     var x = d3.scaleLinear()
               .domain([1989, 2014])
               .range([0, w-marginRight]);
     var y = d3.scaleLinear()
-              .domain([impactDomain[0], impactDomain[1]])
-              .range([0, window.innerHeight*.15]);
+              .domain(impactDomain)
+              .range([0, window.innerHeight*.9*.26]);
     
-    var initialValue = dataUnem[0].value;
-
-    var interval = parseInt((impactDomain[0] - impactDomain[1])/3)+1;
-    for(var i=impactDomain[1];i<=impactDomain[0];){
-      debugger;
-      indi.append("text")
-        .attr("x", 10+x(1989))
-        .attr("y", y(i)+10)
-        .attr("text-anchor","middle")
-        .attr("alignment-baseline","central")
-        .style("fill",baseColor)
-        .style("font-size","12px")
-        .text(parseInt(impactDomainInitialValue + i));  
-      i = i + interval;
-    }
-    indi.append("line")
-             .attr("x1", x(1989))
-             .attr("x2", x(1989))
-             .attr("y1", y(impactDomain[1])+10)
-             .attr("y2", y(impactDomain[0])+10)
-            .style("stroke",baseColor)
-            .style("stroke-width",1);
-    
-    indi.append("circle")
-          .attr("cx", x(1989)+2)
-          .attr("cy", y(initialValue - impactDomainInitialValue))
-          .attr("r", 2 )
+    $(".keys .parameter .label").text(indicator);
+    $(".keys .parameter .label").attr("data-help",indicatorType);
+    var indi_g = indi.append("g")
+        .attr("id",id);
+    indi_g.append("circle")
+          .attr("cx", x(dataUnem[0].key)+6)
+          .attr("cy", y(dataUnem[0].value))
+          .attr("r", 6 )
+          .attr("class","tooltipValue")
+          .attr("value",dataUnem[0].value.toFixed(2)+"("+dataUnem[0].key+")")
           .attr("fill",color)
-    
-    lines.push({
-          "x" : x(1989),
-          "y" : y(initialValue - impactDomainInitialValue)
-    });
-    for(var i=1;i<dataUnem.length;i++){
+   
+    for(var i=0;i<dataUnem.length;i++){
       var xp = x(dataUnem[i].key);
-      var diff = dataUnem[i].value-impactDomainInitialValue ;
-      if(diff > impactDomain[0]){
-        console.log("ouch");
-        diff = impactDomain[0];
-      }else if(diff < impactDomain[1]){
-        diff = impactDomain[1];
-        console.log("ouch");
-      }
-      var yp =  y(diff);
+      var yp =  y(dataUnem[i].value);
       lines.push({
           "x" : xp,
           "y" : yp
       });
-      // indi.append("circle")
-      //     .attr("cx", xp)
-      //     .attr("cy", yp)
-      //     .attr("r", 2 )
-      //     .attr("fill",color)
     }
 
     var lineFunction = d3.line()
@@ -523,24 +529,57 @@ var  SSAConflict = (function(){
                           .x(function(d) { return d.x; })
                           .y(function(d) { return d.y; })
 
-    var lineGraph = indi.append("path")
+    var lineGraph = indi_g.append("path")
                               .attr("d", lineFunction(lines))
                               .attr("stroke", color )
                               .attr("fill", "none")
-                              .attr("id",id)
                               .style("stroke-width",stroke);
+          
+    tooltipEvents();
   };
 
+var tooltipEvents = function(){
+  $(".info").unbind('mouseenter mouseleave').hover(function(){
+        $(".tooltip").css({
+          "top" : event.y + "px",
+          "left" : event.x + "px",
+        }).html(helpText[$(this).data("help")]);
+        $(".tooltipCont").show();
+    });
+    $(".tooltipValue").unbind('mouseenter mouseleave').hover(function(){
+      $(".tooltip").css({
+          "top" : event.y + "px",
+          "left" : event.x + "px",
+      }).html($(this).attr("value"));
+      $(".tooltipCont").show();
+    });
+
+    $(".tooltipCont").unbind('mouseenter mouseleave').hover(function(){
+      $(this).hide();
+    })
+};
+
 var filterEvents = function(){
+
+    $(".ctypes .ctype").on("click",function(){
+      var el = $(this);
+      var type = parseInt(el.data(type).type);
+      d3.selectAll(".countryDyadType").style("stroke",baseColor).style("stroke-width","0.2px");
+      var isActive = el.hasClass("active");
+      $(".ctypes .ctype").removeClass("active");
+      if(!isActive){
+        d3.selectAll(".dt_"+type+" .countryDyadType").style("stroke","#000").style("stroke-width","0.4px");
+        el.addClass("active");
+      }
+    });
 
      $(".header .sub").on("click",function(){
         if(changed == "indicator"){
           SSAConflict.clearIndicator();
           SSAConflict.renderIndicators();
-        }else if(!$(this).hasClass("disabled")){
-          SSAConflict.clear();
-          SSAConflict.init();  
-          $(this).addClass("disabled");
+          highlighCountry();
+          changed = "";
+          $(".header .sub").addClass('disabled');
         }
      });
 
@@ -572,6 +611,7 @@ var filterEvents = function(){
             el.addClass("active");
             el.parent().parent().find(".selected").text(el.data("text"));
             indicatorType = el.data("val");
+            indicator = el.data("text");
             impactDomain = [];
          }
          $(".header .sub").removeClass('disabled');
@@ -622,7 +662,7 @@ var filterEvents = function(){
       dyadsCont = d3.select("#dyads")
                     .append("svg")
                     .attr("width", ww)
-                    .attr("height", $("#dyads").height()*5)
+                    .attr("height", $("#dyads").height()*10)
                     .attr("id","dyadsCont");
       // dyadsCont = svg.append("g").attr("id","dyadsCont");
 
@@ -634,7 +674,7 @@ var filterEvents = function(){
       indi = d3.select(".indicator").append("svg")
                        .attr("id","indicator")
                        .attr("width", ww)
-                       .attr("height", window.innerHeight*.19);
+                       .attr("height", window.innerHeight*.9*.26);
     },
     clear : function(){
         $("#dyadsCont").empty();
@@ -642,6 +682,7 @@ var filterEvents = function(){
         $("#indicator").empty();
         $("#mapp #markers").empty();
         $(".eventPoint,.eventHomeCountry").remove();
+        $(".ctypes .ctypes").removeClass("active");
     },
     clearIndicator : function(){
       $("#indicator").empty();
@@ -658,20 +699,26 @@ var filterEvents = function(){
           SSAConflict.drawGeoMap();
           SSAConflict.renderIndicators();
           highlighCountry();
+          setTimeout(function(){
+            SSAConflict.filterEvents();
+          },3000)
         });
     },
 
     renderIndicators : function(){
         var indiq = es_queries["indicator"][indicatorType];
-        var q = indiq["q"]["ssa"];
+        var q = indiq["q"]["max_min"];
         runQ(q,function(data){
-
-            unempIndicator(data.aggregations.by_year.buckets.map(function(d){
-              return {
-                "key" : d.key,
-                "value" : d.avg_v.value
-              }
-            }),baseColor,1);
+            impactDomain = [parseFloat(data.aggregations.max_v.value),parseFloat(data.aggregations.min_v.value)];
+            var q = indiq["q"]["ssa"];
+            runQ(q,function(data){
+                unempIndicator(data.aggregations.by_year.buckets.map(function(d){
+                  return {
+                    "key" : d.key,
+                    "value" : d.avg_v.value
+                  }
+                }),baseColor,1);
+            },indiq.index,indiq.type);
         },indiq.index,indiq.type);
     }
 
@@ -682,5 +729,5 @@ var filterEvents = function(){
 
 SSAConflict.setup();
 SSAConflict.init();
-SSAConflict.filterEvents();
+
 

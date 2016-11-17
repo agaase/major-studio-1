@@ -65,7 +65,7 @@ var es_queries = {
       "country_dyads" : {
         "terms": {
           "field": "ccd",
-          "size": 5
+          "size": 200
         },
         "aggs": {
           "dyads": {
@@ -143,6 +143,24 @@ var es_queries = {
       "index" : "unemp",
       "type" : "c_unemp",
       "q" : {
+        "max_min" : {
+          "size" : 0,
+          "query": {
+            "match_all" : {}
+          },
+          "aggs": {
+            "max_v": {
+              "max": {
+                "field": "value"
+              }
+            },
+            "min_v" :{
+              "min" : {
+                "field": "value"
+              }
+            }
+          }
+        },
         "ssa" : {
           "size" : 0,
           "query": {
@@ -185,6 +203,32 @@ var es_queries = {
       "index" : "cr",
       "type" : "cr_country_year",
       "q" : {
+        "max_min" : {
+          "size" : 0,
+          "query": {
+            "bool": {
+              "must": [
+                {"range": {
+                  "yr": {
+                    "gte": 1989
+                  }
+                }}
+              ]
+            }
+          },
+          "aggs": {
+            "max_v": {
+              "max": {
+                "field": "value"
+              }
+            },
+            "min_v" :{
+              "min" : {
+                "field": "value"
+              }
+            }
+          }
+        },
         "ssa" : {
           "size" : 0,
           "query": {
