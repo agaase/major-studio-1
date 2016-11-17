@@ -97,7 +97,7 @@ var Renderer = (function(){
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "http://localhost:9200/scholar/"+(type || "word") +"/_search",
+      url: "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);
