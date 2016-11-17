@@ -48,7 +48,7 @@ var  SSAConflict = (function(){
       countrySelected = [cname,c];
 
       d3.selectAll(".countryGeo").style("fill-opacity",0.3);
-      d3.selectAll(".country_"+c).style("fill-opacity",0.6);
+      d3.selectAll(".country_"+c).style("fill-opacity",0.7);
 
 
       $(".keys .legend.second").html("&nbsp;"+cname+"]")
