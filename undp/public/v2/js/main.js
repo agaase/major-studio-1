@@ -320,7 +320,7 @@ var  SSAConflict = (function(){
              .attr("y2", y+he/2)
             .style("stroke",baseColor)
             .attr("class","countryLeftBorder clb_"+ccd)
-            .style("stroke-width",0.2);
+            .style("stroke-width","0.2px");
     //.style("stroke-dasharray",lineTypes[type-1])
     dyadD.append("line")
              .attr("x1", x(0))
@@ -574,7 +574,7 @@ var filterEvents = function(){
       var isActive = el.hasClass("active");
       $(".ctypes .ctype").removeClass("active");
       if(!isActive){
-        d3.selectAll(".dt_"+type+" .countryDyadType").style("stroke","#000").style("stroke-width","0.4px");
+        d3.selectAll(".dt_"+type+" .countryDyadType").style("stroke",highlightColor).style("stroke-width",0.5);
         el.addClass("active");
       }
     });
