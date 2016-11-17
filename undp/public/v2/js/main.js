@@ -18,10 +18,10 @@ var helpText = {
   "ct1" : "Fighting either between two states, or between a state and a rebel group that challenges it",
   "ct2" : "Conflicts in which none of the warring parties is a state",
   "ct3" : "The use of armed force by the government of a state or by a formally organized group against civilians which results in at least 25 deaths in a year",
-  "i1" : "Conflict here specifically means use of violence during a disagreement between two groups either of which can be government or not.<br> <br> Fatalities Scale <span class='scale' style='color:#F3BE8A;'>< 10</span><span class='scale' style='color:#E2825F;'>10-100</span><span class='scale' style='color:#C71F17;'>100-500</span><span class='scale' style='color:#8A0D0A;'>500-5000</span><span class='scale' style='color:#8A0D0A;'>>5000(spike)</span>"
+  "i1" : "Conflict here specifically means use of violence during a disagreement between two groups either of which can be government or not. Each conflict is color coded to display the intensity in terms of deaths or fatalities that resulted in that conflict.<br> <br> Fatalities Scale <span class='scale' style='color:#F3BE8A;'>< 10</span><span class='scale' style='color:#E2825F;'>10-100</span><span class='scale' style='color:#C71F17;'>100-500</span><span class='scale' style='color:#8A0D0A;'>500-5000</span><span class='scale' style='color:#8A0D0A;'>>5000(spike)</span>"
 }
 
-var conflictTypes = [1,2,3], indicatorType = "unemp", indicator = "Unemployment", changed, countrySelected = ["Algeria","DZA"];
+var conflictTypes = [1,2,3], indicatorType = "unemp", indicator = "Unemployment", changed, countrySelected = ["South Africa","ZAF"];
 
 var  SSAConflict = (function(){
   var w = window.innerWidth*.57, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries, impactDomain=[];
@@ -44,10 +44,18 @@ var  SSAConflict = (function(){
   var highlighCountry = function(cname,c){
       cname  = cname || countrySelected[0];
       c = c || countrySelected[1];
+
+      countrySelected = [cname,c];
+
+      d3.selectAll(".countryGeo").style("fill-opacity",0.3);
+      d3.selectAll(".country_"+c).style("fill-opacity",0.6);
+
+
+      $(".keys .legend.second").html("&nbsp;"+cname+"]")
       $(".header .title .country").text(cname);
       $(".user_selection").empty();
 
-      $(".user_selection").append("<div>There are over<div class='dynamic'>"+$(".ehcc_"+c).length+"</div>different types of conflicts in</div><div class='dynamic'>"+cname+"</div>Out of which there are ")
+      $(".user_selection").append("<div>There are over<div class='dynamic'>"+$(".ehcc_"+c).length+"</div>different types of conflicts in</div><div class='dynamic'>"+cname+".</div>Out of which there are ")
 
       $(".user_selection .ct").empty().text( $(".ehcc_"+c).length);
       $(".user_selection .co").text( cname);
@@ -75,7 +83,7 @@ var  SSAConflict = (function(){
       var h = $("#dyads").height();
       if(p2 > (p1+h)){
         $("#dyads").animate({
-          "scrollTop" : p2-p1
+          "scrollTop" : $("#dyads").scrollTop() + (p2-p1-50)
         });
       }else{
         $("#dyads").animate({
@@ -186,8 +194,6 @@ var  SSAConflict = (function(){
                 });
                 l.on("click",function(){
                   highlighCountry(cname,c);
-                  d3.selectAll(".countryGeo").style("fill-opacity",0.3);
-                  d3.selectAll(".country_"+c).style("fill-opacity",0.5);
                 }); 
               }
               
@@ -462,7 +468,7 @@ var  SSAConflict = (function(){
 
   var drawTimeline = function(){
 
-      var marginTop =20, marginRight=0, timeInterval = 5, marginLeft=30;
+      var marginTop =20, marginRight=0, timeInterval = 5, marginLeft=20;
 
       var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
 
