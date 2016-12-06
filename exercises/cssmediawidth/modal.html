@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title></title>
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+		<style>
+		.row div{
+			border: 1px solid; 
+		}
+		#myModal{
+			display: none;
+			position: fixed;
+			top: 100px;
+			left: 20%;
+			padding: 20px;
+			box-shadow: 0 0 5px;
+		}
+		.btn{
+			width: 150px;
+			height: 50px;
+			border: 1px solid;
+			cursor: pointer;
+		}
+	</style>
+
+	<script type="text/javascript">
+		window.onload = function(){
+			$(".btn").on("click",function(){
+				$("#myModal").fadeIn();
+			})
+			$(".btn.close").on("click",function(){
+				$("#myModal").fadeOut();
+			})
+		}
+	</script>
+</head>
+<body>
+
+<div class='btn'>CLICK</div>
+<!-- Modal -->
+<div id='myModal'>
+  	<div class='content'>
+  	Long settled by indigenous peoples of the Dorset culture, the island was abandoned when visited by the Icelandic Viking Leif Eriksson in the 11th century, who called the new land "Vinland". The next European visitors to Newfoundland were Portuguese, Basque, Spanish, French and English migratory fishermen. The island was visited by the Genoese navigator John Cabot (Giovanni Caboto), working under contract to King Henry VII of England on his expedition from Bristol in 1497. In 1501, Portuguese explorers Gaspar Corte-Real and his brother Miguel Corte-Real charted part of the coast of Newfoundland in a failed attempt to find the Northwest Passage. (After European settlement, colonists first called the island Terra Nova, from "New Land" in Portuguese and Latin.)
+  	</div>
+  	<div class='btn close'>X</div>
+</div>
+</body>
+</html>

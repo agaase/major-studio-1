@@ -6,7 +6,7 @@ var data,headers, rows, ctAtOnce = 10000;
 var elasticsearch = require('elasticsearch');
 //http://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/
 var client = new elasticsearch.Client({
-  host: 'http://localhost:9200/'
+  host: 'http://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/'
 });
 
 
@@ -201,14 +201,14 @@ var createEvent = function(ct){
       events.push(obj);
     }
   }
-  // console.log("posting --" + events.length );
-  // var promise = elPost(events);
-  // promise.done(function(){
-  //   console.log("posted");
-  //   if(max < rows ){
-  //     createEvent(ct+ctAtOnce)
-  //   }
-  // });
+  console.log("posting --" + events.length );
+  var promise = elPost(events);
+  promise.done(function(){
+    console.log("posted");
+    if(max < rows ){
+      createEvent(ct+ctAtOnce)
+    }
+  });
 };
 
 var parser = csv.parse({delimiter: ','}, function(err, d ){
