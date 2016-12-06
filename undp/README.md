@@ -1,7 +1,7 @@
  >  Quantitative Asssignment -
  I am studying the nature of ethnic conflicts in sub-saharan africa because I want to find out what are the different types of conflicts and what causes them in order to understand how the nature of conflicts hamper the growth and inequality of a country or in this case the whole SSA. I am using variables related to conflicts such as type of conflict, duration and intensity. My visualization is based on [Uppsala Conflict Data Program] (http://ucdp.uu.se/) data.
  
- [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v2/preview.png)](https://agaase.github.io/major-studio-1/undp/public/v2/)
+ [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v2/previewv2.png)](https://agaase.github.io/major-studio-1/undp/public/v3/)
  
  
  
