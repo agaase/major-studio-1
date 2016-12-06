@@ -28,8 +28,8 @@ var  SSAConflict = (function(){
   var yr1 = 1989, yr2=2015, lineTypes = ["0","2","8"], mainColor = "#00695c";
   
   var runQ = function(q,c,ind,type){
-    var basesearchurl = "http://localhost:9200/";
-    //var basesearchurl = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/";
+    //var basesearchurl = "http://localhost:9200/";
+    var basesearchurl = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
