@@ -27,7 +27,6 @@ var es_queries = {
                 "afro",
                 "article",
                 "sub",
-                "development",
                 "evidence",
                 "university",
                 "management",
