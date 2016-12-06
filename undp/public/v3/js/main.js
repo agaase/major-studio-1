@@ -145,7 +145,7 @@ var  SSAConflict = (function(){
         co_in_ob[data[i]["key"]] = data[i]["sum_v"]["value"];
       }
       for(var i=5;i>0;i--){
-        $(".mapLegend .keys").append("<div class='key'><div class='label'>"+parseInt(max/(i*1000))+"k</div><div class='color'></div></div>");
+        $(".mapLegend .keys").empty().append("<div class='key'><div class='label'>"+parseInt(max/(i*1000))+"k</div><div class='color'></div></div>");
       }
       var myCustomStyle = {
             fill: true,
