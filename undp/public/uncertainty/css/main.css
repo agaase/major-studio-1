@@ -107,14 +107,14 @@ body {
       background-color: #EF5050;
       border: 0px solid; }
   .left .mapLegend {
-    margin-left: 4%; }
+    margin-left: 4%;
+    margin-top: 5%; }
     .left .mapLegend .label {
       display: inline-block; }
     .left .mapLegend .keys {
       width: 70%;
       display: inline-block; }
       .left .mapLegend .keys .key {
-        margin-top: 5%;
         width: 10%;
         display: inline-block; }
         .left .mapLegend .keys .key .label {
