@@ -100,8 +100,8 @@ var  SSAConflict = (function(){
   var lineTypes = ["0","2","8"], mainColor = "#00695c";
   
   var runQ = function(q,c,ind,type){
-    ///var basesearchurl = "http://localhost:9200/";
-    var basesearchurl = "https://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/";
+    var basesearchurl = "http://localhost:9200/";
+    // var basesearchurl = "https://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
@@ -446,7 +446,7 @@ var  SSAConflict = (function(){
     init : function(){
           SSAConflict.renderConflictCountry();
           SSAConflict.drawTimeline();
-          SSAConflict.renderIndicator("ineq");
+          SSAConflict.renderIndicator("gdp");
           SSAConflict.renderIndicator("cr");
           SSAConflict.renderIndicator("health");
 
