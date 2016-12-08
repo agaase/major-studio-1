@@ -207,8 +207,9 @@ body {
         border: 1px solid #eee;
         position: relative; }
         .right .viz .indicators .indicator .label {
-          position: absolute;
-          right: 0;
+          position: relative;
+          left: 84%;
+          width: 14%;
           top: -10px;
           background-color: #f9f9f9;
           padding-top: 0px; }

@@ -340,7 +340,22 @@ var  SSAConflict = (function(){
                         .html('<div style="font-size:75%;color:'+baseColorLight+';">'+(val>1000 ? parseInt(val/1000)+"k": val)+'</div>')
     }
 
+    //Time indicator lines
+    var x = d3.scaleLinear()
+            .domain([timePeriod.from, timePeriod.to+1])
+            .range([0, w]);
+    var wy = x(timePeriod.from+1) - x(timePeriod.from);
 
+    for(var i=timePeriod.from;i<=timePeriod.to;i++){
+      indi_g.append("line")
+          .attr("x1", x(i))
+          .attr("y1",ht)
+          .attr("x2", x(i))
+          .attr("y2",0)
+          .style("stroke",baseColorLight)
+          .style("stroke-opacity","0.8")
+          .style("stroke-width","0.5px");
+    }
     
   };
 
