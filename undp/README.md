@@ -2,7 +2,7 @@
  
  How does Conflict affect Inequality in Africa?
 
- Countries in Africa have gone through a number of conflicts ever since their independence from colonial rule.  Violence due  to conflicts not only results in deaths and destruction of property but a greater collateral damage leading to a complete breakdown of society. With this visualization we try to understand how society suffers because of conflict violence in terms of inequality. We do that by analysing how different drivers of inequality like primary education enrollment, deaths due to disease are affected by conflict violence for different countries in Africa over time.
+Countries in Africa have gone through a number of conflicts since their independence from colonial rule.  Violence due  to conflicts not only results in deaths and destruction of property, but a greater collateral damage leading to a complete breakdown of society. With this visualization, we try to understand different drivers of societal inequality due to conflict violence. 
  
 #### Research Question
  I am studying the nature of ethnic conflicts in sub-saharan africa because I want to find out what are the different types of conflicts and what causes them in order to understand how the nature of conflicts hamper the growth and inequality of a country or in this case the whole SSA. I am using variables related to conflicts such as type of conflict, duration and intensity. My visualization is based on [Uppsala Conflict Data Program] (http://ucdp.uu.se/) data.
@@ -13,7 +13,7 @@
  
 >  Qualitative Asssignment -
 
-There is a lot of hypothesis about what all gets affected by conflicts as a result of collateral damage. What this visualization tries to do is understand what did academic scholars researched over the years around the same topic. It does so by analysing all the articles that Google Scholar provide for the keyworld 'impact africa' and finding which keywords are more popular. 
+There is a lot of hypothesis about what all gets affected by conflicts as a result of collateral damage. What this visualization tries to do is understand what did academic scholars research over the years around the same topic. It does so by analysing all the articles that Google Scholar provide for the keyword 'impact africa' and finding which keywords are more popular. 
 
 I am studying the Google Scholar results (e.g [here](https://scholar.google.com/scholar?start=980&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=1960&as_vis=1)) on the search keyword - "Africa and Conflict" because I want to find out what research was done over the years on that topic in order to know what were the impacts and causes of conflicts in Africa as perceived by the research community. I am using variables related to conflicts such as crisis, war, ethnicity, coup etc to  make my results more relevant.
 
