@@ -12,7 +12,7 @@ Countries in Africa have gone through a number of conflicts since their independ
  
  
  
->  Qualitative Asssignment -
+### Qualitative Asssignment -
 
 #### Causes and impacts of conflicts in Africa : What have Scholars researched?
 
