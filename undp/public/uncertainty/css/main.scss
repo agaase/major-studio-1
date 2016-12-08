@@ -76,6 +76,7 @@ body{
 			height: 60%;
 			display: inline-block;
 			vertical-align: top;
+			font-weight: bold;
 			.label{
 				display: inline-block;
 				font-size: 150%;
@@ -201,7 +202,7 @@ body{
 		.country.label{
 			font-weight: bold;
 			display: block;
-			font-size: 175%;
+			font-size: 200%;
 			margin-bottom: 0.5%;
 			height: 100%;
 			.selected{
@@ -250,6 +251,7 @@ body{
 					top: -10px;
 					background-color: $bg-color;
 					padding-top:0px;
+					font-weight:bold;
 				}
 				.dummy{
 					position: relative;
@@ -278,6 +280,7 @@ body{
 				background-color: $bg-color;
 				padding-top:0px;
 				display: inline-block;
+				font-weight: bold;
 			}
 			.label.dataQuality{
 				width: 20%;
@@ -288,9 +291,9 @@ body{
 			}
 			.label.legend{
 				position: relative;
-				margin-left: 30%;
+				margin-left: 35%;
 				height: 10%;
-				width: 45%;
+				width: 38%;
 				.key{
 					width: 40.5%;
 					display: inline-block;

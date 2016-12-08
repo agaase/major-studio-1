@@ -73,7 +73,8 @@ body {
       width: 91%;
       height: 60%;
       display: inline-block;
-      vertical-align: top; }
+      vertical-align: top;
+      font-weight: bold; }
       .left .header .title .label {
         display: inline-block;
         font-size: 150%; }
@@ -169,7 +170,7 @@ body {
     .right .user_selection .country.label {
       font-weight: bold;
       display: block;
-      font-size: 175%;
+      font-size: 200%;
       margin-bottom: 0.5%;
       height: 100%; }
       .right .user_selection .country.label .selected {
@@ -212,7 +213,8 @@ body {
           width: 14%;
           top: -10px;
           background-color: #f9f9f9;
-          padding-top: 0px; }
+          padding-top: 0px;
+          font-weight: bold; }
         .right .viz .indicators .indicator .dummy {
           position: relative;
           height: 10%; }
@@ -233,7 +235,8 @@ body {
         top: -10px;
         background-color: #f9f9f9;
         padding-top: 0px;
-        display: inline-block; }
+        display: inline-block;
+        font-weight: bold; }
       .right .viz #dyads .label.dataQuality {
         width: 20%;
         position: relative;
@@ -242,9 +245,9 @@ body {
         text-decoration: underline; }
       .right .viz #dyads .label.legend {
         position: relative;
-        margin-left: 30%;
+        margin-left: 35%;
         height: 10%;
-        width: 45%; }
+        width: 38%; }
         .right .viz #dyads .label.legend .key {
           width: 40.5%;
           display: inline-block;
