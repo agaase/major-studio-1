@@ -517,7 +517,7 @@ var  SSAConflict = (function(){
               txtLable.append("rect")
                     .attr("x", 0)
                     .attr("y", y(val)-10*(2-i))
-                    .attr("width",15)
+                    .attr("width",20)
                     .attr("height",15)
                     .attr("fill",bgColor);
               txtLable.append('foreignObject')
