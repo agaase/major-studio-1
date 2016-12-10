@@ -101,7 +101,7 @@ var  SSAConflict = (function(){
   
   var runQ = function(q,c,ind,type){
     // var basesearchurl = "http://localhost:9200/";
-    var basesearchurl = "https://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/";
+    var basesearchurl = "http://35.161.122.132:9200/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
