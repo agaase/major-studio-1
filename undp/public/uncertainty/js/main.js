@@ -85,7 +85,7 @@ var helpText = {
   "ct3" : "The use of armed force by the government of a state or by a formally organized group against civilians which results in at least 25 deaths in a year",
   "i1" : "Countries in Africa have gone through a number of conflicts ever since their independence from colonial rule. Here we try to analyse those conflicts and the resulting deaths.<br><br> Conflicts result because of a disagreement between two groups either of which can be government or not. Violence due to conflicts not only results in deaths and destruction of property but a greater collateral damage leading to a complete breakdown of society.",
   "i2" : "We measure the growth of a country using GDP per capita (US $) which gives an estimate of the average income per person in a country.",
-  "conflicts" : "Conflict Violence is represented by number of deaths or casualties caused by conflicts. Each bar here represents total deaths in a single year. That is what the height of the bar denotes. You can click on each bar to see the number of conflicts and the actual deaths. The y axis scale is 0,3500,7000.",
+  "conflicts" : "Conflict Violence is represented by number of deaths or casualties caused by conflicts. Each bar here represents total deaths in a single year. That is what the height of the bar denotes. The y axis scale is 0,3500,7000 deaths.",
   "legend" : "<b>HOW GOOD IS THIS DATA?</b><br>There is some amount of assumption taken while recording these events and hence an error is always possible. The bars show a high estimation as well as a low estimation level for the number of deaths.<br><br>  <b>HIGH ESTIMATION</b> takes highly clear events(sufficient detailed informationp present) as well as low clear events(sufficient detailed information NOT present) and the highest possible number of deaths possible.<br> <b>BEST ESTIMATION</b> only takes highly clear events and best possible number of deaths.",
   "dataQuality" : "<b>HOW GOOD IS THIS DATA?</b><br>There is some amount of assumption taken while recording these events and hence an error is always possible.<br><br> There are <b>highly clear events</b>(sufficient detailed information present) and <b>low clear events</b> (sufficient detailed information NOT present). <br>Also with each event there is a highest possible number of deaths and best possible number of deaths. The chart here takes the highest possible number of deaths.",
   "gdp" : "The GDP per capita of the country in US$. GDP per capita is a measure of average income per person in a country. ",
@@ -493,7 +493,6 @@ var  SSAConflict = (function(){
                        .attr("width", x(ob.key+1)-x(ob.key))
                        .attr("height", ht-y(deathsHigh))
                        .attr("value",ob.key+"<br>"+"Number of conflicts - "+ob.doc_count)
-                       .attr("class","tooltipValue")
                        .style("fill",secondHighlightColor)
                        .style("opacity",dontShowUncertainty ? "1" : "0.6");
               if(!dontShowUncertainty){
@@ -503,8 +502,6 @@ var  SSAConflict = (function(){
                        .attr("y",y(deathsBest))
                        .attr("width", x(ob.key+1)-x(ob.key))
                        .attr("height", ht-y(deathsBest))
-                       .attr("value",ob.key+"<br>"+"Number of conflicts - "+ob.doc_count)
-                       .attr("class","tooltipValue")
                        .style("fill",secondHighlightColor)
               }
             }
