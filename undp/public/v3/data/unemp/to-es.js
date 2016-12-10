@@ -5,7 +5,7 @@ var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
 var client = new elasticsearch.Client({
-  host: 'https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com/'
+  host: 'http://35.161.122.132:9200/'
 });
 
 var ccodes = [

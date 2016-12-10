@@ -94,14 +94,18 @@ var helpText = {
 }
 
 var conflictTypes = [1,2,3], indicator = "Primary Enrollment", changed, countrySelected = ["Sudan","SDN"];
+var device = {
+  isMobile : window.matchMedia("(max-width: 480px)").matches
+};
 
 var  SSAConflict = (function(){
-  var w = window.innerWidth*.57, h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries;
+  var w = $(".right").width(), h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries;
   var lineTypes = ["0","2","8"], mainColor = "#00695c";
   
+
   var runQ = function(q,c,ind,type){
     // var basesearchurl = "http://localhost:9200/";
-    var basesearchurl = "https://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/";
+    var basesearchurl = "http://35.161.122.132:9200/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
@@ -199,15 +203,15 @@ var  SSAConflict = (function(){
 
   //Just the timeline 1820-2014
   var drawTimeline = function(){
-    var marginTop =20, marginRight=0, timeInterval =7, marginLeft=0, fontSize=window.innerHeight*.02;
+    var marginTop =20, marginRight=0, timeInterval =7, marginLeft=w*.05, fontSize=window.innerHeight*.02;
     var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
 
     var yrStart = timePeriod.from;
 
     var x = d3.scaleLinear()
             .domain([timePeriod.from, timePeriod.to+1])
-            .range([marginLeft, w-marginRight-marginLeft]);
-    var wy = x(timePeriod.formally+1) - x(timePeriod.from);
+            .range([marginLeft, w]);
+    var wy = x(timePeriod.from+1) - x(timePeriod.from);
     timeline.append("line")
             .attr("x1",x(timePeriod.from))
             .attr("y1",marginTop)
@@ -230,8 +234,8 @@ var  SSAConflict = (function(){
           .attr("y",marginTop)
           .attr("text-anchor","left")
           .attr("alignment-baseline","ideographic")
-          .style("fill",baseColor)
           .style("font-size",fontSize+"px")
+          .style("font-weight","bold")
           .text(yrStart);
 
       if(yrStart > timePeriod.to){
@@ -244,22 +248,13 @@ var  SSAConflict = (function(){
 
   //The unemployment indicator
   var drawIndicator = function(type,dataUnem, color,classs,impactDomain,indi){
-    var  marginRight=0,lines = [];
+    var  marginLeft=w*.05,lines = [];
 
     var ht = parseInt(indi.attr("height"));
     
-    // impactDomain = [0,1000000];
-    // for(var i=0;i<dataUnem.length;i++){
-    //   if(dataUnem[i].value>impactDomain[0]){
-    //     impactDomain[0] = dataUnem[i].value;
-    //   }
-    //   if(dataUnem[i].value<impactDomain[1]){
-    //     impactDomain[1] = dataUnem[i].value;
-    //   }
-    // }
     var x = d3.scaleLinear()
               .domain([timePeriod.from, timePeriod.to+1])
-              .range([0, w-marginRight]);
+              .range([marginLeft, w]);
     var y = d3.scaleLinear()
               .domain(impactDomain)
               .range([0, ht]);
@@ -396,6 +391,14 @@ var  SSAConflict = (function(){
         $(".right .list").toggle();
         SSAConflict.reinit();
       });
+      $(".africaToggle").unbind("click").on("click",function(){
+        var map = $(".mapContainer");
+        if(map.hasClass("toggled")){
+          map.animate({"height": "0px"}).removeClass("toggled");  
+        }else{
+          map.animate({"height": .72*window.innerHeight}).addClass("toggled");
+        }
+      });
   }
 
 
@@ -446,12 +449,15 @@ var  SSAConflict = (function(){
     init : function(){
           SSAConflict.renderConflictCountry();
           SSAConflict.drawTimeline();
-          SSAConflict.renderIndicator("gdp");
+          SSAConflict.renderIndicator("ineq");
           SSAConflict.renderIndicator("cr");
           SSAConflict.renderIndicator("health");
 
           setTimeout(function(){
             SSAConflict.addEvents();
+            if(device.isMobile){
+              $(".mapContainer").animate({"height": "0px"}).removeClass("toggled");    
+            }
           },1500)
     },
 
@@ -461,14 +467,14 @@ var  SSAConflict = (function(){
         q["query"]["bool"]["must"][1]["range"]["year"] = {"gte" : timePeriod.from,"lte" : timePeriod.to};
         runQ(q,function(data){
             var data = data.aggregations.by_year.buckets;
-            var ht = parseInt(dyadsCont.attr("height"));
+            var ht = parseInt(dyadsCont.attr("height")), marginLeft=w*.05;
             var impactDomain = [7000,0];
             var x = d3.scaleLinear()
                       .domain([timePeriod.from, timePeriod.to+1])
-                      .range([0, w]);
+                      .range([marginLeft, w]);
             var y = d3.scaleLinear()
                       .domain(impactDomain)
-                      .range([0, ht]);
+                      .range([$("#dyads .label").height(), ht]);
             for(var i=0;i<data.length;i++){
               var ob = data[i];
               var deathsHigh = ob["clarity"]["buckets"][0]["high"]["value"] + (ob["clarity"]["buckets"].length > 1 ? ob["clarity"]["buckets"][1]["high"]["value"] : 0);
@@ -511,7 +517,7 @@ var  SSAConflict = (function(){
                                 .attr('width', 15)
                                 .attr('height', 15)
                                 .append("xhtml:div")
-                                .html('<div style="font-size:75%;color:'+baseColorLight+';">'+val+'</div>')
+                                .html('<div class="yLabel">'+(val >=1000 ? val/1000 + "k" : val)+'</div>')
             }
         });
     },

@@ -1,12 +1,109 @@
 @media screen and (max-width: 480px) {
-	.right{
-		width: 100%;
-		margin-right: 0;
-		.viz{
-			width: 100%;
-		}
+	
+	body{
+		font-size: 2.5vh;
 	}
 	.left{
-		display: none;
+		float: none;
+		height: auto;
+		width: 95%;
+		margin-left: 2.5%;
+		.header{
+			height: 20vh;
+			margin-bottom: 3vh;
+			margin:0;
+			.title{
+				height: auto;
+				margin-bottom: 4%;
+				width: 100%;
+			}
+			.descr{
+				width: 100%;
+			}
+		}
+		.mapContainer{
+			height: 72vh;
+			overflow: hidden;
+			border-bottom: 1px solid $base-color-light;
+			border-top: 1px solid $base-color-light;
+			.mapLegend{
+				padding-top: 5%;
+				margin-left: 0;
+				.label{
+					width: 30%;
+					font-size: 80%;
+					margin-right: 3%;
+				}
+				.keys{
+					width: 65%;
+					.key{
+						width: 19%;
+						margin-top: 0;
+					}
+				}
+			}
+		}
+	}
+	.right{
+		width: 95%;
+		margin-right: 0;
+		display: block;
+		margin-left: 2.5%;
+		.user_selection{
+			padding-top: 5%;
+			
+			.country{
+				&.label{
+					display: inline-block;
+					font-size: 150%;
+					width: 80%;	
+					.selected{
+						padding-right: 10%;
+					}	
+				}
+			}
+			.africaToggle{
+				width: 18%;
+				display: inline-block;
+				background-image: url(../images/africa-icon.png);
+			    background-position: center top;
+			    background-repeat: no-repeat;
+			    background-size: 70%;
+			    height: 100%;
+			    vertical-align: top;
+			}
+		}
+		.list{
+			width: 60%;
+
+		}
+		.viz{
+			height: 88%;
+			padding-bottom: 0;
+			.indicators{
+				.indicator{
+					height: 40%;
+					margin:0;
+					margin-top: 10%;
+					.label{
+						height: 15%;
+						position: static;
+						font-weight: normal;
+					}
+				}
+			}
+			#dyads{
+				.label{
+					height: 15%;
+					font-weight: normal;
+				}
+				svg{
+					border: 1px solid #eee;
+					.yLabel{
+						font-size: 70%;
+					}
+				}
+			}
+		}
 	}
 }

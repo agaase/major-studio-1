@@ -5,7 +5,7 @@ var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
 //var hostu = "http://localhost:9200";
-var hostu = 'http://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/';
+var hostu = 'http://35.161.122.132:9200/';
 var client = new elasticsearch.Client({
   host: hostu
 });
