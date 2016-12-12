@@ -14,7 +14,7 @@ var $;
 
 
 var elasticsearch = require('elasticsearch');
-var url = "https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com";
+var url = "http://35.161.122.132:9200";
 //var url = "localhost:9200";
 var client = new elasticsearch.Client({
   host: url
