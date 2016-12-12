@@ -36,6 +36,10 @@ body{
 	    }
 	}
 }
+.tooltipValue{
+	cursor: pointer;
+	font-weight: bold;
+}
 .info{
 	padding-right: 17px;
     background-image: url(../images/info.png);
@@ -53,7 +57,7 @@ body{
 	.header{
 		height: 13%;
 		margin-left: 4%;
-		padding-top: 4%;
+		padding-top: 2%;
 		.sub{
 			display: inline-block;
 			vertical-align: bottom;
@@ -85,39 +89,6 @@ body{
 			font-style: italic;
 		}
 	}
-	.ctypes{
-			height: 2%;
-			width: 92%;
-			margin-top: 5%;
-			margin-left: 4%;
-			text-align: left;
-			display: none;	
-			.ctype{
-				cursor: pointer;
-				width: 32%;
-	    		height: 100%;
-	    		display: inline-block;
-				.btn{
-					width: 10%;
-	    			height: 100%;
-	    			border: 1px solid $base-color;
-	    			border-radius: 2px;	
-	    			display: inline-block;
-	    			vertical-align: bottom;
-				}
-				.label{
-					display: inline-block;
-					font-size: 90%;
-				}
-
-			}
-			.ctype.active{
-				.btn{
-					background-color: $highlight-color;
-					border: 0px solid;
-				}
-			}
-		}
 	.mapContainer{
 		height: 87%;
 		.mapLegend{
@@ -135,7 +106,7 @@ body{
 				display: inline-block;
 				.key{
 					margin-top: 5%;
-					width: 18%;
+					width: 10%;
 					display: inline-block;
 					.label{
 						text-align: center;
@@ -143,26 +114,14 @@ body{
 					.color{
 						width: 100%;
 						height: 1vh;
-						background-color: $highlight-color;
+						opacity: 0.7;
+					}
+					&.genocide,&.nodata{
+						width: 15%;
+						margin-left: 2%;
 					}
 				}
 			}
-			.key:nth-child(1) .color{
-				opacity: 0.2;
-			}
-			.key:nth-child(2) .color{
-				opacity: 0.4;
-			}
-			.key:nth-child(3) .color{
-				opacity: 0.6;
-			}
-			.key:nth-child(4) .color{
-				opacity: 0.8;
-			}
-			.key:nth-child(5) .color{
-				opacity: 1;
-			}
-
 		}
 		#mapp{
 			background-color: transparent;
@@ -189,10 +148,10 @@ body{
 	float: left;
 	position: relative;
 	.user_selection{
-		height: 9%;
+		height: 10%;
 		width: 100%;
 		line-height: 150%;
-		padding-top: 3%;
+		padding-top: 2%;
 		z-index: 100;
 		.africaToggle{
 			display: none;
@@ -208,17 +167,31 @@ body{
 		.country.label{
 			font-weight: bold;
 			display: block;
-			font-size: 175%;
+			font-size: 150%;
 			margin-bottom: 0.5%;
 			height: 100%;
 			.selected{
 				background-image: url(../images/dd_blue.png);
 			    background-repeat: no-repeat;
-			    background-size: auto 45%;
-			    background-position: right 50%;
+			    background-size: auto 20%;
+			    background-position: right 5%;
 			    width: auto;
 			    padding-right: 5%;
 			    cursor: pointer;
+			    display: inline-block;
+			    max-width: 20%;
+			    width: auto;
+			    height: 100%;
+			}
+			.text{
+				display: inline-block;
+				font-size: 65%;
+				max-width: 72%;
+				font-weight: normal;
+				margin-left: 2%;
+				height: 100%;
+				vertical-align: top;
+				line-height: 120%;
 			}
 		}
 	}
@@ -241,8 +214,7 @@ body{
 	}
 	.viz{
 		width: 100%;
-		height: 84%;
-		padding-bottom: 2%;
+		height: 86%;
 		.indicators{
 			height: 61%;
 			svg{
@@ -276,6 +248,19 @@ body{
 					font-size: 90%;
 					color: $base-color-light;
 				}
+				&.eventTimeline{
+					display: none;
+				}
+			}
+			.btn{
+				float: right;
+			    padding: 0px 10px;
+			    border-right: 2px solid $base-color;
+			    cursor: pointer;
+			    &.active{
+			    	color: $second-highlight-color;
+			    	font-weight: bold;
+			    }
 			}
 			.label{
 				position: relative;

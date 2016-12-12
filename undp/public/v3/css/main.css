@@ -29,6 +29,10 @@ body {
       display: block;
       padding: 5px 0; }
 
+.tooltipValue {
+  cursor: pointer;
+  font-weight: bold; }
+
 .info {
   padding-right: 17px;
   background-image: url(../images/info.png);
@@ -46,7 +50,7 @@ body {
   .left .header {
     height: 13%;
     margin-left: 4%;
-    padding-top: 4%; }
+    padding-top: 2%; }
     .left .header .sub {
       display: inline-block;
       vertical-align: bottom;
@@ -72,31 +76,6 @@ body {
       font-size: 110%;
       width: 90%;
       font-style: italic; }
-  .left .ctypes {
-    height: 2%;
-    width: 92%;
-    margin-top: 5%;
-    margin-left: 4%;
-    text-align: left;
-    display: none; }
-    .left .ctypes .ctype {
-      cursor: pointer;
-      width: 32%;
-      height: 100%;
-      display: inline-block; }
-      .left .ctypes .ctype .btn {
-        width: 10%;
-        height: 100%;
-        border: 1px solid #4A4A4A;
-        border-radius: 2px;
-        display: inline-block;
-        vertical-align: bottom; }
-      .left .ctypes .ctype .label {
-        display: inline-block;
-        font-size: 90%; }
-    .left .ctypes .ctype.active .btn {
-      background-color: #EF5050;
-      border: 0px solid; }
   .left .mapContainer {
     height: 87%; }
     .left .mapContainer .mapLegend {
@@ -113,24 +92,17 @@ body {
         display: inline-block; }
         .left .mapContainer .mapLegend .keys .key {
           margin-top: 5%;
-          width: 18%;
+          width: 10%;
           display: inline-block; }
           .left .mapContainer .mapLegend .keys .key .label {
             text-align: center; }
           .left .mapContainer .mapLegend .keys .key .color {
             width: 100%;
             height: 1vh;
-            background-color: #EF5050; }
-      .left .mapContainer .mapLegend .key:nth-child(1) .color {
-        opacity: 0.2; }
-      .left .mapContainer .mapLegend .key:nth-child(2) .color {
-        opacity: 0.4; }
-      .left .mapContainer .mapLegend .key:nth-child(3) .color {
-        opacity: 0.6; }
-      .left .mapContainer .mapLegend .key:nth-child(4) .color {
-        opacity: 0.8; }
-      .left .mapContainer .mapLegend .key:nth-child(5) .color {
-        opacity: 1; }
+            opacity: 0.7; }
+          .left .mapContainer .mapLegend .keys .key.genocide, .left .mapContainer .mapLegend .keys .key.nodata {
+            width: 15%;
+            margin-left: 2%; }
     .left .mapContainer #mapp {
       background-color: transparent;
       height: 90%;
@@ -151,10 +123,10 @@ body {
   float: left;
   position: relative; }
   .right .user_selection {
-    height: 9%;
+    height: 10%;
     width: 100%;
     line-height: 150%;
-    padding-top: 3%;
+    padding-top: 2%;
     z-index: 100; }
     .right .user_selection .africaToggle {
       display: none; }
@@ -167,17 +139,30 @@ body {
     .right .user_selection .country.label {
       font-weight: bold;
       display: block;
-      font-size: 175%;
+      font-size: 150%;
       margin-bottom: 0.5%;
       height: 100%; }
       .right .user_selection .country.label .selected {
         background-image: url(../images/dd_blue.png);
         background-repeat: no-repeat;
-        background-size: auto 45%;
-        background-position: right 50%;
+        background-size: auto 20%;
+        background-position: right 5%;
         width: auto;
         padding-right: 5%;
-        cursor: pointer; }
+        cursor: pointer;
+        display: inline-block;
+        max-width: 20%;
+        width: auto;
+        height: 100%; }
+      .right .user_selection .country.label .text {
+        display: inline-block;
+        font-size: 65%;
+        max-width: 72%;
+        font-weight: normal;
+        margin-left: 2%;
+        height: 100%;
+        vertical-align: top;
+        line-height: 120%; }
   .right .list {
     display: none;
     border: 1px solid #4A4A4A;
@@ -195,8 +180,7 @@ body {
       cursor: pointer; }
   .right .viz {
     width: 100%;
-    height: 84%;
-    padding-bottom: 2%; }
+    height: 86%; }
     .right .viz .indicators {
       height: 61%; }
       .right .viz .indicators svg {
@@ -224,6 +208,16 @@ body {
         .right .viz #dyads svg .yLabel {
           font-size: 90%;
           color: #bbbbbb; }
+        .right .viz #dyads svg.eventTimeline {
+          display: none; }
+      .right .viz #dyads .btn {
+        float: right;
+        padding: 0px 10px;
+        border-right: 2px solid #4A4A4A;
+        cursor: pointer; }
+        .right .viz #dyads .btn.active {
+          color: #006e98;
+          font-weight: bold; }
       .right .viz #dyads .label {
         position: relative;
         right: 0;

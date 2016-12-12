@@ -10,6 +10,7 @@
 	<script src="js/lib/africa-geo-json.js"></script>
 	<script src="js/lib/jquery.min.js"></script>
     <script src="js/lib/leafleft.min.js"></script>
+    <script src="js/lib/chroma.min.js"></script>
 	<title></title>
 	<script type="text/javascript">
 		var dontShowUncertainty = true;
@@ -30,20 +31,6 @@
 			<div class='descr'>Analysing the impact of violence due to conflicts on different drivers of inequality.</div>
 			</div>
 			<div class='sub disabled'></div>
-		<div class='ctypes'>
-			<div data-type="1" class='ctype'>
-				<div class='btn'></div>
-				<div data-help='ct1' class='label info'>Government Involved</div>
-			</div>
-			<div data-type="2" class='ctype'>
-				<div class='btn'></div>
-				<div data-help='ct2' class='label info'>Between Groups</div>
-			</div>
-			<div data-type="3" class='ctype'>
-				<div class='btn'></div>
-				<div data-help='ct3' class='label info'>One sided violence</div>
-			</div>
-		</div>
 		<div class='mapContainer toggled'>
 			<div class='mapLegend'>
 				<div class='label'>Conflict Violence:</div>
@@ -55,7 +42,7 @@
 	<div class="right">
 		<div class='user_selection'>
 		<div class='country label'>
-			<span class='selected'></span>
+			<div class='selected'></div>
 			<div class='text'></div>
 		</div>
 		<div class='africaToggle'></div>
@@ -63,24 +50,6 @@
 		<div class='list'>
 		</div>
 		<div class='viz'>
-			<div class='timeline'>
-				<div class='container'></div>
-			</div>
-			<div id="dyads">
-				<div data-help='conflicts' class='label info'>CONFLICT DEATHS</div>
-			</div>
-			<div class='indicators'>
-			<div class='indicator health'>
-				<div data-help='health' class='label info'>DEATHS BY DISEASE</div>
-			</div>
-			<div class='indicator cr'>
-				<div class='label info'>PRIMARY EDUCATION ENROLLMENT</div>
-			</div>
-			<div class='indicator ineq'>
-				<div data-help='ineq' class='label info'>INEQUALITY</div>
-			</div>
-			</div>
-			
 		</div>
 	</div>
 	<script src="js/main.js"></script>

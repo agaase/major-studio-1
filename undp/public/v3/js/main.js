@@ -10,14 +10,23 @@ var timePeriod = {
 var estimate = 1;
 var indicatorPercentile = [80,0];
 
-var outlierColor = "#000000";
+var selectionColor = "#000000";
 var bgColor = "#f9f9f9"
 var baseColor = "#4A4A4A";
 var baseColorLight = "#bbbbbb";
 var highlightColor = "#EF5050";
 var secondHighlightColor = "#006e98";
 var healthColor = "#4c9f38";
+var genocideColor = "#4C0901";
+var highDeathColor  = "#8C0213";
+var eventColorIndividual = "#FFE8C8";
 
+var labels = {
+  "ineq" : "INEQUALITY",
+  "cr" : "PRIMARY EDUCATION ENROLLMENT",
+  "health" : "DEATHS DUE TO DISEASE",
+  "conflicts" : "CONFLICT DEATHS"
+}
 
 var countryCodes = {
         "Algeria" : "DZA",
@@ -99,7 +108,7 @@ var device = {
 };
 
 var  SSAConflict = (function(){
-  var w = $(".right").width(), h = window.innerHeight*.7, svg, dyadsCont, timeline, indi, countryDyadsCont, conflictCountries;
+  var w = $(".right").width(), h = window.innerHeight*.7, hRight, svg, rightCont,dyadsCont, eventTimeline, timeline, indi, countryDyadsCont, conflictCountries;
   var lineTypes = ["0","2","8"], mainColor = "#00695c";
   
 
@@ -117,7 +126,14 @@ var  SSAConflict = (function(){
     });
   };
 
+
+
   var highlighCountry = function(cname,c){
+      $("#eventTimeline").hide().empty();
+      $("#dyadsCont").show();
+      $("#dyads .btn").removeClass("active");
+      $("#dyads .yrTotal").addClass("active");
+      
       cname  = cname || countrySelected[0];
       c = c || countrySelected[1];
       countrySelected[0] = cname;
@@ -125,19 +141,84 @@ var  SSAConflict = (function(){
       SSAConflict.clear();
       SSAConflict.init();  
       $(".user_selection .label .selected").text(cname);
+
+
+      $(".eventSelectedCountry").remove();
       d3.selectAll(".countryGeo")
-      	.style("stroke-width",0.8)
-      	.style("stroke",baseColorLight);
+      	.style("stroke-width",0.5)
+      	.style("stroke",baseColor);
 
       d3.select(".country_"+c)
-      	.style("stroke-width",2  )
-      	.style("stroke","#000")
+      	.style("stroke-width",1)
+      	.style("stroke",selectionColor)
         .style("stroke-opacity",1);
+  };
+
+
+  var allEventTimeline = function(){
+    var q = es_queries["all_conflicts_of_a_country"];
+    q["query"]["bool"]["must"][0]["term"]["ccd"]["value"] = countrySelected[1];
+    runQ(q,function(d){
+      var events = d.hits.hits.map(function(d){
+        return d._source;
+      });
+      var conflicts = {};
+      for(var i=0;i<events.length;i++){
+        var ev  =events[i];
+        conflicts[ev.type_of_conflict] = conflicts[ev.type_of_conflict] || [];
+        conflicts[ev.type_of_conflict].push(ev);
+      }
+      $("#dyadsCont").hide();
+      $("#eventTimeline").show();
+      var ht = parseInt(dyadsCont.attr("height"))/3, marginLeft=w*.04;
+      var x = d3.scaleLinear()
+                .domain([timePeriod.from, timePeriod.to+1])
+                .range([marginLeft, w]);
+      var ct=0;
+      for(var conflictType in conflicts){
+        var container = eventTimeline.append("g");
+        var events = conflicts[conflictType];
+        events = events.sort(function(a,b){
+          return new Date(a.date_start) - new Date(b.date_start);
+        });
+        if(events.length > 0){
+          for(var i=0;i<events.length;i++){
+            var ev = events[i];
+            var marker = L.circleMarker([ev.latitude,ev.longitude],{
+              radius : 1, 
+              color : baseColor,
+              className : "eventSelectedCountry",
+            });
+            marker.bindPopup(ev.d_name + "<br>" + ev.country);
+            mapObj.addLayer(marker);
+            var xpos = x(timePeriod.from+((new Date(ev.date_start) - new Date(""+timePeriod.from))/(1000*60*60*24*365)));
+            var scale = chroma.scale([bgColor,highlightColor]);
+            var margin = ht/4;
+            container.append("line")
+                     .attr("x1",xpos)
+                     .attr("y1",ct*ht+ht/4+(.75*ht-.75*ht*((ev.high_est>100 ? 100 : ev.high_est)/100)))
+                     .attr("x2",xpos)
+                     .attr("y2",ct*ht+ht)
+                     .style("stroke",highlightColor);
+          } 
+        }
+        ct++;
+      }
+    });
   };
 
 
   //This is where the skeleton is drawn with the conflict intensity.
   var drawMapSkeleton = function(){
+
+    var colors = {
+      "1": "#ffffff",
+      "1000" : "#FFE8C8",
+      "3000" : "#FFB78C",
+      "10000" : "#ff5252",
+      "50000" : "#f44336",
+      "200000" : "#8C0213"
+    };
     var q = es_queries["conflict_country"];
     q["query"]["bool"]["must"][0]["terms"]["clarity"] = estimate == 1 ? [1,2] : [1];
     q["aggs"]["country_inq"]["aggs"]["sum_v"]["sum"]["field"] = estimate == 1 ? "high_est" : "best_est";
@@ -149,16 +230,22 @@ var  SSAConflict = (function(){
         co_in_ob[data[i]["key"]] = data[i]["sum_v"]["value"];
       }
       $(".mapLegend .keys").empty();
-      for(var i=5;i>0;i--){
-        $(".mapLegend .keys").append("<div class='key'><div class='label'>"+parseInt(max/(i*1000))+"k</div><div class='color'></div></div>");
-      }
-      var myCustomStyle = {
-            fill: true,
-            fillColor: highlightColor,
-            fillOpacity: 0.2,
-            color : baseColorLight,
-            weight: 1
+      var range = Object.keys(colors), ct=0;
+      for(var color in colors){
+        var val = parseInt(color);
+        if(ct < range.length-1){
+          $(".mapLegend .keys").append("<div class='key'><div class='label'>"+(val >= 1000 ? (val/1000)+"k" : val )+"</div><div style='background: linear-gradient(to right, "+colors[range[ct]]+","+colors[range[ct+1]]+");' class='color'></div></div>");
+          ct++;
         }
+      }
+      $(".mapLegend .keys").append("<div class='key genocide'><div class='label'>Genocide</div><div style='background: "+genocideColor+"' class='color'></div></div>");
+      $(".mapLegend .keys").append("<div class='key nodata'><div class='label'>No Data</div><div style='background: "+baseColorLight+"' class='color'></div></div>");
+      var myCustomStyle = {
+          fill: true,
+          fillColor: baseColorLight,
+          fillOpacity: 0.7,
+          color : bgColor,
+      }
       //This is just stupid.
       var zoomLevel = 3.1 + parseInt((window.innerHeight-700)/400)*.5;
       if(!mapObj){
@@ -184,12 +271,26 @@ var  SSAConflict = (function(){
           style: myCustomStyle,
           onEachFeature : function(d,l){
             var c = d.properties.iso_a3;
-            var cname = d.properties.sovereignt;
+            var cname = d.properties.name;
+              l.options = l.options || l._options;
               if(l.options)
               l.options.className = "countryGeo country_"+c;
-              l.setStyle({
-                fillOpacity: co_in_ob[c] ? parseInt(co_in_ob[c])/max : 0.1
-              });
+              var val = co_in_ob[c],ct=0,scale;
+              if(val){
+                for(var color in colors){
+                  var cv = parseInt(color);
+                  if(val < cv){
+                    scale = chroma.scale([colors[range[ct-1]],colors[cv]]);
+                    val = val/cv;
+                    break;
+                  }
+                  ct++;
+                }
+                l.setStyle({
+                  fillColor: scale ? scale(val).hex() : genocideColor
+                });
+              }
+              
               l.on("click",function(){
                 highlighCountry(cname,c);
               }); 
@@ -202,31 +303,42 @@ var  SSAConflict = (function(){
   }
 
   //Just the timeline 1820-2014
-  var drawTimeline = function(){
-    var marginTop =20, marginRight=0, timeInterval =7, marginLeft=w*.05, fontSize=window.innerHeight*.02;
+  var drawTimeline = function(ht,marginTop){
+    var timeInterval =7, marginLeft=0, fontSize=window.innerHeight*.02;
     var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
-
+    var timeline = rightCont.append("g")
+                            .attr("class","timeline");
     var yrStart = timePeriod.from;
 
+    var labelHt = ht*.4;
+    marginTop += labelHt;
+
     var x = d3.scaleLinear()
-            .domain([timePeriod.from, timePeriod.to+1])
+            .domain([timePeriod.from-1, timePeriod.to+1])
             .range([marginLeft, w]);
     var wy = x(timePeriod.from+1) - x(timePeriod.from);
     timeline.append("line")
-            .attr("x1",x(timePeriod.from))
+            .attr("x1",x(timePeriod.from-1))
             .attr("y1",marginTop)
             .attr("x2",x(timePeriod.to+1))
             .attr("y2",marginTop)
             .attr("stroke",baseColor);
 
-
-    for(var i=timePeriod.from;i<=timePeriod.to;i++){
+    for(var i=timePeriod.from-1;i<=timePeriod.to;i++){
       timeline.append("rect")
           .attr("x", x(i))
           .attr("y",marginTop-2)
           .attr("width","2px")
           .style("height","4px")
           .style("fill",bgColor);
+      if(i>(timePeriod.from-1))
+      timeline.append("line")
+          .attr("x1", x(i))
+          .attr("y1",marginTop)
+          .attr("x2", x(i))
+          .attr("y2",hRight)
+          .style("stroke",baseColorLight)
+          .style("stroke-width","0.5px");
     }
     while(true){
       timeline.append("text")
@@ -236,6 +348,7 @@ var  SSAConflict = (function(){
           .attr("alignment-baseline","ideographic")
           .style("font-size",fontSize+"px")
           .style("font-weight","bold")
+          .style("fill",baseColor)
           .text(yrStart);
 
       if(yrStart > timePeriod.to){
@@ -247,22 +360,32 @@ var  SSAConflict = (function(){
   };
 
   //The unemployment indicator
-  var drawIndicator = function(type,dataUnem, color,classs,impactDomain,indi){
-    var  marginLeft=w*.05,lines = [];
+  var drawIndicator = function(type,dataUnem, color,classs,impactDomain,indi,ht,marginTop){
+    var  marginLeft=w*.04,lines = [];
 
-    var ht = parseInt(indi.attr("height"));
-    
+
+    var labelMargin = ht*.05;
+
     var x = d3.scaleLinear()
               .domain([timePeriod.from, timePeriod.to+1])
               .range([marginLeft, w]);
     var y = d3.scaleLinear()
               .domain(impactDomain)
-              .range([0, ht]);
+              .range([0, ht-labelMargin]);
 
+    
     var indi_g = indi.append("g")
         .attr("class",classs)
         .attr("type",type);
+    indi_g.append("text")
+          .attr("x",0)
+          .attr("y",marginTop)
+          .text(labels[type])
+          .style("fill",baseColor)
+          .attr("class","tooltipValue")
+          .attr("value",helpText[type])
 
+    marginTop += labelMargin;
 
     $(".keys .parameter .label").text(indicator);
     $(".keys .parameter .label").attr("data-help",type);
@@ -270,47 +393,70 @@ var  SSAConflict = (function(){
    
     var ct = 0, x1, x2, y1=y(impactDomain[1]), y2=y(impactDomain[1]), value, strokeColor;
     for(var i=timePeriod.from;i<=timePeriod.to;i++){
-      x1 = x(i), value = 0, dashed=false;
+      x1 = x(i), value = 0, dashed=false, interpolating = false;
+      var yrData = indi_g.append("g");
+
       if(dataUnem[ct] && dataUnem[ct].key == i){
         y2 = y(dataUnem[ct].value);
         value = dataUnem[ct].value;
         strokeColor=color;
         if(y2<=0){
           y2 = 1;
-          strokeColor = outlierColor;
           dashed = true;
         }
         if(y2>=ht){
           y2 = ht-1;
-          strokeColor = outlierColor;
           dashed = true;
         }
         ct++;
-      }else{
-        strokeColor=bgColor;
-      }
-      if(i>timePeriod.from){
+        //Adding circle points for years which have values.
+        yrData.append("circle")
+            .attr("cx",x(i+0.5))
+            .attr("cy",marginTop + y2)
+            .attr("r","4px")
+            .style("fill",secondHighlightColor);
 
-        indi_g.append("line")
+      }else{
+        interpolating = true;
+        strokeColor=baseColorLight;
+        if(ct ==0){
+          //Interpolating in the case of values before the first value
+          y2 = y(dataUnem[ct].value);
+          if(y2<=0){
+            y2 = 1;
+          }
+          if(y2>=ht){
+            y2 = ht-1;
+          }
+          value = dataUnem[ct].value;
+        }
+      }
+      if(!interpolating){
+        yrData.attr("value",parseInt(value)+"("+i+")")
+              .attr("class","tooltipValue")
+              .style("cursor","pointer")
+      }
+      if(i>timePeriod.from && ct>1){
+        yrData.append("line")
             .attr("x1", x1)
             .attr("x2", x1)
-            .attr("y1", y1)
-            .attr("y2", y2)
+            .attr("y1", marginTop + y1)
+            .attr("y2", marginTop + y2)
             .attr("stroke", strokeColor)
-            .attr("stroke-width",3)
+            .attr("stroke-width",2)
             .attr("value",value)
       }
       
       if(i<(timePeriod.to+1)){
         x2 = x(i+1);
-        indi_g.append("line")
+        yrData.append("line")
               .attr("x1", x1)
               .attr("x2", x2)
-              .attr("y1", y2)
-              .attr("y2", y2)
+              .attr("y1", marginTop + y2)
+              .attr("y2", marginTop + y2)
               .style("stroke-dasharray", !dashed ? ("0") : ("2, 2"))
               .attr("stroke", strokeColor)
-              .attr("stroke-width",3);
+              .attr("stroke-width",2);
       }
       y1=y2;
     }
@@ -322,21 +468,26 @@ var  SSAConflict = (function(){
       var val = parseInt(i*impactInterval+impactDomain[1]);
       txtLable.append("rect")
             .attr("x", 0)
-            .attr("y", y(val)-10*(2-i))
+            .attr("y", marginTop + y(val)-10*(2-i))
             .attr("width",15)
             .attr("height",15)
             .attr("fill",bgColor);
       txtLable.append('foreignObject')
                         .attr('x', 0)
-                        .attr('y', y(val)-7.5*(2-i))
+                        .attr('y', marginTop + y(val)-7.5*(2-i))
                         .attr('width', 15)
                         .attr('height', 15)
                         .append("xhtml:div")
                         .html('<div style="font-size:75%;color:'+baseColorLight+';">'+(val>1000 ? parseInt(val/1000)+"k": val)+'</div>')
+      txtLable.append("line")
+                    .attr("x1",0)
+                    .attr("y1",marginTop + y(val))
+                    .attr("x2",x(timePeriod.to+1))
+                    .attr("y2",marginTop + y(val))
+                    .style("stroke",baseColorLight)
+                    .style("stroke-dasharray", ("3, 3"))
+                    .style("stroke-width",0.7);
     }
-
-
-    
   };
 
   var tooltipEvents = function(){
@@ -399,6 +550,23 @@ var  SSAConflict = (function(){
           map.animate({"height": .72*window.innerHeight}).addClass("toggled");
         }
       });
+      $("#dyads .btn").on("click",function(){
+        var el = $(this);
+        $("#dyads .btn").removeClass("active");
+        if(el.hasClass("evTimeline")){
+          if($("#eventTimeline").children().length){
+            $("#dyadsCont").hide();
+            $("#eventTimeline").show();
+          }else{
+            allEventTimeline();  
+          }
+        }else{
+          $("#eventTimeline").hide();
+          $("#dyadsCont").show();
+        }
+        el.addClass("active")
+      })
+      
   }
 
 
@@ -412,22 +580,31 @@ var  SSAConflict = (function(){
       tooltipEvents();
       otherEvents();
     },
-
-    drawTimeline : function(){
-      drawTimeline();
-    },
     setup : function(width){
       var ww = width || w;
-      dyadsCont = d3.select("#dyads")
-                    .append("svg")
-                    .attr("width", ww)
-                    .attr("height", $("#dyads").height() - $("#dyads .label").height())
-                    .attr("id","dyadsCont");
 
-      timeline = d3.select(".timeline .container").append("svg")
-                       .attr("id","timeline")
-                       .attr("width", ww)
-                       .attr("height",$(".timeline").height());
+      hRight = $(".viz").height();
+      rightCont = d3.select(".viz")
+                        .append("svg")
+                        .attr("width", ww)
+                        .attr("height",$(".viz").height());
+
+
+      // dyadsCont = d3.select("#dyads")
+      //               .append("svg")
+      //               .attr("width", ww)
+      //               .attr("height", $("#dyads").height() - $("#dyads .label").height())
+      //               .attr("id","dyadsCont");
+      // eventTimeline = d3.select("#dyads")
+      //               .append("svg")
+      //               .attr("width", ww)
+      //               .attr("height", $("#dyads").height() - $("#dyads .label").height())
+      //               .attr("id","eventTimeline");
+
+      // timeline = d3.select(".timeline .container").append("svg")
+      //                  .attr("id","timeline")
+      //                  .attr("width", ww)
+      //                  .attr("height",$(".timeline").height());
       drawMapSkeleton();
       
       $.each(Object.keys(countryCodes).sort(),function(i,v){
@@ -447,12 +624,20 @@ var  SSAConflict = (function(){
     },
 
     init : function(){
-          SSAConflict.renderConflictCountry();
-          SSAConflict.drawTimeline();
-          SSAConflict.renderIndicator("ineq");
-          SSAConflict.renderIndicator("cr");
-          SSAConflict.renderIndicator("health");
 
+          $(".viz g").remove();
+
+          var y = 0;
+          drawTimeline(.06*hRight,0);
+          y += .06*hRight;
+          SSAConflict.renderConflictCountry(.21*hRight,y+(.01)*hRight);
+          y += .18*hRight + (.04)*hRight;
+          var indicHt = .25*.7*hRight;
+          SSAConflict.renderIndicator("health",indicHt,y+(.06)*hRight);
+          y += indicHt + (.06)*hRight;
+          SSAConflict.renderIndicator("cr",indicHt,y+(.06)*hRight);
+          y += indicHt + (.06)*hRight;
+          SSAConflict.renderIndicator("ineq",indicHt,y+(.06)*hRight);
           setTimeout(function(){
             SSAConflict.addEvents();
             if(device.isMobile){
@@ -461,59 +646,100 @@ var  SSAConflict = (function(){
           },1500)
     },
 
-    renderConflictCountry : function(){
+    renderConflictCountry : function(ht,marginTop){
         var q = es_queries["conflict_country_yr"];
         q["query"]["bool"]["must"][0]["term"]["ccd"]["value"] = countrySelected[1];
         q["query"]["bool"]["must"][1]["range"]["year"] = {"gte" : timePeriod.from,"lte" : timePeriod.to};
+        var conflictsYrly = rightCont.append("g")
+                            .attr("class","conflictsYrly");
+
+        var labelMargin = ht*.04;
+        var labeslG = conflictsYrly.append("g");
+        var text = labeslG.append("text")
+                  .attr("x",0)
+                  .attr("y",marginTop)
+                  .text(labels["conflicts"])
+                  .style("fill",baseColor)
+                  .attr("class","tooltipValue")
+                  .attr("value",helpText["conflicts"]);
+
+        // var margin = 0.03*w+text.node().getBBox().width;
+        // text = labeslG.append("text")
+        //           .attr("x",margin)
+        //           .attr("y",marginTop)
+        //           .text("YEAR TOTAL")
+        //           .style("fill",baseColor)
+        //           .attr("class","btn");
+        // labeslG.append("line")
+        //              .attr("x1",margin)
+        //              .attr("y1",marginTop+labelMargin/1.5)
+        //              .attr("x2",margin+text.node().getBBox().width)
+        //              .attr("y2",marginTop+labelMargin/1.5)
+        //              .style("stroke",baseColor)
+        //              .style("stroke-width",2);
+       
+
+        marginTop += labelMargin;
+
+        ht = ht - labelMargin;
         runQ(q,function(data){
             var data = data.aggregations.by_year.buckets;
-            var ht = parseInt(dyadsCont.attr("height")), marginLeft=w*.05;
-            var impactDomain = [7000,0];
+            var marginLeft=w*.04;
+            var impactDomain = [20000,0];
             var x = d3.scaleLinear()
                       .domain([timePeriod.from, timePeriod.to+1])
                       .range([marginLeft, w]);
             var y = d3.scaleLinear()
                       .domain(impactDomain)
-                      .range([$("#dyads .label").height(), ht]);
+                      .range([0, ht]);
+            var totalDeaths=0,totalConflicts=0;
             for(var i=0;i<data.length;i++){
               var ob = data[i];
+              totalConflicts += ob.doc_count;
               var deathsHigh = ob["clarity"]["buckets"][0]["high"]["value"] + (ob["clarity"]["buckets"].length > 1 ? ob["clarity"]["buckets"][1]["high"]["value"] : 0);
-              dyadsCont.append("rect")
+              totalDeaths += deathsHigh;
+              var yy = deathsHigh>impactDomain[0] ? -1*labelMargin : y(deathsHigh);
+              conflictsYrly.append("rect")
                        .attr("x",x(ob.key))
-                       .attr("y",y(deathsHigh))
+                       .attr("y", marginTop + yy)
                        .attr("width", x(ob.key+1)-x(ob.key))
-                       .attr("height", ht-y(deathsHigh))
+                       .attr("height",    ht-yy)
                        .attr("value",ob.key+"<br>"+"Number of conflicts - "+ob.doc_count)
                        .attr("class","tooltipValue")
-                       .style("fill",secondHighlightColor)
-                       .style("opacity",dontShowUncertainty ? "1" : "0.6");
+                       .style("fill",deathsHigh > impactDomain[0] ? highDeathColor : highlightColor)
+                       .style("opacity",dontShowUncertainty ? "0.8" : "0.6");
               if(!dontShowUncertainty){
                 var deathsBest = ob["clarity"]["buckets"][0]["best"]["value"];
-                dyadsCont.append("rect")
+                conflictsYrly.append("rect")
                        .attr("x",x(ob.key))
-                       .attr("y",y(deathsBest))
+                       .attr("y",marginTop + y(deathsHigh) - (deathsHigh>impactDomain[0] ? labelMargin : 0) )
                        .attr("width", x(ob.key+1)-x(ob.key))
                        .attr("height", ht-y(deathsBest))
                        .attr("value",ob.key+"<br>"+"Number of conflicts - "+ob.doc_count)
                        .attr("class","tooltipValue")
-                       .style("fill",secondHighlightColor)
+                       .style("fill",highlightColor)
               }
             }
+            if(totalConflicts)
+            $(".country.label .text").html("Between "+timePeriod.from+" -- "+timePeriod.to+", "+countrySelected[0]+", has faced over "+totalConflicts+" conflicts which have led to over "+totalDeaths+" fatalities.");
 
             //Adding the y axis labels here
             var impactInterval = parseInt((impactDomain[0]-impactDomain[1])/2);
             for(var i=0; i<=2;i++){
-              var txtLable = dyadsCont.append('g')
-              var val = parseInt(i*impactInterval+impactDomain[1]);
-              txtLable.append("rect")
-                    .attr("x", 0)
-                    .attr("y", y(val)-10*(2-i))
-                    .attr("width",15)
-                    .attr("height",15)
-                    .attr("fill",bgColor);
+              var txtLable = conflictsYrly.append('g')
+              var val = i*impactInterval+impactDomain[1];
+              conflictsYrly.append("line")
+                     .attr("x1",0)
+                     .attr("y1",marginTop + y(val))
+                     .attr("x2",x(timePeriod.to+1))
+                     .attr("y2",marginTop + y(val))
+                     .style("stroke",baseColorLight)
+                     .style("stroke-dasharray", ("3, 3"))
+                     .style("stroke-width",0.5);
+
               txtLable.append('foreignObject')
                                 .attr('x', 0)
-                                .attr('y', y(val)-7.5*(2-i))
+                                .attr('y', marginTop + (i==0 ? y(val)-7.5*(2-i) : y(val)))
                                 .attr('width', 15)
                                 .attr('height', 15)
                                 .append("xhtml:div")
@@ -523,11 +749,9 @@ var  SSAConflict = (function(){
     },
 
     //This is where the indicator which suffers is rendered
-    renderIndicator : function(indicatorType){
-        var indi = d3.select(".indicator."+indicatorType).append("svg")
-                       .attr("id","indicator")
-                       .attr("width", w)
-                       .attr("height", $(".indicator").height()-$(".indicator .label").height());
+    renderIndicator : function(indicatorType,ht,marginTop){
+        var indi =  rightCont.append("g")
+                             .attr("class","indicator")
         var indiq = es_queries["indicator"][indicatorType];
 
         var colorToSend =  secondHighlightColor || indiq["color"];
@@ -545,7 +769,7 @@ var  SSAConflict = (function(){
                       "key" : d._source.yr,
                       "value" : d._source.value
                     }
-                  }),colorToSend,"countryIndicator",impactDomain,indi);
+                  }),colorToSend,"countryIndicator",impactDomain,indi,ht,marginTop);
             },indiq.index,indiq.type);
         },indiq.index,indiq.type);
     }

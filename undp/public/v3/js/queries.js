@@ -75,10 +75,20 @@ var es_queries = {
         }
       }
   },
-  "conflicts_all_country" : {
-
+  "all_conflicts_of_a_country" : {
+    "size" : 10000,
+    "query": {
+      "bool": {
+        "must": [
+          {"term": {
+            "ccd": {
+              "value": "SDN"
+            }
+          }}
+        ]
+      }
+    }
   },
-
   "indicator" : {
     "ineq" :{ 
       "index" : "ineq",
