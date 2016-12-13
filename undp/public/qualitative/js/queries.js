@@ -84,6 +84,21 @@ var es_queries = {
               "size": 1000,
               "query": {
                 "bool": {
+                  "filter": [
+                    {"range": {
+                      "yr": {
+                        "gte": 1970,
+                        "lte": 1974
+                      }
+                    }},
+                    {
+                      "term": {
+                        "new": {
+                          "value": "race"
+                        }
+                      }
+                    }
+                  ], 
                   "should": [
                     {"terms": {
                       "new": [
@@ -102,23 +117,6 @@ var es_queries = {
                         "ethnic"
                       ]
                     }}
-                  ],
-                  "filter": [
-                    {
-                      "range": {
-                        "yr": {
-                          "gte": 1970,
-                          "lte": 1974
-                        }
-                      }
-                    },
-                    {
-                    "term": {
-                          "new": {
-                            "value": "race"
-                          }
-                        }
-                    }
                   ]
                 }
               }

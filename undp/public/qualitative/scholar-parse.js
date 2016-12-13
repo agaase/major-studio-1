@@ -80,6 +80,7 @@ function parseHeadlines(yr,rows,ct,subpage){
     headline = headline ? headline.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
     link = link ? link.replace(/<(.)*>/g,"").replace(/=/g,"").replace(/[\n\r]/g,"") : "";
     headline = headline.toLowerCase();
+    //The first scoring value is done based on search ranking
     headline = getWords(yr,headline,(1000-((subpage-1)*10+ct))*.001);
     headline["link"] = link;
     //getTopics(headline);

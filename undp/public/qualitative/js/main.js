@@ -1,5 +1,11 @@
 var Renderer = (function(){
 
+
+  var helpText = {
+    "title" : "This visualization tries to understand what kind of research, scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this it analyses top 1000 search results from Google Academic Scholar for each year between 1970-2016. Each search result is analysed for its headline to understand its focus. As such some words or topics are more often used over a time period for and that is what this visualization tries to find and visualize",
+    "highcor" : "Every word in the headline is given a score which depends on following criteria.<ul>  <li> The ranking of search result/headline in Google Scholar search results </li> <li> If the headlines has additional words like 'reasons','why','impact','look','costs' </li> <li> If the headline includes the word 'conflict'. </li> <br> Also, some words show a high correlation (get a very high score) not just for that time period (2yrs, 5yrs) but generally over time."
+}
+
   var years = { "2010-2016" : [ { "word" : "test1", "score" : 10}, { "word" : "test2", "score" : 8},{ "word" : "test3", "score" : 6}, { "word" : "test2", "score" : 5},{ "word" : "test3", "score" : 4},{ "word" : "test1", "score" : 10}, { "word" : "test2", "score" : 8},{ "word" : "test3", "score" : 6}, { "word" : "test2", "score" : 5},{ "word" : "test3", "score" : 4},{ "word" : "test1", "score" : 10}, { "word" : "test2", "score" : 8},{ "word" : "test3", "score" : 6}, { "word" : "test2", "score" : 5},{ "word" : "test3", "score" : 4},{ "word" : "test1", "score" : 10}, { "word" : "test2", "score" : 8},{ "word" : "test3", "score" : 6}, { "word" : "test2", "score" : 5},{ "word" : "test3", "score" : 4}] } ;
 
   var drawYearData = function(yrData){
@@ -71,13 +77,32 @@ var Renderer = (function(){
             $(".arrow.left",parent).hide();
           }
         });
-
     });
+    $(".info").unbind('click').on("click",function(){
+        // clearTimeout(tooltipTimer);
+        var ev = event;
+        var el = $(this);
+        var x = ev.x;
+        if(x + .2*window.innerWidth > window.innerWidth){
+          x = x - .2*window.innerWidth;
+        }
+        $(".tooltip").css({
+          "top" : ev.y+10 + "px",
+          "left" : x + "px",
+        }).html(helpText[el.data("help")]);
+        $(".tooltipCont").show();
+    });
+    $(".tooltipCont").unbind('click').on("click",function(){
+        if(!$(event.target).hasClass("tooltip")){
+          $(this).hide();  
+        };
+    });
+
   };
 
   var drawArticles = function(word,articles,pos){
       debugger;
-      $(".articles").empty().append("<div class='heading'>"+word.toUpperCase()+"<span class='count'>("+articles.length+" articles)</span></div><div class='headlines'></div>");
+      $(".articles").empty().append("<div class='heading'><span class='main'>"+word+"</span><span class='count'>("+articles.length+" articles)</span></div><div class='headlines'></div>");
       $.each(articles,function(i,v){
           var rx = new RegExp(word, 'gi');
           v._source.or = v._source.or.replace(rx,"<span class='highlight'>"+word+"</span>");
@@ -92,12 +117,12 @@ var Renderer = (function(){
       });
       //.css({"top":""+(pos.top+20)+"px","left":""+(pos.left+150)+"px"});
   };
-  //https://search-undp-nnvlmicmvsudjoqjuj574sqrty.us-west-2.es.amazonaws.com
+  //http://http://35.161.122.132:9200
   //http://localhost:9200
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "http://35.161.122.132:9200/scholar/"+(type || "word") +"/_search",
+      url: "http://http://35.161.122.132:9200/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);

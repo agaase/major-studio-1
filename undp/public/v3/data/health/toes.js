@@ -4,8 +4,8 @@ var deferred = require('deferred');
 var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
-var hostu = "http://localhost:9200";
-// var hostu = 'http://35.161.122.132:9200/';
+// var hostu = "http://localhost:9200";
+var hostu = 'http://35.161.122.132:9200/';
 var client = new elasticsearch.Client({
   host: hostu
 });
@@ -114,6 +114,6 @@ var parser = csv.parse({delimiter: ','}, function(err, d ){
   });
 });
 
-fs.createReadStream('NEW/NEW.csv').pipe(parser);
+fs.createReadStream('deaths_rate_100k.csv').pipe(parser);
 
 
