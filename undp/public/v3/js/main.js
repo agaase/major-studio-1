@@ -113,8 +113,8 @@ var  SSAConflict = (function(){
   
 
   var runQ = function(q,c,ind,type){
-    var basesearchurl = "http://localhost:9200/";
-    // var basesearchurl = "http://35.161.122.132:9200/";
+    // var basesearchurl = "http://localhost:9200/";
+    var basesearchurl = "http://35.161.122.132:9200/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
