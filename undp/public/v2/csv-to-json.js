@@ -4,9 +4,9 @@ var deferred = require('deferred');
 var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
-//http://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/
+//http://35.161.122.132:9200/
 var client = new elasticsearch.Client({
-  host: 'http://search-undp-uhzzk2e4xmpuedy3ys6war7364.us-east-1.es.amazonaws.com/'
+  host: 'http://35.161.122.132:9200/'
 });
 
 

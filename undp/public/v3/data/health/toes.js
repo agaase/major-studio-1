@@ -4,8 +4,8 @@ var deferred = require('deferred');
 var data,headers, rows, ctAtOnce = 10000;
 
 var elasticsearch = require('elasticsearch');
-//var hostu = "http://localhost:9200";
-var hostu = 'http://35.161.122.132:9200/';
+var hostu = "http://localhost:9200";
+// var hostu = 'http://35.161.122.132:9200/';
 var client = new elasticsearch.Client({
   host: hostu
 });
@@ -90,25 +90,21 @@ var parser = csv.parse({delimiter: ','}, function(err, d ){
   var toPost = [];
   var countries = {};
   var yrCountry = {};
+  var notpresnt = [];
   for(var i=1;i<data.length;i++){
     var row = data[i];
-    
-    if(countryCodes[row[3]] && row[11].toString().toLowerCase() == "rate" && parseInt(row[0]) == 1){
-      var yr = "" + row[12];
-      var coun = row[3];
-      yrCountry[yr] = yrCountry[yr] || {};
-      yrCountry[yr][coun] = yrCountry[yr][coun] || 0;
-      yrCountry[yr][coun] += parseFloat(row[13]*100);
-      
-    }
-  }
-  for(var yr in yrCountry){
-    for(var coun in yrCountry[yr]){
-      toPost.push({
-        "yr" : yr,
-        "ccode" : countryCodes[coun],
-        "value" : yrCountry[yr][coun]
-      })
+    if(countryCodes[row[1]]){
+      // var yr = "" + row[12];
+      // var coun = row[3];
+      // yrCountry[yr] = yrCountry[yr] || {};
+      // yrCountry[yr][coun] = yrCountry[yr][coun] || 0;
+      // yrCountry[yr][coun] += parseFloat(row[13]*100);
+       toPost.push({
+         "yr" : parseInt(row[6]),
+         "ccode" : countryCodes[row[1]],
+         "value" : parseFloat(row[7])
+       });
+
     }
   }
   console.log("posting - "+toPost.length);
@@ -118,6 +114,6 @@ var parser = csv.parse({delimiter: ','}, function(err, d ){
   });
 });
 
-fs.createReadStream('deaths_by_disease.csv').pipe(parser);
+fs.createReadStream('NEW/NEW.csv').pipe(parser);
 
 

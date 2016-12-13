@@ -94,7 +94,7 @@ var helpText = {
   "dataQuality" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible.<br><br> There are highly clear events(sufficient detailed information present) and low clear events (sufficient detailed information NOT present). <br>Also with each event there is a highest possible number of deaths and best possible number of deaths. The chart here takes the highest possible number of deaths.",
   "gdp" : "The total GDP of the country in US$",
   "ineq" : "Inequality is measured using GINI coeffecient and represents the income distribution of a nation's residents. The value lies between 0 and 100 where 100 denotes maximum inequality and 0 as NO inequality.",
-  "health" : "Total "
+  "health" : ""
 }
 
 var conflictTypes = [1,2,3], indicator = "Primary Enrollment", changed, countrySelected = ["Sudan","SDN"];

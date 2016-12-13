@@ -233,7 +233,7 @@ var  SSAConflict = (function(){
       for(var i=0;i<1;i++){
         var latlong = mapObj.latLngToLayerPoint(events[i].position);
         var marker = L.circleMarker(events[i].position,{
-          radius : 4, 
+          radius : 10, 
           color : baseColor,
           className : "eventHomeCountry ehcc_"+countryCode + " ehcd_"+d,
           d_id : d

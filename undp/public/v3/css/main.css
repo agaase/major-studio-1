@@ -28,6 +28,9 @@ body {
     .tooltipCont .tooltip .scale {
       display: block;
       padding: 5px 0; }
+    .tooltipCont .tooltip a {
+      text-decoration: underline;
+      color: #4A4A4A; }
 
 .tooltipValue {
   cursor: pointer;
@@ -38,7 +41,7 @@ body {
   background-image: url(../images/info.png);
   background-repeat: no-repeat;
   background-size: auto 18px;
-  background-position: right 0px;
+  background-position: right 50%;
   cursor: pointer;
   display: table;
   padding-top: 2px; }

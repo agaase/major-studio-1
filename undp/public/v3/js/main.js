@@ -87,19 +87,19 @@ var countryCodes = {
 
 
 var helpText = {
-  "cr" : "Total enrollment in primary education, regardless of age, expressed as a percentage of the population of official primary education age.<br> ",
+  "cr" : "Total enrollment in primary education, regardless of age, expressed as a percentage. It shows the ratio of the number of students who live in that country to those who qualify for the particular grade level. It can exceed 100% due to the inclusion of over-aged and under-aged students because of early or late school entrance and grade repetition. Data Source - <a href='http://data.uis.unesco.org/?queryid=142#' target='_blank'>UNESCO Institute for Statistics</a>",
   "unemp" : "Unemployment, total (% of total labor force) (modeled ILO estimate)",
   "ct1" : "Fighting either between two states, or between a state and a rebel group that challenges it",
   "ct2" : "Conflicts in which none of the warring parties is a state",
   "ct3" : "The use of armed force by the government of a state or by a formally organized group against civilians which results in at least 25 deaths in a year",
   "i1" : "Countries in Africa have gone through a number of conflicts ever since their independence from colonial rule. Here we try to analyse those conflicts and the resulting deaths.<br><br> Conflicts result because of a disagreement between two groups either of which can be government or not. Violence due to conflicts not only results in deaths and destruction of property but a greater collateral damage leading to a complete breakdown of society.",
-  "i2" : "If a country has a high GDP it doesn't necessarily mean its good for the people of the country. Inequality is very important while measuring the growth of a country.<br><br> There are a number of reasons which affect inequality like the GDP in a country, employment, health, education level etc. What we try to analyse here is the impact of violence due conflicts on some of these indicators which may give a clue about the reasons of inequality",
-  "conflicts" : "What you see here is number of deaths or casualties caused by conflicts in a single year over time. That is what the height of the bar denotes. You can click on each bar to see the number of conflicts and the actual deaths.",
+  "i2" : "The most important factor in development of a country is the distribution of income. Rising economic growth cannot alone gurantee welfare for the society unless the growth is distributed fairly and inequality is minimum.<br><br> In African countries, there are a number of reasons which affect inequality like the GDP in a country, employment, health, education level etc. What we try to analyse here is the <a href='' target='_blank'>impact of conflict violence</a> on some of these indicators which may give a clue about the reasons of inequality",
+  "conflicts" : "Number of deaths or casualties caused by conflicts in a single year over time. The data here takes the 'HIGH ESTIMATE' for the number of deaths given for each event in the data set. Data Source: <a href='http://www.ucdp.uu.se' target='_blank'>Uppsala Conflict Data Program</a><br>  You can click on each bar to see the number of conflicts and the actual deaths.",
   "legend" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible. The bars show a high estimation as well as a low estimation level for the number of deaths.<br><br> The HIGH ESTIMATION takes highly clear events(sufficient detailed informationp present) as well as low clear events(sufficient detailed information NOT present) and the highest possible number of deaths possible.<br> The BEST ESTIMATION only takes highly clear events and best possible number of deaths.",
   "dataQuality" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible.<br><br> There are highly clear events(sufficient detailed information present) and low clear events (sufficient detailed information NOT present). <br>Also with each event there is a highest possible number of deaths and best possible number of deaths. The chart here takes the highest possible number of deaths.",
   "gdp" : "The total GDP of the country in US$",
-  "ineq" : "Inequality is measured using GINI coeffecient and represents the income distribution of a nation's residents. The value lies between 0 and 100 where 100 denotes maximum inequality and 0 as NO inequality.",
-  "health" : "Total deaths due to diseases for a country"
+  "ineq" : "Inequality is measured using GINI coeffecient and represents the income distribution of a nation's residents. The value lies between 0 and 100 where 100 denotes maximum inequality and 0 as NO inequality. Data source - <a href='https://www.wider.unu.edu/project/wiid-world-income-inequality-database' target='_blank'> World Income Inequality Database (WIID) </a>",
+  "health" : "Total number of deaths due to any type of disease per 100k population. Data source:  <a href='http://ghdx.healthdata.org/gbd-results-tool' target='_blank'>Global Burden of Disease Study 2015</a>"
 }
 
 var conflictTypes = [1,2,3], indicator = "Primary Enrollment", changed, countrySelected = ["Sudan","SDN"];
@@ -113,8 +113,8 @@ var  SSAConflict = (function(){
   
 
   var runQ = function(q,c,ind,type){
-    // var basesearchurl = "http://localhost:9200/";
-    var basesearchurl = "http://35.161.122.132:9200/";
+    var basesearchurl = "http://localhost:9200/";
+    // var basesearchurl = "http://35.161.122.132:9200/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
@@ -145,12 +145,12 @@ var  SSAConflict = (function(){
 
       $(".eventSelectedCountry").remove();
       d3.selectAll(".countryGeo")
-      	.style("stroke-width",0.5)
-      	.style("stroke",baseColor);
+        .style("stroke-width",0.5)
+        .style("stroke",baseColor);
 
       d3.select(".country_"+c)
-      	.style("stroke-width",1)
-      	.style("stroke",selectionColor)
+        .style("stroke-width",1)
+        .style("stroke",selectionColor)
         .style("stroke-opacity",1);
   };
 
@@ -304,7 +304,7 @@ var  SSAConflict = (function(){
 
   //Just the timeline 1820-2014
   var drawTimeline = function(ht,marginTop){
-    var timeInterval = device.isMobile ? 8 : 7, marginLeft=0, fontSize=window.innerHeight*.02;
+    var timeInterval = device.isMobile ? 8 : 7, marginLeft=0;
     var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
     var timeline = rightCont.append("g")
                             .attr("class","timeline");
@@ -322,15 +322,10 @@ var  SSAConflict = (function(){
             .attr("y1",marginTop)
             .attr("x2",x(timePeriod.to+1))
             .attr("y2",marginTop)
-            .attr("stroke",baseColor);
+            .attr("stroke",baseColorLight);
 
     for(var i=timePeriod.from-1;i<=timePeriod.to;i++){
-      timeline.append("rect")
-          .attr("x", x(i))
-          .attr("y",marginTop-2)
-          .attr("width","2px")
-          .style("height","4px")
-          .style("fill",bgColor);
+
       if(i>(timePeriod.from-1))
       timeline.append("line")
           .attr("x1", x(i))
@@ -341,12 +336,20 @@ var  SSAConflict = (function(){
           .style("stroke-width","0.5px");
     }
     while(true){
+      timeline.append("line")
+          .attr("x1", x(yrStart))
+          .attr("y1",marginTop)
+          .attr("x2", x(yrStart+1))
+          .attr("y2",marginTop)
+          .style("stroke",baseColor)
+          .style("stroke-width","2px");
+
       timeline.append("text")
-          .attr("x", x(yrStart))
+          .attr("x", x(yrStart)-(device.isMobile ? wy/2 : 0))
           .attr("y",marginTop)
           .attr("text-anchor","left")
           .attr("alignment-baseline","ideographic")
-          .style("font-size",fontSize+"px")
+          .style("font-size",device.isMobile ? "70%":"100%")
           .style("font-weight","bold")
           .style("fill",baseColor)
           .text(yrStart);
