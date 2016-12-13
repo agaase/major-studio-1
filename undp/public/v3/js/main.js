@@ -104,7 +104,7 @@ var helpText = {
 
 var conflictTypes = [1,2,3], indicator = "Primary Enrollment", changed, countrySelected = ["Sudan","SDN"];
 var device = {
-  isMobile : window.matchMedia("(max-width: 480px)").matches
+  isMobile : window.matchMedia("(max-width: 800px)").matches
 };
 
 var vizStatus=0;

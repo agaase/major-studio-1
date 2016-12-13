@@ -45,9 +45,9 @@ var Renderer = (function(){
       var word = $(this).data("word");
       var yr = $(this).data("yr");
       var q = es_queries["default_word_headlines_yr"];
-      q.query.bool.filter[0].range.yr.gte = parseInt(yr.split("-")[0]);
-      q.query.bool.filter[0].range.yr.lte = parseInt(yr.split("-")[1]);
-      q.query.bool.filter[1].term.new.value = word;
+      q.query.bool.must[0].range.yr.gte = parseInt(yr.split("-")[0]);
+      q.query.bool.must[0].range.yr.lte = parseInt(yr.split("-")[1]);
+      q.query.bool.must[1].term.new.value = word;
       var pos = $(this)[0].getBoundingClientRect();
        runQ(q,function(data){
           drawArticles(word,data.hits.hits,pos);

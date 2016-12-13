@@ -258,7 +258,7 @@ body {
     .right .viz #dyads::-webkit-scrollbar {
       display: none; }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 800px) {
   body {
     font-size: 2.5vh; }
 
@@ -272,7 +272,7 @@ body {
     margin-left: 2.5%; }
     .left .header {
       height: 20vh;
-      margin-bottom: 3vh;
+      padding-bottom: 3vh;
       margin: 0; }
       .left .header .title {
         height: auto;

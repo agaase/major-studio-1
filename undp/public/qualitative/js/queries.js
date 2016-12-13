@@ -84,7 +84,7 @@ var es_queries = {
               "size": 1000,
               "query": {
                 "bool": {
-                  "filter": [
+                  "must": [
                     {"range": {
                       "yr": {
                         "gte": 1970,
