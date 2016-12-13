@@ -6,8 +6,6 @@ Countries in Africa have gone through a number of conflicts since their independ
  [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v3/previewv3.png)](http://ec2-35-161-122-132.us-west-2.compute.amazonaws.com/major-studio-1/undp/public/v3/)
  
  
- 
-### Qualitative Asssignment -
 
 #### Causes and Impact of Conflicts in Africa : What have Scholars researched?
 
