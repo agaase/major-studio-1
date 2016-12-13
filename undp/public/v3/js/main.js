@@ -8,7 +8,7 @@ var timePeriod = {
   "to" : 2014
 };
 var estimate = 1;
-var indicatorPercentile = [80,0];
+var indicatorPercentile = [90,0];
 
 var selectionColor = "#000000";
 var bgColor = "#f9f9f9"
@@ -94,7 +94,7 @@ var helpText = {
   "ct3" : "The use of armed force by the government of a state or by a formally organized group against civilians which results in at least 25 deaths in a year",
   "i1" : "Countries in Africa have gone through a number of conflicts ever since their independence from colonial rule. Here we try to analyse those conflicts and the resulting deaths.<br><br> Conflicts result because of a disagreement between two groups either of which can be government or not. Violence due to conflicts not only results in deaths and destruction of property but a greater collateral damage leading to a complete breakdown of society.",
   "i2" : "The most important factor in development of a country is the distribution of income. Rising economic growth cannot alone gurantee welfare for the society unless the growth is distributed fairly and inequality is minimum.<br><br> In African countries, there are a number of reasons which affect inequality like the GDP in a country, employment, health, education level etc. What we try to analyse here is the <a href='https://agaase.github.io/major-studio-1/undp/qualitative/' target='_blank'>impact of conflict violence</a> on some of these indicators which may give a clue about the reasons of inequality",
-  "conflicts" : "Number of deaths or casualties caused by conflicts in a single year over time. The data here takes the 'HIGH ESTIMATE' for the number of deaths given for each event in the data set. Data Source: <a href='http://www.ucdp.uu.se' target='_blank'>Uppsala Conflict Data Program</a><br>  You can click on each bar to see the number of conflicts and the actual deaths.",
+  "conflicts" : "Number of deaths or casualties caused by conflicts in a single year over time. The data here takes the 'HIGH ESTIMATE' for the number of deaths given for each event in the data set. Data Source: <a href='http://www.ucdp.uu.se' target='_blank'>Uppsala Conflict Data Program</a><br>  You can click on each bar to see the number of conflicts, the actual deaths and each event located on the map.",
   "legend" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible. The bars show a high estimation as well as a low estimation level for the number of deaths.<br><br> The HIGH ESTIMATION takes highly clear events(sufficient detailed informationp present) as well as low clear events(sufficient detailed information NOT present) and the highest possible number of deaths possible.<br> The BEST ESTIMATION only takes highly clear events and best possible number of deaths.",
   "dataQuality" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible.<br><br> There are highly clear events(sufficient detailed information present) and low clear events (sufficient detailed information NOT present). <br>Also with each event there is a highest possible number of deaths and best possible number of deaths. The chart here takes the highest possible number of deaths.",
   "gdp" : "The total GDP of the country in US$",
@@ -131,6 +131,10 @@ var  SSAConflict = (function(){
 
 
   var highlighCountry = function(cname,c){
+  	  if(c && c==countrySelected[1]){
+  	  	return;
+  	  }
+  	  $(".tooltip2").hide();
       $("#eventTimeline").hide().empty();
       $("#dyadsCont").show();
       $("#dyads .btn").removeClass("active");
@@ -157,10 +161,12 @@ var  SSAConflict = (function(){
   };
 
 
-  var allEventTimeline = function(){
+  var allEventTimeline = function(yr){
     var q = es_queries["all_conflicts_of_a_country"];
     q["query"]["bool"]["must"][0]["term"]["ccd"]["value"] = countrySelected[1];
+    q["query"]["bool"]["must"][1]["term"]["year"]["value"] = yr;
     runQ(q,function(d){
+      $(".eventSelectedCountry").remove();
       var events = d.hits.hits.map(function(d){
         return d._source;
       });
@@ -170,15 +176,8 @@ var  SSAConflict = (function(){
         conflicts[ev.type_of_conflict] = conflicts[ev.type_of_conflict] || [];
         conflicts[ev.type_of_conflict].push(ev);
       }
-      $("#dyadsCont").hide();
-      $("#eventTimeline").show();
-      var ht = parseInt(dyadsCont.attr("height"))/3, marginLeft=w*.04;
-      var x = d3.scaleLinear()
-                .domain([timePeriod.from, timePeriod.to+1])
-                .range([marginLeft, w]);
       var ct=0;
       for(var conflictType in conflicts){
-        var container = eventTimeline.append("g");
         var events = conflicts[conflictType];
         events = events.sort(function(a,b){
           return new Date(a.date_start) - new Date(b.date_start);
@@ -187,21 +186,12 @@ var  SSAConflict = (function(){
           for(var i=0;i<events.length;i++){
             var ev = events[i];
             var marker = L.circleMarker([ev.latitude,ev.longitude],{
-              radius : 1, 
-              color : baseColor,
+              radius : 2, 
+              color : bgColor,
               className : "eventSelectedCountry",
             });
-            marker.bindPopup(ev.d_name + "<br>" + ev.country);
+            marker.bindPopup(ev.d_name + "<br>" + ev.country + "<br>Deaths : "+ev.high_est +"<br> Date  :"+ev.date_start);
             mapObj.addLayer(marker);
-            var xpos = x(timePeriod.from+((new Date(ev.date_start) - new Date(""+timePeriod.from))/(1000*60*60*24*365)));
-            var scale = chroma.scale([bgColor,highlightColor]);
-            var margin = ht/4;
-            container.append("line")
-                     .attr("x1",xpos)
-                     .attr("y1",ct*ht+ht/4+(.75*ht-.75*ht*((ev.high_est>100 ? 100 : ev.high_est)/100)))
-                     .attr("x2",xpos)
-                     .attr("y2",ct*ht+ht)
-                     .style("stroke",highlightColor);
           } 
         }
         ct++;
@@ -390,12 +380,12 @@ var  SSAConflict = (function(){
           .attr("class","tooltipValue")
           .attr("value",helpText[type])
 
-    var htext = text.node().getBBox().height;
+    var bbox = text.node().getBBox();
     indi_g.append("image")
-          .attr("x",text.node().getBBox().width+htext/2)
-          .attr("y",marginTop-htext)
-          .attr("width",htext)
-          .attr("height",htext)
+          .attr("x",text.node().getBBox().width+bbox.height)
+          .attr("y",bbox.y)
+          .attr("width",bbox.height)
+          .attr("height",bbox.height)
           .attr("class","info")
           .attr("data-help",type)
           .attr("xlink:href","images/info.png")
@@ -493,7 +483,7 @@ var  SSAConflict = (function(){
                         .attr('width', 15)
                         .attr('height', 15)
                         .append("xhtml:div")
-                        .html('<div style="font-size:75%;color:'+baseColorLight+';">'+(val>1000 ? parseInt(val/1000)+"k": val)+'</div>')
+                        .html('<div style="font-size:75%;color:'+baseColorLight+';">'+(val>1000 ? Math.round((val/1000)*10)/10+"k": val)+'</div>')
       txtLable.append("line")
                     .attr("x1",0)
                     .attr("y1",marginTop + y(val))
@@ -527,8 +517,8 @@ var  SSAConflict = (function(){
         var x = event.x;
         if(device.isMobile){
           x = window.innerWidth*.1;
-        }else if(x + .3*window.innerWidth > window.innerWidth){
-          x = x - .3*window.innerWidth;
+        }else if(x + .2*window.innerWidth > window.innerWidth){
+          x = x - .2*window.innerWidth;
         }
         $(".tooltip").css({
             "top" : event.y + "px",
@@ -561,9 +551,12 @@ var  SSAConflict = (function(){
       });
       $(".right .list .listItem").unbind("click").on("click",function(){
         $(".country .selected").text($(this).text());
-        countrySelected = [$(this).text(),$(this).data("code")];
-        $(".right .list").toggle();
-        SSAConflict.reinit();
+        var code = $(this).data("code");
+        if(code !== countrySelected[1]){
+        	countrySelected = [$(this).text(),code];
+	        $(".right .list").toggle();
+	        highlighCountry();	
+        }
       });
       $(".africaToggle").unbind("click").on("click",function(){
         var map = $(".mapContainer");
@@ -588,7 +581,20 @@ var  SSAConflict = (function(){
           $("#dyadsCont").show();
         }
         el.addClass("active")
-      })
+      });
+      $(".conflictYr").unbind("click").on("click",function(){
+      	var el = $(this);
+      	allEventTimeline(parseInt(el.attr("yr")));  
+      	var x = event.x;
+      	var w = device.isMobile ? .5*window.innerWidth : .1*window.innerWidth;
+      	if(x + w > window.innerWidth){
+      		x = x - w;
+      	}
+        $(".tooltip2").css({
+            "top" : event.y+"px",
+            "left" : x + "px"
+        }).html($(this).attr("value")).show();
+      });
       
   }
 
@@ -639,11 +645,6 @@ var  SSAConflict = (function(){
         $("#dyadsCont").empty();
         $("#timeline").empty();
         $(".indicator svg").remove();
-    },
-    reinit : function(){
-        SSAConflict.clear();
-        drawMapSkeleton();
-        highlighCountry();
     },
 
     init : function(){
@@ -702,12 +703,12 @@ var  SSAConflict = (function(){
                   .style("fill",baseColor)
                   .attr("class","tooltipValue")
                   .attr("value",helpText["conflicts"]);
-        var htext = text.node().getBBox().height;
+        var bbox = text.node().getBBox();
         labeslG.append("image")
-          .attr("x",text.node().getBBox().width+htext/2)
-          .attr("y",marginTop-htext)
-          .attr("width",htext)
-          .attr("height",htext)
+          .attr("x",text.node().getBBox().width+bbox.height)
+          .attr("y",bbox.y)
+          .attr("width",bbox.height)
+          .attr("height",bbox.height)
           .attr("class","info")
           .attr("data-help","conflicts")
           .attr("xlink:href","images/info.png")
@@ -737,8 +738,10 @@ var  SSAConflict = (function(){
                        .attr("y", marginTop + yy)
                        .attr("width", x(ob.key+1)-x(ob.key))
                        .attr("height",    ht-yy)
-                       .attr("value",ob.key+"<br>"+"Number of conflicts : "+ob.doc_count + "<br> Deaths : "+deathsHigh)
-                       .attr("class","tooltipValue")
+                       .attr("value",ob.key+"<br>Conflict events : "+ob.doc_count +" "+ "<br>Deaths : "+deathsHigh)
+                       .attr("yr",ob.key)
+                       .attr("class","conflictYr")
+                       .attr("ypos",marginTop+ht)
                        .style("fill",deathsHigh > impactDomain[0] ? highDeathColor : highlightColor)
                        .style("opacity",dontShowUncertainty ? "0.8" : "0.6");
               if(!dontShowUncertainty){

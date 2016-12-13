@@ -84,7 +84,14 @@ var es_queries = {
             "ccd": {
               "value": "SDN"
             }
-          }}
+          }},
+          {
+            "term" : {
+              "year" : {
+                "value" : 1991
+              }
+            }
+          }
         ]
       }
     }
