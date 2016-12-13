@@ -16,7 +16,7 @@ Countries in Africa have gone through a number of conflicts since their independ
 
 #### Causes and impacts of conflicts in Africa : What have Scholars researched?
 
-With this project I try to understand what kind of research scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this I analyse top 1000 search results from [https://scholar.google.com/scholar?start=0&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=2010&as_vis=1](Google Academic Scholar) for each year between 1970-2016. Each search result is analysed for its headline to understand its focus which is ultimately aggregated to find a larger focus over a time period.  
+With this project I try to understand what kind of research scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this I analyse top 1000 search results from  [Google Academic Scholar](https://scholar.google.com/scholar?start=0&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=2010&as_vis=1) for each year between 1970-2016. Each search result is analysed for its headline to understand its focus which is ultimately aggregated to find a larger focus over a time period.  
 
  > Research Question
  
