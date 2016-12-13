@@ -99,7 +99,7 @@ var helpText = {
   "dataQuality" : "HOW GOOD IS THIS DATA?<br>There is some amount of assumption taken while recording these events and hence an error is always possible.<br><br> There are highly clear events(sufficient detailed information present) and low clear events (sufficient detailed information NOT present). <br>Also with each event there is a highest possible number of deaths and best possible number of deaths. The chart here takes the highest possible number of deaths.",
   "gdp" : "The total GDP of the country in US$",
   "ineq" : "Inequality is measured using GINI coeffecient and represents the income distribution of a nation's residents. The value lies between 0 and 100 where 100 denotes maximum inequality and 0 as NO inequality.",
-  "health" : "Total "
+  "health" : "Total deaths due to diseases for a country"
 }
 
 var conflictTypes = [1,2,3], indicator = "Primary Enrollment", changed, countrySelected = ["Sudan","SDN"];
@@ -113,8 +113,8 @@ var  SSAConflict = (function(){
   
 
   var runQ = function(q,c,ind,type){
-    // var basesearchurl = "http://localhost:9200/";
-    var basesearchurl = "http://35.161.122.132:9200/";
+    var basesearchurl = "http://localhost:9200/";
+    // var basesearchurl = "http://35.161.122.132:9200/";
     $.ajax({
       type: "POST",
       url: basesearchurl+(ind || "ucdp") + "/"+ (type || "event") + "/_search",
@@ -234,7 +234,7 @@ var  SSAConflict = (function(){
       for(var color in colors){
         var val = parseInt(color);
         if(ct < range.length-1){
-          $(".mapLegend .keys").append("<div class='key'><div class='label'>"+(val >= 1000 ? (val/1000)+"k" : val )+"</div><div style='background: linear-gradient(to right, "+colors[range[ct]]+","+colors[range[ct+1]]+");' class='color'></div></div>");
+          $(".mapLegend .keys").append("<div class='key'><div class='label'>"+(val >= 1000 ? (val/1000)+"k" : val )+"</div><div class='label rightL'>"+(ct==(range.length-2) ? range[range.length-1]/1000+"k" : "")+"</div><div style='background: linear-gradient(to right, "+colors[range[ct]]+","+colors[range[ct+1]]+");' class='color'></div></div>");
           ct++;
         }
       }
@@ -304,7 +304,7 @@ var  SSAConflict = (function(){
 
   //Just the timeline 1820-2014
   var drawTimeline = function(ht,marginTop){
-    var timeInterval =7, marginLeft=0, fontSize=window.innerHeight*.02;
+    var timeInterval = device.isMobile ? 8 : 7, marginLeft=0, fontSize=window.innerHeight*.02;
     var yrInterval = parseInt((timePeriod.to  - timePeriod.from)/timeInterval);
     var timeline = rightCont.append("g")
                             .attr("class","timeline");
@@ -377,13 +377,23 @@ var  SSAConflict = (function(){
     var indi_g = indi.append("g")
         .attr("class",classs)
         .attr("type",type);
-    indi_g.append("text")
+    var text = indi_g.append("text")
           .attr("x",0)
           .attr("y",marginTop)
           .text(labels[type])
           .style("fill",baseColor)
           .attr("class","tooltipValue")
           .attr("value",helpText[type])
+
+    var htext = text.node().getBBox().height;
+    indi_g.append("image")
+          .attr("x",text.node().getBBox().width+htext/2)
+          .attr("y",marginTop-htext)
+          .attr("width",htext)
+          .attr("height",htext)
+          .attr("class","info")
+          .attr("data-help",type)
+          .attr("xlink:href","images/info.png")
 
     marginTop += labelMargin;
 
@@ -414,7 +424,7 @@ var  SSAConflict = (function(){
             .attr("cx",x(i+0.5))
             .attr("cy",marginTop + y2)
             .attr("r","4px")
-            .style("fill",secondHighlightColor);
+            .style("fill",color);
 
       }else{
         interpolating = true;
@@ -496,20 +506,28 @@ var  SSAConflict = (function(){
           // clearTimeout(tooltipTimer);
           var ev = event;
           var el = $(this);
-            var x = ev.x;
-            if(x + .3*window.innerWidth > window.innerWidth){
-              x = x - .3*window.innerWidth;
-            }
-            $(".tooltip").css({
-              "top" : ev.y+10 + "px",
-              "left" : x + "px",
-            }).html(helpText[el.data("help")]);
-            $(".tooltipCont").show();
+          var x = ev.x;
+          if(device.isMobile){
+            x = window.innerWidth*.1;
+          }else if(x + .3*window.innerWidth > window.innerWidth){
+            x = x - .3*window.innerWidth;
+          }
+          $(".tooltip").css({
+            "top" : ev.y+10 + "px",
+            "left" : x + "px",
+          }).html(helpText[el.data("help")]);
+          $(".tooltipCont").show();
       });
       $(".tooltipValue").unbind('click').on("click",function(){
+        var x = event.x;
+        if(device.isMobile){
+          x = window.innerWidth*.1;
+        }else if(x + .3*window.innerWidth > window.innerWidth){
+          x = x - .3*window.innerWidth;
+        }
         $(".tooltip").css({
             "top" : event.y + "px",
-            "left" : event.x + "px",
+            "left" : x + "px",
         }).html($(this).attr("value"));
         $(".tooltipCont").show();
       });
@@ -583,11 +601,11 @@ var  SSAConflict = (function(){
     setup : function(width){
       var ww = width || w;
 
-      hRight = $(".viz").height();
+      hRight = device.isMobile ? $(".viz").height()*1.5 : $(".viz").height();
       rightCont = d3.select(".viz")
                         .append("svg")
                         .attr("width", ww)
-                        .attr("height",$(".viz").height());
+                        .attr("height",hRight);
 
 
       // dyadsCont = d3.select("#dyads")
@@ -627,17 +645,31 @@ var  SSAConflict = (function(){
 
           $(".viz g").remove();
 
+          var positions = {
+            "timeline"  : {
+              "h" : .06*hRight,
+              "mt" : 0
+            },
+            "conflicts"  : {
+              "h" : .21*hRight,
+              "mt" : .01*hRight
+            },
+            "indicator"  : {
+              "h" : .25*.7*hRight,
+              "mt" : .06*hRight
+            }
+          }
           var y = 0;
-          drawTimeline(.06*hRight,0);
-          y += .06*hRight;
-          SSAConflict.renderConflictCountry(.21*hRight,y+(.01)*hRight);
-          y += .18*hRight + (.04)*hRight;
-          var indicHt = .25*.7*hRight;
-          SSAConflict.renderIndicator("health",indicHt,y+(.06)*hRight);
-          y += indicHt + (.06)*hRight;
-          SSAConflict.renderIndicator("cr",indicHt,y+(.06)*hRight);
-          y += indicHt + (.06)*hRight;
-          SSAConflict.renderIndicator("ineq",indicHt,y+(.06)*hRight);
+          drawTimeline(positions.timeline.h,positions.timeline.mt);
+          y += positions.timeline.h;
+          SSAConflict.renderConflictCountry(positions.conflicts.h,y+positions.conflicts.mt);
+          y += positions.conflicts.h + positions.conflicts.mt;
+          var indicHt = positions.indicator.h;
+          SSAConflict.renderIndicator("health",indicHt,y+positions.indicator.mt);
+          y += indicHt + positions.indicator.mt;
+          SSAConflict.renderIndicator("cr",indicHt,y+positions.indicator.mt);
+          y += indicHt + positions.indicator.mt;
+          SSAConflict.renderIndicator("ineq",indicHt,y+positions.indicator.mt);
           setTimeout(function(){
             SSAConflict.addEvents();
             if(device.isMobile){
@@ -662,6 +694,15 @@ var  SSAConflict = (function(){
                   .style("fill",baseColor)
                   .attr("class","tooltipValue")
                   .attr("value",helpText["conflicts"]);
+        var htext = text.node().getBBox().height;
+        labeslG.append("image")
+          .attr("x",text.node().getBBox().width+htext/2)
+          .attr("y",marginTop-htext)
+          .attr("width",htext)
+          .attr("height",htext)
+          .attr("class","info")
+          .attr("data-help","conflicts")
+          .attr("xlink:href","images/info.png")
 
         // var margin = 0.03*w+text.node().getBBox().width;
         // text = labeslG.append("text")
@@ -720,8 +761,12 @@ var  SSAConflict = (function(){
                        .style("fill",highlightColor)
               }
             }
-            if(totalConflicts)
-            $(".country.label .text").html("Between "+timePeriod.from+" -- "+timePeriod.to+", "+countrySelected[0]+", has faced over "+totalConflicts+" conflicts which have led to over "+totalDeaths+" fatalities.");
+            if(totalConflicts){
+              $(".country.label .text").html("Between "+timePeriod.from+" -- "+timePeriod.to+", "+countrySelected[0]+", has faced over "+totalConflicts+" conflicts which have led to over "+totalDeaths+" fatalities.");  
+            }else{
+              $(".country.label .text").html("No data available for this country.");
+            }
+            
 
             //Adding the y axis labels here
             var impactInterval = parseInt((impactDomain[0]-impactDomain[1])/2);
@@ -754,7 +799,7 @@ var  SSAConflict = (function(){
                              .attr("class","indicator")
         var indiq = es_queries["indicator"][indicatorType];
 
-        var colorToSend =  secondHighlightColor || indiq["color"];
+        var colorToSend =  indiq["color"];
         var q = indiq["q"]["percentile"];
         q["aggs"]["perc"]["percentiles"]["percents"] = indicatorPercentile;
         runQ(q,function(data){

@@ -93,7 +93,7 @@ var es_queries = {
     "ineq" :{ 
       "index" : "ineq",
       "type" : "ineq_country_year",
-      "color" : "#dd1367",
+      "color" : "#000000",
       "q" : {
         "percentile" : {
           "size": 0,
@@ -141,7 +141,7 @@ var es_queries = {
     "health" :{ 
       "index" : "health",
       "type" : "deaths",
-      "color" : "#4c9f38",
+      "color" : "#53A233",
       "q" : {
         "percentile" : {
           "size": 0,
@@ -189,7 +189,7 @@ var es_queries = {
     "cr" : {
       "index" : "cr",
       "type" : "cr_country_year",
-      "color" : "#c5192d",
+      "color" : "#C3242B",
       "q" : {
         "percentile" : {
           "size": 0,
@@ -237,6 +237,7 @@ var es_queries = {
      "gdp" : {
       "index" : "gdp",
       "type" : "gdp_c",
+      "color" : "#9F1F46",
       "q" : {
         "percentile" : {
           "size": 0,
