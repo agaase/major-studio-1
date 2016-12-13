@@ -122,7 +122,7 @@ var Renderer = (function(){
   var runQ = function(q,c,type){
     $.ajax({
       type: "POST",
-      url: "http://http://35.161.122.132:9200/scholar/"+(type || "word") +"/_search",
+      url: "http://35.161.122.132:9200/scholar/"+(type || "word") +"/_search",
       data: JSON.stringify(q),
       success: function(data){
         c(data);
