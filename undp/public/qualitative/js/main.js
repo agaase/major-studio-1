@@ -2,7 +2,7 @@ var Renderer = (function(){
 
 
   var helpText = {
-    "title" : "This visualization tries to understand what kind of research, scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this it analyses top 1000 search results from Google Academic Scholar for each year between 1970-2016. Each search result is analysed for its headline to understand its focus. As such some words or topics are more often used over a time period for and that is what this visualization tries to find and visualize",
+    "title" : "This visualization tries to understand what kind of research academic scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this it analyses top 1000 search results from Google Academic Scholar for each year between 1970-2016. Each search result is analysed for its headline to understand its focus which is ultimately aggregated to find a larger focus over a time period.",
     "highcor" : "Every word in the headline is given a score which depends on following criteria.<ul>  <li> The ranking of search result/headline in Google Scholar search results </li> <li> If the headlines has additional words like 'reasons','why','impact','look','costs' </li> <li> If the headline includes the word 'conflict'. </li> <br> Also, some words show a high correlation (get a very high score) not just for that time period (2yrs, 5yrs) but generally over time."
 }
 
