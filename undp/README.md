@@ -2,7 +2,7 @@
  
 #### How does Conflict affect Inequality in Africa?
 
-Countries in Africa have gone through a number of conflicts since their independence from colonial rule.  Violence due  to conflicts not only results in deaths and destruction of property, but a greater collateral damage leading to a complete breakdown of society. With this visualization, we try to understand different drivers of societal inequality due to conflict violence. 
+Countries in Africa have gone through a number of conflicts since their independence from colonial rule.  Violence due  to conflicts not only results in deaths and destruction of property, but a greater collateral damage leading to a complete breakdown of society. With this visualization, I try to understand different drivers of societal inequality due to conflict violence. 
  
  > Research Question
  
@@ -16,7 +16,7 @@ Countries in Africa have gone through a number of conflicts since their independ
 
 #### Causes and impacts of conflicts in Africa : What have Scholars researched?
 
-There is a lot of hypothesis about what all gets affected by conflicts as a result of collateral damage. What this visualization tries to do is understand what did academic scholars research over the years around the same topic. It does so by analysing all the articles that Google Scholar provide for the keyword 'impact africa' and finding which keywords are more popular. 
+With this project I try to understand what kind of research scholars have carried out around conflicts in Africa specifically related to its impact and cause. For this I analyse top 1000 search results from [https://scholar.google.com/scholar?start=0&q=africa+conflict&hl=en&as_sdt=1,33&as_ylo=1960&as_yhi=2010&as_vis=1](Google Academic Scholar) for each year between 1970-2016. Each search result is analysed for its headline to understand its focus which is ultimately aggregated to find a larger focus over a time period.  
 
  > Research Question
  
