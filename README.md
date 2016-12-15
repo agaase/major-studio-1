@@ -3,7 +3,7 @@
 Countries in Africa have gone through a number of conflicts since their independence from colonial rule.  Violence due  to conflicts not only results in deaths and destruction of property, but a greater collateral damage leading to a complete breakdown of society. With this visualization, I try to understand different drivers of societal inequality due to conflict violence. 
 
  
- [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v3/previewv3.png)](https://agaase.github.io/major-studio-1/undp/quantitative/)
+ [![PREVIEW](https://agaase.github.io/major-studio-1/undp/public/v3/preview.png)](https://agaase.github.io/major-studio-1/undp/quantitative/)
  
  
 
