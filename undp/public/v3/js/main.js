@@ -422,6 +422,9 @@ var  SSAConflict = (function(){
             .style("fill",color);
 
       }else{
+        if(!ct){
+          continue;
+        }
         interpolating = true;
         strokeColor=baseColorLight;
         if(ct ==0){
@@ -757,7 +760,7 @@ var  SSAConflict = (function(){
               }
             }
             if(totalConflicts){
-              $(".country.label .text").html("Between "+timePeriod.from+" -- "+timePeriod.to+", "+countrySelected[0]+", has faced over "+totalConflicts+" conflicts which have led to over "+totalDeaths+" fatalities.");  
+              $(".country.label .text").html("Between "+timePeriod.from+" -- "+timePeriod.to+", "+countrySelected[0]+", has faced over <b>"+totalConflicts+" conflicts</b> which have led to over <b>"+totalDeaths+" fatalities</b>.");  
             }else{
               $(".country.label .text").html("No data available for this country.");
             }
